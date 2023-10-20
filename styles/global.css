@@ -1,0 +1,241 @@
+body{
+    margin: 0px;
+}
+.search-placeholder{
+    border: none;
+    padding: 5px;
+    background: #F1F1F1;
+    width: 325px;
+    color: #ADADAD;
+}
+.search-placeholder:active , .search-placeholder:focus{
+    border: none;
+    outline: none;
+}
+.logIn-btn{
+    border: none;
+}
+.blue-text{
+    color: #2E5BA5;
+    font-weight: bold;
+    font-size: 18px;
+}
+.product-box{
+    width: 100%;
+    height: 175px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+.red-btn{
+    background: #E52222;
+    border: none;
+    color: white;
+    padding: 3px 15px;
+    margin-bottom: 10px;
+}
+.genuine-parts-heading{
+    color: #2E5BA5;
+    font-weight: 700;
+    position: absolute;
+    top: -190px;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 4px;
+}
+.genuine-parts-para{
+    position: absolute;
+    top: -110px;
+    color: black;
+    padding: 0px 217px;
+    text-align: center;
+    font-family: "Roboto";
+    line-height: 1.5;
+
+}
+.image-container {
+    position: relative;
+    width: 100%;
+    height: 295px;
+}
+
+.image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+.models-button{
+    background: white;
+    color: black;
+    border: 1px solid #D0D0D0;
+    border-radius: 2px;
+    padding: 5px 70px;
+    cursor: pointer;
+    width: 100%;
+}
+.wholesale-heading{
+    color: #2E5BA5;
+    font-weight: 700;
+    position: absolute;
+    top: 20px;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 4px;
+}
+.wholesale-para{
+    position: absolute;
+    top: 100px;
+    color: black;
+    padding: 0px 217px;
+    text-align: center;
+    line-height: 1.5;
+}
+.footer-padding{
+    padding: 0px 15px;
+}
+.leftside-heading{
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.leftside-image{
+    width: 28px;
+    height: 25px;
+    margin-right: 10px;
+}
+.productblock-grid{
+    padding: 0px 5px;
+    margin-top: 20px;
+
+}
+.grid-product_box{
+    text-align: center;
+}
+.images-product_box{
+    width: 130px;
+    height: 95px;
+    /* margin-bottom: 4px; */
+    margin-top: 15px;
+}
+.title-product_block{
+    margin-top: 5px;
+    color: #E52222;
+}
+.header{
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: #E6E5E5;
+}
+.logo-img{
+    height: 55px;
+}
+.car{
+    margin-right: 3px;
+    margin-left: 8px;
+    margin-top: 2px;
+    width: 25px;
+    height: 20px;
+}
+.select-vehicle-btn{
+    background: #E52222;
+    padding: 5px;
+    color: white;
+    border: none;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.sub-header{
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 60px;
+    background: #F1F1F1;
+}
+.search-by-category{
+    display: flex;
+    align-items: center;
+}
+.search-by-category-text{
+    /*fontWeight="600" color="#2E5BA5"*/
+    font-weight: 600;
+    color: #2E5BA5 ;
+    font-size: 18px;
+    margin: 0px;
+}
+.sub-header-links{
+    /*textDecoration="none"  color="black"*/
+    text-decoration: none;
+    color: #2E5BA5;
+    cursor: pointer;
+    font-weight: 500;
+}
+.right-subheader-img{
+    width: 23px;
+    height: 23px;
+    margin-right: 7px;
+}
+.sub-header-rightlinks{
+    /*textDecoration="none"  color="black"*/
+    text-decoration: none;
+    color: #E52222;
+    cursor: pointer;
+    font-weight: 500;
+}
+.find-parts-btn{
+    background: #202020;
+    color: white;
+    padding: 3px 15px;
+
+}
+.topsection-input{
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    background: white;
+    border: 1px solid grey;
+    margin-bottom: 4px;
+}
+.topsextion_heading1{
+    width: 50%;
+    background: #D3EAFF;
+    padding: 3px 25px;
+}
+.topsextion_heading2{
+    width: 50%;
+    background: #DCF2FF;
+    padding: 3px 25px;
+}
+.topsection-container{
+    display: flex;
+    border: 2px solid #2E5BA5 ;
+    position: relative;
+    height: 259px;
+}
+.or-image{
+    width: 31px;
+    height: 28px;
+    position: absolute;
+    top: 3%;
+    left: 47%;
+}
+.carousel .thumbs-wrapper{
+    display: none;
+}
+.footer-lower{
+    /*bg='#F1F1F1' padding="10px 0px" color='black'*/
+    background: #F1F1F1;
+    padding: 25px 0px;
+    color: black;
+
+}

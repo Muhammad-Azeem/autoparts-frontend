@@ -1,0 +1,46 @@
+/* styles/header.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px; /* Adjust the logo size as needed */
+}
+
+.center {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+}
+
+.logout {
+    margin-right: 10px;
+    /* Add more styles as needed */
+    color: red;
+}
+
+.cart {
+    /* Add styles for the cart button */
+}
