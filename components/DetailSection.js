@@ -27,11 +27,10 @@ const DetailSection = () => {
     return (
 
         <Grid
-            templateRows='repeat(1, 1fr)'
-            templateColumns='repeat(5, 1fr)'
-            gap={4}
-            mt={40}
-            padding="0px 150px"
+            // templateRows='repeat(1, 1fr)'
+            // templateColumns='repeat(5, 1fr)'
+            // gap={4}
+            className="grid main-padding"
         >
             <LeftSide />
 

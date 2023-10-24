@@ -7,7 +7,7 @@ import {ChevronDownIcon} from "@chakra-ui/icons";
 const LeftSide = () => {
     return (
 
-            <Grid templateColumns="repeat(1, 1fr)" gap={6}>
+            <Grid className="left-row" templateColumns="repeat(1, 1fr)" gap={6}>
                 <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                     <Box display="flex" alignItems="center">
 

@@ -11,8 +11,8 @@ const TopSection = () => {
     ];
     return (
 
-        <Grid mt={40} padding="0px 150px"  templateColumns='repeat(2, 1fr)' gap={6}>
-            <GridItem  w='100%' h='10' bg='blue.500' >
+        <Grid className="main-padding" templateColumns='repeat(2, 1fr)' gap={6}>
+            <GridItem className="section-first"   >
                 <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
                     Shop for Parts
                 </Heading>
@@ -32,7 +32,7 @@ const TopSection = () => {
                         <Flex justify="end">
                             <Button mt={4} className="find-parts-btn" >Find My Parts</Button>
                         </Flex>
-                        <Text mt={50} textAlign="center" fontSize="sm" color="gray.500">
+                        <Text className="box-one-text" >
                             For the most accurate results, search by your VIN (vehicle identification number).
                         </Text>
                     </Box>
@@ -86,7 +86,7 @@ const TopSection = () => {
                     </Box>
                 </Container>
             </GridItem>
-            <GridItem w="100%" h={264} position="relative">
+            <GridItem className="section-second" >
                 <div className="image-container">
                     <ImageCarousel images={images} />
 
@@ -103,9 +103,9 @@ const TopSection = () => {
                 >
                     <Text fontSize="20px" mb={4}>
                         Are You a <br/>
-                        <Text margin="0px" fontSize="30px" fontWeight="700">
+                        <span className="adds-text" >
                             Wholesale Retailer
-                        </Text>
+                        </span>
                     </Text>
                     <Button className="red-btn" >Join Now</Button>
                 </Box>

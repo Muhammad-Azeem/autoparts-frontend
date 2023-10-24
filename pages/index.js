@@ -8,22 +8,38 @@ import GeniunePartsSection from "../components/GeniunePartsSection";
 import ModelSection from "../components/ModelSection";
 import WholeSaleSection from "../components/WholeSaleSection";
 import Footer from "../components/Footer";
+import HeaderMobile from "../components/HeaderMobile";
+import MobileFooter from "../components/MobileFooter";
+import MobileTopSection from "../components/MobileTopSection";
 const HomePage = () => {
     return (
         <div>
-            <Header />
-            <SubHeader />
+            <div className="main-header">
+                <Header />
+                <SubHeader />
+            </div>
+            <div className="mobile-header">
+                <HeaderMobile />
+            </div>
 
             <main>
-                {/* Your main content for the home page */}
-                <TopSection />
-                <DetailSection />
-                <GeniunePartsSection />
-                <ModelSection />
-                <WholeSaleSection />
+                <div className="main-top-section">
+                    <TopSection/>
+                </div>
+                <div className="mobile-top-section">
+                    <MobileTopSection/>
+                </div>
+                <DetailSection/>
+                <GeniunePartsSection/>
+                <ModelSection/>
+                <WholeSaleSection/>
             </main>
-
-            <Footer />
+            <div className="main-footer">
+                <Footer/>
+            </div>
+            <div className="mobile-footer">
+                <MobileFooter />
+            </div>
         </div>
     );
 };

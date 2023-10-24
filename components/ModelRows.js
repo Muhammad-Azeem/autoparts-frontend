@@ -67,7 +67,7 @@ const ModelRows = () => {
     ];
     return (
         <Center>
-            <Grid templateColumns="repeat(4, 1fr)" gap={10}>
+            <Grid className="model-rows"  >
                 {buttons.map((title, index) => (
                     <GridItem key={index}>
                         <ModelButton title={title} />

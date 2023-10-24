@@ -29,7 +29,7 @@ const SeventhProductBlock = ({title}) => {
                 <Heading ml={15} fontStyle="bold" color="black" as="h4" size="lg" mb={4}>
                     {title}
                 </Heading>
-                <Grid className="productblock-grid"  templateColumns='repeat(4, 1fr)' gap={6}>
+                <Grid className="item  productblock-grid"  gap={6}>
 
                     <Product
                         image="/images/oil-filter.png"

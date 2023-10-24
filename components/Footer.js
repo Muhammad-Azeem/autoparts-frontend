@@ -72,15 +72,15 @@ const Footer = () => {
                         Shop with Confidence
                     </Text>
                     <HStack spacing={2}>
-                        <Image width="150px" mr={10} src="/images/footer-img2.png" alt="Image 1"/>
-                        <Image width="150px" src="/images/footer-img1.png" alt="Image 2"/>
+                        <Image className="footer_images-top" src="/images/footer-img2.png" alt="Image 1"/>
+                        <Image className="footer_images-top" src="/images/footer-img1.png" alt="Image 2"/>
                     </HStack>
                     <HStack mt={10} spacing={2}>
-                        <Image width="70px" mr={10} src="/images/paypal.png" alt="Image 1"/>
-                        <Image width="70px" src="/images/visa.png" alt="Image 2"/>
-                        <Image width="70px" src="/images/american.png" alt="Image 2"/>
-                        <Image width="70px" src="/images/MC.png" alt="Image 2"/>
-                        <Image width="70px" src="/images/maestro.png" alt="Image 2"/>
+                        <Image className="footer_images-bottom" src="/images/paypal.png" alt="Image 1"/>
+                        <Image className="footer_images-bottom" src="/images/visa.png" alt="Image 2"/>
+                        <Image className="footer_images-bottom" src="/images/american.png" alt="Image 2"/>
+                        <Image className="footer_images-bottom" src="/images/MC.png" alt="Image 2"/>
+                        <Image className="footer_images-bottom" src="/images/maestro.png" alt="Image 2"/>
                     </HStack>
                 </Box>
 

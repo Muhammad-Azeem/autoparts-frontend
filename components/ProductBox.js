@@ -31,7 +31,7 @@ import SeventhProductBlock from "./SeventhProductBlock";
 const ProductBox = () => {
     return (
         <Flex>
-            <GridItem colSpan={4} bg='#F4F4F4'>
+            <Box colSpan={4} bg='#F4F4F4'>
 
                 <ProductBlock
                     title="Power Train/Chassis Parts"
@@ -54,7 +54,7 @@ const ProductBox = () => {
                 <SeventhProductBlock
                     title="Interior Accessories"
                 />
-            </GridItem>
+            </Box>
 
         </Flex>
     )

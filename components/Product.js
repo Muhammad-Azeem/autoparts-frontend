@@ -30,7 +30,7 @@ const Product = ({ description, image }) => {
                     <GridItem className="product-box">
                         <Box className="grid-product_box" >
                             <Image src={image} className="images-product_box" alt="Image Alt Text"  />
-                            <Text classname="title-product_block">{description}</Text>
+                            <Text className="title-product_block">{description}</Text>
                         </Box>
                     </GridItem>
 

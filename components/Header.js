@@ -6,10 +6,7 @@ import '../styles//global.css';
 
 const Header = () => {
     return (
-        <Flex className="header"
-            as="header"
-
-        >
+        <Flex className="header" as="header" >
             {/* Left-aligned logo */}
             <Link href="/">
                 <Box as="img" className="logo-img" src="/images/logo.png" alt="Logo"  />
@@ -27,7 +24,9 @@ const Header = () => {
                                 rightIcon={<ArrowUpDownIcon />}
                                 className="select-vehicle-btn"
                     >
+                        <Text className="header-select-vehicle">
                         Select Vehicle
+                        </Text>
                     </MenuButton>
                     <MenuList>
                         <MenuItem>Download</MenuItem>
@@ -49,7 +48,7 @@ const Header = () => {
             </Flex>
 
             <Flex >
-                <Container mr={35} maxW="container.sm">
+                <Container className="margin-between-boxes" maxW="container.sm">
                     <Button
                         variant="outline"
                         display="flex"
@@ -62,7 +61,7 @@ const Header = () => {
                             <Image src="/images/user.png" alt="Image" boxSize="24px" mr={10} />
                         </Box>
                         <Box display="flex" flexDir="column" textAlign="left">
-                            <Text color="#939393" fontWeight="semibold">Hello, Log In <br/>
+                            <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
                                 <span className="blue-text">My Account </span>
                                 </Text>
                         </Box>
@@ -82,7 +81,7 @@ const Header = () => {
                             <Image src="/images/Cart.png" alt="Image" boxSize="24px" mr={10} />
                         </Box>
                         <Box display="flex" flexDir="column" textAlign="left">
-                            <Text color="#939393" fontWeight="semibold">Cart<br/>
+                            <Text className="header-right-box-text"  fontWeight="semibold">Cart<br/>
                                 <span className="blue-text">$73.35 </span>
                             </Text>
                         </Box>

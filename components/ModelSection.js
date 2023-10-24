@@ -22,10 +22,10 @@ import '../styles//global.css';
 import ModelRows from "./ModelRows";
 const ModelSection = () => {
     return (
-        <Center padding="80px">
+        <Center className="model-section_mainPadding" >
             <Box>
                 <Heading as="h3" size="lg" mb={4}>
-                    Select Vehcle by Model
+                    Featured Toyota Models
                 </Heading>
                 <ModelRows />
             </Box>
