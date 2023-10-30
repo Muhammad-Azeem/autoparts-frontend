@@ -1,6 +1,13 @@
 // components/Header.js
 import React, { useState , useRef, useEffect  } from 'react';
 import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
     IconButton,
     Box,
     Container,
@@ -13,7 +20,8 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Collapse
+    Collapse,
+    Tooltip
 } from '@chakra-ui/react';
 import {
     AddIcon,
@@ -25,7 +33,18 @@ import {
     TriangleDownIcon
 } from '@chakra-ui/icons';
 import '../styles//global.css';
+import * as PropTypes from "prop-types";
+import AddVehicleModal from "./AddVehicleModal";
 
+function Backdrop(props) {
+    return null;
+}
+
+Backdrop.propTypes = {
+    onClick: PropTypes.func,
+    in: PropTypes.bool,
+    zIndex: PropTypes.string
+};
 const SubHeader = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navRef = useRef(null);
@@ -34,6 +53,8 @@ const SubHeader = () => {
     };
     const closeNav = () => {
         setIsOpen(false);
+        document.body.style.opacity = "1";
+
     };
 
     useEffect(() => {
@@ -45,12 +66,49 @@ const SubHeader = () => {
 
         if (isOpen) {
             document.addEventListener('click', handleClickOutside);
+            document.body.style.opacity = "0.6";
+
         }
 
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [isOpen]);
+
+
+//Div
+    const [isDivOpen, setIsDivOpen] = useState(false);
+    const divRef = useRef();
+
+    // Close the div when clicking outside
+    const handleClickOutside = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setIsDivOpen(false);
+        }
+    };
+
+    // Close the div when the cursor hovers out
+    const handleMouseLeave = () => {
+        setIsDivOpen(false);
+    };
+
+    // Add click outside event listener when the div is open
+    useEffect(() => {
+        if (isDivOpen) {
+            document.addEventListener('click', handleClickOutside);
+        } else {
+            document.removeEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isDivOpen]);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const onModalOpen = () => setIsModalOpen(true);
+    const onModalClose = () => setIsModalOpen(false);
     return (
         <Flex className="sub-header" >
             <Menu>
@@ -65,40 +123,50 @@ const SubHeader = () => {
                         mr={8}
                         onClick={toggleNav}
                     />
-
-                    <Collapse in={isOpen} animateOpacity>
+                    <Collapse  in={isOpen} animateOpacity>
                         <Box
+                            className="zindex"
                             position="fixed"
                             top="0"
                             left={isOpen ? 0 : '-250px'}  // Adjust the width of the navigation bar as needed
                             width="250px"  // Set the desired width
                             height="100%"
                             backgroundColor="gray.900"  // Customize the background color
-                            zIndex="99"  // Ensure it's on top of other content
+                            // zIndex="99"  // Ensure it's on top of other content
                             transition="left 0.3s"
                         >
                             <nav className="main-nav" >
                                 <ul className="main-nav-ul-top" >
                                     <li >
-                                        <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
+                                        <Image mr={15} src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
                                             Live Chat
                                     </li>
                                     <li>
-                                        <Image src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
+                                        <Image mr={15} src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
                                         1-888-905-9199
                                     </li>
                                 </ul>
-                                <ul className="main-nav-ul">
-                                    <li>Toyota Parts</li>
+                                <ul className="main-nav-ul-middle">
+                                    <li >Toyota Parts</li>
                                     <li>Toyota Accessories</li>
                                     <li>Resources and Links</li>
                                 </ul>
-                                <ul className="main-nav-ul" style={{borderBottom:"none"}}>
-                                    <li>Login/Register</li>
-                                    <li>My Account</li>
-                                    <li>Track Order</li>
-                                    <li>Help Center</li>
-                                    <li>Contact Us</li>
+                                <ul className="main-nav-ul-last" style={{borderBottom:"none"}}>
+                                    <li>
+                                        <Image mr={15} src="/images/logout.svg" alt="Image Alt Text" className="right-subheader-img" />
+                                        Login/Register</li>
+                                    <li>
+                                        <Image mr={15} src="/images/profile.png " alt="Image Alt Text" className="right-subheader-img" />
+                                        My Account</li>
+                                    <li>
+                                        <Image mr={15} src="/images/track.jpg " alt="Image Alt Text" className="right-subheader-img" />
+                                        Track Order</li>
+                                    <li>
+                                        <Image mr={15} src="/images/help.png " alt="Image Alt Text" className="right-subheader-img" />
+                                        Help Center</li>
+                                    <li>
+                                        <Image src="/images/email.jpg " alt="Image Alt Text" className="right-subheader-img" />
+                                        Contact Us</li>
                                 </ul>
                             </nav>
                         </Box>
@@ -120,25 +188,54 @@ const SubHeader = () => {
                     </MenuItem>
                 </MenuList>
             </Menu>
-
-            <Link className="sub-header-links"  href="https://example.com">
-                Toyota Parts
-            </Link>
-            <Link className="sub-header-links" href="https://example.com">
-                Toyota Accesories
-            </Link>
-            <Link className="sub-header-links" href="https://example.com">
-                Resource and Links
-            </Link>
-            <Link className="sub-header-links" href="https://example.com">
-                Location
-            </Link>
-            <Flex align="center">
-                <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img" />
-                <Link className="sub-header-rightlinks" href="https://example.com">
-                    My Garage
+            <Box>
+                <Link className="sub-header-links"  href="https://example.com">
+                    Toyota Parts
                 </Link>
-            </Flex>
+                <Link className="sub-header-links" href="https://example.com">
+                    Toyota Accesories
+                </Link>
+                <Link className="sub-header-links" href="https://example.com">
+                    Resource and Links
+                </Link>
+                <Link className="sub-header-links" href="https://example.com">
+                    Location
+                </Link>
+            </Box>
+            <div>
+                <Flex align="center" onMouseEnter={() => setIsDivOpen(true)}>
+                        <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img" />
+                    <Link className="sub-header-rightlinks" href="https://example.com">
+                        My Garage
+                    </Link>
+                </Flex>
+                {isDivOpen && (
+                    <div
+                        ref={divRef}
+                        style={{
+                            position: 'absolute',
+                            top: '150px', // Adjust the positioning as needed
+                            right: '200px',
+                            width: '400px', // Set the desired width
+                            background: 'white',
+                            boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                            zIndex: '9',
+                            // Add other styles as needed
+                        }}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        {/* Content of the div */}
+                        <p className="vehicle-list" >Vehicle List</p>
+                        <p className="no-vehicles" >No Vehicles</p>
+                        <div className="vehicle-list-box" >
+                            <p onClick={onModalOpen} className="add-new-vehicle" >Add New Vehicle</p>
+
+                            <p className="clear-all" >Clear All</p>
+                        </div>
+                    </div>
+                )}
+            </div>
+            {/*<AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
             <Flex align="center">
                 <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
                 <Link className="sub-header-rightlinks" href="https://example.com">

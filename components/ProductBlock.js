@@ -1,5 +1,6 @@
 // components/Header.js
 import React from 'react';
+import { useRouter } from 'next/router';
 import {
     Heading,
     Input,
@@ -23,6 +24,12 @@ import {ChevronDownIcon} from "@chakra-ui/icons";
 import Product from "./Product";
 
 const ProductBlock = ({title}) => {
+    const router = useRouter();
+
+    const handleViewMoreClick = () => {
+        // Use router.push to navigate to the product list page
+        router.push('/ViewMore'); // Replace '/productlist' with the actual URL of your product list page
+    };
     return (
         <Flex>
             <Box width="100%">
@@ -68,7 +75,7 @@ const ProductBlock = ({title}) => {
 
                 </Grid>
                 <Center>
-                    <Button className="red-btn" mt={15} >
+                    <Button onClick={handleViewMoreClick} className="red-btn" mt={15} >
                         VIEW MORE
                     </Button>
                 </Center>

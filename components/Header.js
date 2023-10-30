@@ -1,10 +1,60 @@
 // components/Header.js
-import React from 'react';
-import {Box,Container, Image,Text, Flex, Link, Button, Menu, MenuButton, MenuList, MenuItem} from '@chakra-ui/react';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+    Box,
+    Container,
+    Image,
+    Text,
+    Flex,
+    Link,
+    Button,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem,
+    Icon
+} from '@chakra-ui/react';
 import { ArrowUpDownIcon } from '@chakra-ui/icons';
 import '../styles//global.css';
+import { useRouter } from 'next/router';
+import { FaUser ,FaShoppingCart } from "react-icons/fa";
 
 const Header = () => {
+    const [isDivOpen, setIsDivOpen] = useState(false);
+    const divRef = useRef();
+
+    // Close the div when clicking outside
+    const handleClickOutside = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setIsDivOpen(false);
+        }
+    };
+
+    // Close the div when the cursor hovers out
+    const handleMouseLeave = () => {
+        setIsDivOpen(false);
+    };
+
+    // Add click outside event listener when the div is open
+    useEffect(() => {
+        if (isDivOpen) {
+            document.addEventListener('click', handleClickOutside);
+        } else {
+            document.removeEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isDivOpen]);
+
+    const router = useRouter();
+
+    const handleLoginClick = () => {
+        // Use router.push to navigate to the product list page
+        router.push('/signUp'); // Replace '/productlist' with the actual URL of your product list page
+    };
+
     return (
         <Flex className="header" as="header" >
             {/* Left-aligned logo */}
@@ -28,13 +78,13 @@ const Header = () => {
                         Select Vehicle
                         </Text>
                     </MenuButton>
-                    <MenuList>
-                        <MenuItem>Download</MenuItem>
-                        <MenuItem>Create a Copy</MenuItem>
-                        <MenuItem>Mark as Draft</MenuItem>
-                        <MenuItem>Delete</MenuItem>
-                        <MenuItem>Attend a Workshop</MenuItem>
-                    </MenuList>
+                    {/*<MenuList className="menu-list">*/}
+                    {/*    <MenuItem className="menu-item">Download</MenuItem>*/}
+                    {/*    <MenuItem className="menu-item">Create a Copy</MenuItem>*/}
+                    {/*    <MenuItem className="menu-item">Mark as Draft</MenuItem>*/}
+                    {/*    <MenuItem className="menu-item">Delete</MenuItem>*/}
+                    {/*    <MenuItem className="menu-item">Attend a Workshop</MenuItem>*/}
+                    {/*</MenuList>*/}
                 </Menu>
                 <Box
                     background="#F1F1F1"
@@ -58,14 +108,41 @@ const Header = () => {
                         background="transparent"
                     >
                         <Box display="flex" alignItems="center">
-                            <Image src="/images/user.png" alt="Image" boxSize="24px" mr={10} />
+                            <Icon as={FaUser} boxSize="24px" mr={10} style={{ color: "#2E5BA5" }} />
                         </Box>
-                        <Box display="flex" flexDir="column" textAlign="left">
+                        <div>
+                        <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
                             <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
                                 <span className="blue-text">My Account </span>
                                 </Text>
+                            {isDivOpen && (
+                                <div
+                                    ref={divRef}
+                                    style={{
+                                        position: 'absolute',
+                                        top: '55px', // Adjust the positioning as needed
+                                        right: '-25px',
+                                        width: '225px', // Set the desired width
+                                        height: '75px',
+                                        background: 'white',
+                                        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                                        zIndex: '9',
+                                        textAlign :'center'
+                                        // Add other styles as needed
+                                    }}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+
+                                        <p onClick={handleLoginClick} className="logIn-button" >Login</p>
+                                        <p className="new_customer-btn" >New Customer?
+                                           <a style={{marginLeft:'15px', color:'black'}}>Start Here</a>
+                                        </p>
+
+                                </div>
+                            )}
                         </Box>
-                    </Button>
+                        </div>
+                        </Button>
                 </Container>
                 <Container maxW="container.sm">
                     <Button
@@ -78,7 +155,7 @@ const Header = () => {
 
                     >
                         <Box display="flex" alignItems="center">
-                            <Image src="/images/Cart.png" alt="Image" boxSize="24px" mr={10} />
+                            <Icon as={FaShoppingCart} boxSize="24px" mr={10} style={{ color: "#2E5BA5" }} />
                         </Box>
                         <Box display="flex" flexDir="column" textAlign="left">
                             <Text className="header-right-box-text"  fontWeight="semibold">Cart<br/>

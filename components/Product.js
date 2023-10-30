@@ -25,7 +25,7 @@ const Product = ({ description, image }) => {
     return (
         <Flex>
             <Box width="100%">
-                <Grid className="productblock-grid"  templateColumns='repeat(4, 1fr)' gap={6}>
+                <Grid className="productblock-grid" >
                     {/* Your existing content */}
                     <GridItem className="product-box">
                         <Box className="grid-product_box" >

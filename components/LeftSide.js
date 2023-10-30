@@ -12,14 +12,15 @@ const LeftSide = () => {
                     <Box display="flex" alignItems="center">
 
                         <div>
-                            <Heading fontStyle="italic" color="grey" as="h4" size="lg" mb={4}>
+                            <Heading className="main-heading" as="h4" size="lg" mb={4}>
                                 Why Choose <span style={{ color: 'red' }}>Car Parts Website?</span>
                             </Heading>
                             <Heading as="h4" className="leftside-heading" size="lg">
                                 <Image src="/images/SVG.png" alt="Image" className="leftside-image" />
                                 Unparalleled Quality
                             </Heading>
-                            <Text fontSize="small" color="grey">
+                            <Text className="leftside-heading-text" >
+                                {/*eslint-disable-next-line react/no-unescaped-entities*/}
                                 Car Parts Website ensures unbeatable quality by offering genuine Toyota parts that are backed by the manufacturer's warranty. Trust in our years of experience as the top destination for auto parts and accessories to guarantee your vehicle's optimum performance and longevity.
                             </Text>
                         </div>
@@ -30,7 +31,7 @@ const LeftSide = () => {
                                 <Image src="/images/SVG.png" alt="Image" className="leftside-image" />
                                 Exceptional Customer Service
                             </Heading>
-                            <Text fontSize="small" color="grey">
+                            <Text className="leftside-heading-text" >
                                 Experience seamless shopping with our
                                 exceptional customer service. We provide dedicated support through email, live chat, and phone calls. We prioritize you by expediting orders nationwide and offering a
                                 simple, hassle-free return process, ensuring
@@ -44,7 +45,8 @@ const LeftSide = () => {
                                 <Image src="/images/SVG.png" alt="Image" className="leftside-image" />
                                 Unmatched Affordability
                             </Heading>
-                            <Text fontSize="small" color="grey">
+                            <Text className="leftside-heading-text" >
+                                {/* eslint-disable-next-line react/no-unescaped-entities*/}
                                 Discover unbeatable prices on all genuine parts and accessories. Car Parts Website believes that maintaining your vehicle shouldn't break the bank, and our extensive online catalog offers the best deals in the market. Our low prices and comprehensive inventory make us the ultimate choice for all your Toyota parts needs.                            </Text>
                         </div>
                     </Box>

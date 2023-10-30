@@ -1,5 +1,6 @@
 // components/Header.js
 import React from 'react';
+import { useRouter } from 'next/router';
 import {Heading,Input,Grid, GridItem ,Box,Container, Image,Text, Flex, Link, Button, Menu, MenuButton, MenuList, MenuItem} from '@chakra-ui/react';
 import '../styles//global.css';
 import {ChevronDownIcon} from "@chakra-ui/icons";
@@ -9,12 +10,17 @@ const TopSection = () => {
         '/images/engine.png',
         '/images/engine.png',
     ];
+
+    const router = useRouter();
+    const handleFindPartsClick = () => {
+        router.push('/ProductList');
+    };
     return (
 
-        <Grid className="main-padding" templateColumns='repeat(2, 1fr)' gap={6}>
+        <Grid className="topSection_main-padding" >
             <GridItem className="section-first"   >
                 <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
-                    Shop for Parts
+                    Shop for Toyota Parts
                 </Heading>
                 <Container className="topsection-container"  maxW="container.md">
                     <Box className="topsextion_heading1">
@@ -30,15 +36,18 @@ const TopSection = () => {
                         </Box>
 
                         <Flex justify="end">
-                            <Button mt={4} className="find-parts-btn" >Find My Parts</Button>
+                            <Button onClick={handleFindPartsClick} mt={4} className="find-parts-btn" >Find My Parts</Button>
                         </Flex>
                         <Text className="box-one-text" >
                             For the most accurate results, search by your VIN (vehicle identification number).
                         </Text>
                     </Box>
-                    <Image src="/images/or.png" alt="Image Alt Text" className="or-image"/> {/* Replace with your image path */}
 
                     <Box className="topsextion_heading2">
+                        {/*<Image src="/images/or.png" alt="Image Alt Text" className="or-image"/> /!* Replace with your image path *!/*/}
+                        <Heading className="or-image" as="h3" size="lg" mb={4}>
+                            OR
+                        </Heading>
                         <Heading as="h3" size="lg" mb={4}>
                             Select Vehicle by Model
                         </Heading>
@@ -47,12 +56,12 @@ const TopSection = () => {
                             <MenuButton className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Year --
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                            <MenuList zIndex={3} >
+                                <MenuItem className="menu-item">Download</MenuItem>
+                                <MenuItem className="menu-item">Create a Copy</MenuItem>
+                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
+                                <MenuItem className="menu-item">Delete</MenuItem>
+                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
                             </MenuList>
                         </Menu>
                         <Menu >
@@ -60,11 +69,11 @@ const TopSection = () => {
                                 -- Select Make --
                             </MenuButton>
                             <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                                <MenuItem className="menu-item">Download</MenuItem>
+                                <MenuItem className="menu-item">Create a Copy</MenuItem>
+                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
+                                <MenuItem className="menu-item">Delete</MenuItem>
+                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
                             </MenuList>
                         </Menu>
                         <Menu >
@@ -72,16 +81,16 @@ const TopSection = () => {
                                 -- Select Model --
                             </MenuButton>
                             <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                                <MenuItem className="menu-item">Download</MenuItem>
+                                <MenuItem className="menu-item">Create a Copy</MenuItem>
+                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
+                                <MenuItem className="menu-item">Delete</MenuItem>
+                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
                             </MenuList>
                         </Menu>
 
                         <Flex justify="end">
-                            <Button mt={14} className="find-parts-btn" >Find My Parts</Button>
+                            <Button onClick={handleFindPartsClick} mt={14} className="find-parts-btn" >Find My Parts</Button>
                         </Flex>
                     </Box>
                 </Container>

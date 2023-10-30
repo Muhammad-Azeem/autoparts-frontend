@@ -52,7 +52,7 @@ const ProductBox = () => {
                     title="Interior Accessories"
                 />
                 <SeventhProductBlock
-                    title="Interior Accessories"
+                    title="Other Toyota Accessories"
                 />
             </Box>
 

@@ -20,9 +20,7 @@ import {
 } from '@chakra-ui/react';
 import '../styles//global.css';
 import ProductBox from "./ProductBox";
-import {ChevronDownIcon} from "@chakra-ui/icons";
 import LeftSide from "./LeftSide";
-import ProductBlock from "./ProductBlock";
 const DetailSection = () => {
     return (
 

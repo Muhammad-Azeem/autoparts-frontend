@@ -53,7 +53,7 @@ const MobileTopSection = () => {
             <Box className="mobile-topsection-lowerpart" >
 
                 <Heading className="top-section_main-padding"  as="h3">
-                    Shop for Parts
+                    Shop for Toyota Parts
                 </Heading>
                 <Box
                     display="flex"
