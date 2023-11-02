@@ -123,6 +123,7 @@ const SubHeader = () => {
                         fontSize="x-large"
                         mr={8}
                         onClick={toggleNav}
+                        className="HamburgerIcon"
                     />
                     <Collapse  in={isOpen} animateOpacity>
                         <Box
