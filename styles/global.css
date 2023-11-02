@@ -619,7 +619,6 @@ body{
 .find-parts-btn:hover{
     background: #fff;
     color: #202020;
-    border: 1px solid #202020;
 }
 .mobile_find-parts-btn{
     background: #202020;
@@ -1542,6 +1541,10 @@ body{
 .main-nav-li:hover{
     color: #bc0000;
     cursor: pointer;
+}
+.main-nav-li{
+    font-size: 16px;
+    margin-top: 20px;
 }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
