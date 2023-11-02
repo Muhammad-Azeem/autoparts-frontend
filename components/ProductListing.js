@@ -118,7 +118,7 @@ const ProductListing = () => {
                                     Change Vehicle
                                 </a>
                             </Text>
-                            <Box className="vm-leftside-box" fontSize="lg" fontWeight="600" color="black">
+                            <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
                                 2022 Toyota 4Runner
                             </Box>
                         </Box>

@@ -78,13 +78,6 @@ const Header = () => {
                         Select Vehicle
                         </Text>
                     </MenuButton>
-                    {/*<MenuList className="menu-list">*/}
-                    {/*    <MenuItem className="menu-item">Download</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Create a Copy</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Mark as Draft</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Delete</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Attend a Workshop</MenuItem>*/}
-                    {/*</MenuList>*/}
                 </Menu>
                 <Box
                     background="#F1F1F1"

@@ -37,8 +37,8 @@ const BussinessAccountForm = () => {
 
         <Flex className="bussiness-box" >
             <Box className="bussiness-box1"  >
-                <Heading as="h3">Create a Bussiness Account</Heading>
-                <Heading mb={5} className="bussines-second-heading" >
+                <Heading as="h1">Create a Bussiness Account</Heading>
+                <Heading  as="h2" mb={5} className="bussines-second-heading" >
                     Shopping for yourself?
                     <span onClick={handlePersonalClick} className="bussiness-url"  >
                         Create a personal account.
@@ -102,6 +102,7 @@ const BussinessAccountForm = () => {
                     </Box>
 
                     <Heading mt={25} className="returning-heading" as="h3">Bussiness Information</Heading>
+
                     <Box className="forms-box" >
                         <FormControl  mt={20}>
                             <FormLabel mr={5} className="returing-label">Bussiness Type:
@@ -166,8 +167,8 @@ const BussinessAccountForm = () => {
 
                     </Box>
 
-                    <Flex className="returning-checkbox" mr={5} mt={20} justify="flex-end">
-                        <Button className="returning-button" colorScheme="teal" type="submit">
+                    <Flex className="bussiness-checkbox"  mt={30} >
+                        <Button className="bussiness-acct-button" colorScheme="teal" type="submit">
                             Create a Bussiness Account
                         </Button>
                     </Flex>

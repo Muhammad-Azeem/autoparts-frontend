@@ -6,6 +6,7 @@ import '../styles//global.css';
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageCarousel from '../components/ImageCarousel';
 const TopSection = () => {
+
     const images = [
         '/images/engine.png',
         '/images/engine.png',
@@ -15,6 +16,8 @@ const TopSection = () => {
     const handleFindPartsClick = () => {
         router.push('/ProductList');
     };
+    const years = Array.from({ length: 2023 - 1969 + 1 }, (_, index) => 2023 - index);
+
     return (
 
         <Grid className="topSection_main-padding" >
@@ -52,40 +55,42 @@ const TopSection = () => {
                             Select Vehicle by Model
                         </Heading>
 
-                        <Menu >
+                        <Menu>
                             <MenuButton className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Year --
                             </MenuButton>
-                            <MenuList zIndex={3} >
-                                <MenuItem className="menu-item">Download</MenuItem>
-                                <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                <MenuItem className="menu-item">Delete</MenuItem>
-                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
-                            </MenuList>
+                            <Box maxHeight="200px" overflowY="auto">
+                                <MenuList zIndex={3}>
+                                    {years.slice(0, 5).map((year) => (
+                                        <MenuItem key={year} className="menu-item">
+                                            {year}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Box>
                         </Menu>
-                        <Menu >
+                        <Menu>
                             <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Make --
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem className="menu-item">Download</MenuItem>
-                                <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                <MenuItem className="menu-item">Delete</MenuItem>
-                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
-                            </MenuList>
+                            <Box maxHeight="200px" overflowY="auto">
+                                <MenuList zIndex={3}>
+                                    {years.slice(0, 5).map((year) => (
+                                        <MenuItem key={year} className="menu-item">
+                                            {year}
+                                        </MenuItem>
+                                    ))}
+                                </MenuList>
+                            </Box>
                         </Menu>
                         <Menu >
                             <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Model --
                             </MenuButton>
                             <MenuList>
-                                <MenuItem className="menu-item">Download</MenuItem>
-                                <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                <MenuItem className="menu-item">Delete</MenuItem>
-                                <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                <MenuItem className="menu-item">NAP</MenuItem>
+                                <MenuItem className="menu-item">NAP - hybrid </MenuItem>
+
                             </MenuList>
                         </Menu>
 

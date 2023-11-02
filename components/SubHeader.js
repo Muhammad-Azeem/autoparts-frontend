@@ -53,9 +53,10 @@ const SubHeader = () => {
     };
     const closeNav = () => {
         setIsOpen(false);
-        document.body.style.opacity = "1";
+        // document.body.style.opacity = "1";
 
     };
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -66,7 +67,7 @@ const SubHeader = () => {
 
         if (isOpen) {
             document.addEventListener('click', handleClickOutside);
-            document.body.style.opacity = "0.6";
+            // document.body.style.opacity = "0.6";
 
         }
 
@@ -137,34 +138,34 @@ const SubHeader = () => {
                         >
                             <nav className="main-nav" >
                                 <ul className="main-nav-ul-top" >
-                                    <li >
+                                    <li className="main-nav-li" >
                                         <Image mr={15} src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
                                             Live Chat
                                     </li>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image mr={15} src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
                                         1-888-905-9199
                                     </li>
                                 </ul>
                                 <ul className="main-nav-ul-middle">
-                                    <li >Toyota Parts</li>
-                                    <li>Toyota Accessories</li>
-                                    <li>Resources and Links</li>
+                                    <li className="main-nav-li" >Toyota Parts</li>
+                                    <li className="main-nav-li">Toyota Accessories</li>
+                                    <li className="main-nav-li">Resources and Links</li>
                                 </ul>
                                 <ul className="main-nav-ul-last" style={{borderBottom:"none"}}>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image mr={15} src="/images/logout.svg" alt="Image Alt Text" className="right-subheader-img" />
                                         Login/Register</li>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image mr={15} src="/images/profile.png " alt="Image Alt Text" className="right-subheader-img" />
                                         My Account</li>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image mr={15} src="/images/track.jpg " alt="Image Alt Text" className="right-subheader-img" />
                                         Track Order</li>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image mr={15} src="/images/help.png " alt="Image Alt Text" className="right-subheader-img" />
                                         Help Center</li>
-                                    <li>
+                                    <li className="main-nav-li">
                                         <Image src="/images/email.jpg " alt="Image Alt Text" className="right-subheader-img" />
                                         Contact Us</li>
                                 </ul>
@@ -189,23 +190,23 @@ const SubHeader = () => {
                 </MenuList>
             </Menu>
             <Box>
-                <Link className="sub-header-links"  href="https://example.com">
+                <Link className="sub-header-links"  href="/">
                     Toyota Parts
                 </Link>
-                <Link className="sub-header-links" href="https://example.com">
+                <Link className="sub-header-links" href="#">
                     Toyota Accesories
                 </Link>
-                <Link className="sub-header-links" href="https://example.com">
+                <Link className="sub-header-links" href="#">
                     Resource and Links
                 </Link>
-                <Link className="sub-header-links" href="https://example.com">
+                <Link className="sub-header-links" href="#">
                     Location
                 </Link>
             </Box>
             <div>
                 <Flex align="center" onMouseEnter={() => setIsDivOpen(true)}>
                         <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img" />
-                    <Link className="sub-header-rightlinks" href="https://example.com">
+                    <Link className="sub-header-rightlinks" href="#">
                         My Garage
                     </Link>
                 </Flex>
@@ -238,13 +239,13 @@ const SubHeader = () => {
             {/*<AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
             <Flex align="center">
                 <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
-                <Link className="sub-header-rightlinks" href="https://example.com">
+                <Link className="sub-header-rightlinks" href="#">
                     Live Chat
                 </Link>
             </Flex>
             <Flex align="center">
                 <Image src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
-                <Link className="sub-header-rightlinks" href="https://example.com">
+                <Link className="sub-header-rightlinks" href="#">
                     +1 434-123-6987
                 </Link>
             </Flex>

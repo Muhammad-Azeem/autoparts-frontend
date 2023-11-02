@@ -74,7 +74,7 @@ const FifthProductBlock = ({title}) => {
 
                 </Grid>
                 <Center>
-                    <Button onClick={handleViewMoreClick} className="red-btn" mt={15}>
+                    <Button onClick={handleViewMoreClick} className="product-red-btn" mt={15}>
                         VIEW MORE
                     </Button>
                 </Center>

@@ -29,13 +29,13 @@ const Footer = () => {
                     <Text fontWeight="600" className="footer-padding">
                         Wholesale
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         About Us
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Customer Reviews
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Contact Us
                     </Text>
                 </Box>
@@ -43,13 +43,13 @@ const Footer = () => {
                     <Text className="footer-padding" fontWeight="600">
                         Policies
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Sales Policy
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Return Policy
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Privacy Policy
                     </Text>
                 </Box>
@@ -57,13 +57,13 @@ const Footer = () => {
                     <Text className="footer-padding" fontWeight="600">
                         Customer Services
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         My Account
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Track Order
                     </Text>
-                    <Text className="footer-padding">
+                    <Text className="foot-text footer-padding">
                         Help Center
                     </Text>
                 </Box>

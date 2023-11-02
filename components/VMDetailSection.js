@@ -132,11 +132,9 @@ const DetailSection = ({title}) => {
                                     -- Select Make --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">Toyota</MenuItem>
+                                    <MenuItem className="menu-item">Scion</MenuItem>
+
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -144,11 +142,11 @@ const DetailSection = ({title}) => {
                                     -- Select Model --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">4-Runner</MenuItem>
+                                    <MenuItem className="menu-item">86</MenuItem>
+                                    <MenuItem className="menu-item">Avalon</MenuItem>
+                                    <MenuItem className="menu-item">C-HR</MenuItem>
+                                    <MenuItem className="menu-item">Camry</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -156,11 +154,11 @@ const DetailSection = ({title}) => {
                                     -- Select Year --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">2023</MenuItem>
+                                    <MenuItem className="menu-item">2022</MenuItem>
+                                    <MenuItem className="menu-item">2021</MenuItem>
+                                    <MenuItem className="menu-item">2020</MenuItem>
+                                    <MenuItem className="menu-item">2019</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -321,7 +319,7 @@ const DetailSection = ({title}) => {
                                             </Heading>
 
                                             <Grid className="item productblock-grid" gap={6}>
-                                            <Product
+                                                <Product
                                                     image="/images/drain-plug.png"
                                                     description="Drain Plug"
                                                 >

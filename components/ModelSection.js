@@ -19,7 +19,7 @@ import {
     Center, Stack
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import ModelRows from "./ModelRows";
+import DetailModelRows from "./DetailModelRows";
 const ModelSection = () => {
     return (
         <Center className="model-section_mainPadding" >
@@ -27,7 +27,7 @@ const ModelSection = () => {
                 <Heading as="h3" size="lg" mb={4}>
                     Featured Toyota Models
                 </Heading>
-                <ModelRows />
+                <DetailModelRows />
             </Box>
 
         </Center>

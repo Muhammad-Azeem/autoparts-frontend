@@ -17,11 +17,13 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon
+    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
 } from '@chakra-ui/react';
 import '../styles//global.css';
-    
+
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
+import {FaMinus, FaPlus} from "react-icons/fa";
+import Product from "./Product";
 
 const ProductDetail = () => {
 
@@ -46,6 +48,9 @@ const ProductDetail = () => {
     };
     const router = useRouter();
 
+    const handleGoToCartClick = () => {
+        router.push('/AddToCart');
+    };
     const handleHomeClick = () => {
         router.push('/');
     };
@@ -95,11 +100,9 @@ const ProductDetail = () => {
                                     -- Select Make --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">Toyota</MenuItem>
+                                    <MenuItem className="menu-item">Scion</MenuItem>
+
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -107,11 +110,11 @@ const ProductDetail = () => {
                                     -- Select Model --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">4-Runner</MenuItem>
+                                    <MenuItem className="menu-item">86</MenuItem>
+                                    <MenuItem className="menu-item">Avalon</MenuItem>
+                                    <MenuItem className="menu-item">C-HR</MenuItem>
+                                    <MenuItem className="menu-item">Camry</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -119,11 +122,11 @@ const ProductDetail = () => {
                                     -- Select Year --
                                 </MenuButton>
                                 <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Download</MenuItem>
-                                    <MenuItem className="menu-item">Create a Copy</MenuItem>
-                                    <MenuItem className="menu-item">Mark as Draft</MenuItem>
-                                    <MenuItem className="menu-item">Delete</MenuItem>
-                                    <MenuItem className="menu-item">Attend a Workshop</MenuItem>
+                                    <MenuItem className="menu-item">2023</MenuItem>
+                                    <MenuItem className="menu-item">2022</MenuItem>
+                                    <MenuItem className="menu-item">2021</MenuItem>
+                                    <MenuItem className="menu-item">2020</MenuItem>
+                                    <MenuItem className="menu-item">2019</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -225,32 +228,362 @@ const ProductDetail = () => {
                 We offer a full selection of genuine Toyota Drain Plugs, engineered specifically to restore factory performance. Please narrow the Oil Drain Plug results by selecting the vehicle.
             </Text>
 
-            <Box>
-                <Flex>
-                    {/* First Column */}
-                    <Box flex="1">
-                        <Image src="/image1.jpg" alt="Image 1" mb={4} />
-                        <Image src="/image2.jpg" alt="Image 2" />
+            <Box className="productDetail-main-box">
+                <Flex className="productDetail-innerbox" >
+                    <Box className="productDetail-box1" display="flex" flexDirection="column">
+                        <Box mb={4}>
+                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        </Box>
+                        <Box mb={4}>
+                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
+                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
+                                View related parts
+                            </Text>
+                        </Box>
                     </Box>
 
-                    {/* Second Column */}
-                    <Box flex="1">
-                        <Flex justifyContent="space-between" alignItems="center">
+                    <Box className="productDetail-box2" flex="1">
+                        <Flex className="productDetail-box2-flex" >
                             {/* Left Sub-Column */}
-                            <Box>
-                                <Text fontSize="xl">Product Title</Text>
-                                <Text fontSize="md">Product Description goes here.</Text>
+                            <Box className="productDetail-box2-heads">
+                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                    <span className="detail-box2-partno">90341-12012</span>
+                                </Text>
+                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
+
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
+                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
+                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
+                                <UnorderedList className="detail-box2-subheading" padding={0}>
+                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
+                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
+                                </UnorderedList>
+                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
                             </Box>
 
                             {/* Right Sub-Column */}
-                            <Box>
-                                <Text fontSize="xl">$99.99</Text>
-                                <Button colorScheme="teal">Add to Cart</Button>
+                            <Box className="product-price-box">
+                                <Text className="product-price" fontSize="xl">$99.99
+                                <span className="product-price-span" >
+                                    MSRP:
+                                    <span style={{textDecoration:'line-through'}}>
+                                        $6.55
+                                    </span>
+                                </span>
+                                </Text>
+                                <Text className="save-price" fontSize="xl">4
+                                    You Save: $1.86 (29%)
+                                </Text>
+                                <Box display="grid">
+                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
+                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                </Box>
+                            </Box>
+                        </Flex>
+                    </Box>
+                </Flex>
+                <Flex className="productDetail-innerbox" >
+                    <Box className="productDetail-box1" display="flex" flexDirection="column">
+                        <Box mb={4}>
+                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        </Box>
+                        <Box mb={4}>
+                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
+                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
+                                View related parts
+                            </Text>
+                        </Box>
+                    </Box>
+
+                    <Box className="productDetail-box2" flex="1">
+                        <Flex className="productDetail-box2-flex" >
+                            {/* Left Sub-Column */}
+                            <Box className="productDetail-box2-heads">
+                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                    <span className="detail-box2-partno">90341-12012</span>
+                                </Text>
+                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
+
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
+                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
+                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
+                                <UnorderedList className="detail-box2-subheading" padding={0}>
+                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
+                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
+                                </UnorderedList>
+                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
+                            </Box>
+
+                            {/* Right Sub-Column */}
+                            <Box className="product-price-box">
+                                <Text className="product-price" fontSize="xl">$99.99
+                                    <span className="product-price-span" >
+                                    MSRP:
+                                    <span style={{textDecoration:'line-through'}}>
+                                        $6.55
+                                    </span>
+                                </span>
+                                </Text>
+                                <Text className="save-price" fontSize="xl">4
+                                    You Save: $1.86 (29%)
+                                </Text>
+                                <Box display="grid">
+                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
+                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                </Box>
+                            </Box>
+                        </Flex>
+                    </Box>
+                </Flex>
+                <Flex className="productDetail-innerbox" >
+                    <Box className="productDetail-box1" display="flex" flexDirection="column">
+                        <Box mb={4}>
+                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        </Box>
+                        <Box mb={4}>
+                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
+                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
+                                View related parts
+                            </Text>
+                        </Box>
+                    </Box>
+
+                    <Box className="productDetail-box2" flex="1">
+                        <Flex className="productDetail-box2-flex" >
+                            {/* Left Sub-Column */}
+                            <Box className="productDetail-box2-heads">
+                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                    <span className="detail-box2-partno">90341-12012</span>
+                                </Text>
+                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
+
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
+                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
+                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
+                                <UnorderedList className="detail-box2-subheading" padding={0}>
+                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
+                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
+                                </UnorderedList>
+                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
+                            </Box>
+
+                            {/* Right Sub-Column */}
+                            <Box className="product-price-box">
+                                <Text className="product-price" fontSize="xl">$99.99
+                                    <span className="product-price-span" >
+                                    MSRP:
+                                    <span style={{textDecoration:'line-through'}}>
+                                        $6.55
+                                    </span>
+                                </span>
+                                </Text>
+                                <Text className="save-price" fontSize="xl">4
+                                    You Save: $1.86 (29%)
+                                </Text>
+                                <Box display="grid">
+                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
+                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                </Box>
+                            </Box>
+                        </Flex>
+                    </Box>
+                </Flex>
+                <Flex className="productDetail-innerbox" >
+                    <Box className="productDetail-box1" display="flex" flexDirection="column">
+                        <Box mb={4}>
+                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        </Box>
+                        <Box mb={4}>
+                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
+                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
+                                View related parts
+                            </Text>
+                        </Box>
+                    </Box>
+
+                    <Box className="productDetail-box2" flex="1">
+                        <Flex className="productDetail-box2-flex" >
+                            {/* Left Sub-Column */}
+                            <Box className="productDetail-box2-heads">
+                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                    <span className="detail-box2-partno">90341-12012</span>
+                                </Text>
+                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
+
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
+                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
+                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
+                                <UnorderedList className="detail-box2-subheading" padding={0}>
+                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
+                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
+                                </UnorderedList>
+                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
+                            </Box>
+
+                            {/* Right Sub-Column */}
+                            <Box className="product-price-box">
+                                <Text className="product-price" fontSize="xl">$99.99
+                                    <span className="product-price-span" >
+                                    MSRP:
+                                    <span style={{textDecoration:'line-through'}}>
+                                        $6.55
+                                    </span>
+                                </span>
+                                </Text>
+                                <Text className="save-price" fontSize="xl">4
+                                    You Save: $1.86 (29%)
+                                </Text>
+                                <Box display="grid">
+                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
+                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                </Box>
+                            </Box>
+                        </Flex>
+                    </Box>
+                </Flex>
+                <Flex className="productDetail-innerbox" >
+                    <Box className="productDetail-box1" display="flex" flexDirection="column">
+                        <Box mb={4}>
+                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        </Box>
+                        <Box mb={4}>
+                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
+                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
+                                View related parts
+                            </Text>
+                        </Box>
+                    </Box>
+
+                    <Box className="productDetail-box2" flex="1">
+                        <Flex className="productDetail-box2-flex" >
+                            {/* Left Sub-Column */}
+                            <Box className="productDetail-box2-heads">
+                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                    <span className="detail-box2-partno">90341-12012</span>
+                                </Text>
+                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
+
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
+                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
+                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
+                                <UnorderedList className="detail-box2-subheading" padding={0}>
+                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
+                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
+                                </UnorderedList>
+                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
+                            </Box>
+
+                            {/* Right Sub-Column */}
+                            <Box className="product-price-box">
+                                <Text className="product-price" fontSize="xl">$99.99
+                                    <span className="product-price-span" >
+                                    MSRP:
+                                    <span style={{textDecoration:'line-through'}}>
+                                        $6.55
+                                    </span>
+                                </span>
+                                </Text>
+                                <Text className="save-price" fontSize="xl">4
+                                    You Save: $1.86 (29%)
+                                </Text>
+                                <Box display="grid">
+                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
+                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                </Box>
                             </Box>
                         </Flex>
                     </Box>
                 </Flex>
             </Box>
+
+            <Grid
+                templateColumns="repeat(6, 1fr)"
+                className="list-grid main-padding"
+                mb={35}
+                mt={0}
+            >
+                <GridItem colSpan={6} bg="#fff">
+                    <Flex>
+                        <Box width="100%">
+                            <Grid className="detail-grid">
+                                <Heading className="detail-heading" as="h3">
+                                    Related Toyota Parts
+                                </Heading>
+                            </Grid>
+                            <Grid className="productdetail-grid" gap={6}>
+                                <Product
+                                    image="/images/drain-plug.png"
+                                    description="Drain Plug"
+                                >
+                                </Product>
+                                <Product
+                                    image="/images/lug-nuts.png"
+                                    description="Lug Nuts"
+                                />
+                                <Product
+                                    image="/images/brake-pad-set.png"
+                                    description="Brake Pad Set"
+                                />
+                                <Product
+                                    image="/images/brake-master-cylinder.jpg"
+                                    description="Brake Master Cylinder"
+                                />
+                                <Product
+                                    image="/images/automatic-transmission-filter.jpg"
+                                    description="Automatic Transmission Filter"
+                                />
+                                <Product
+                                    image="/images/shift-cable.jpg"
+                                    description="Shift Cable"
+                                />
+                                <Product
+                                    image="/images/pinion-bearing.jpg"
+                                    description="Pinion Bearing"
+                                />
+
+                                <Product
+                                    image="/images/sway-bar-bushing.jpg"
+                                    description="Sway Bar Bushing"
+                                />
+                                <Product
+                                    image="/images/steering-wheel.jpg"
+                                    description="Steering Wheel"
+                                />
+                                <Product
+                                    image="/images/parking-brake-cable.jpg"
+                                    description="Parking Brake Cable"
+                                />
+                                <Product
+                                    image="/images/steering-column-cover.jpg"
+                                    description="Steering Column Cover"
+                                />
+
+                            </Grid>
+                        </Box>
+                    </Flex>
+                </GridItem>
+            </Grid>
+
 
         </Box>
     );

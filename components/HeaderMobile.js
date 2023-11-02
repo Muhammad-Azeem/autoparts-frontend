@@ -56,24 +56,24 @@ const HeaderMobile = () => {
         <Box>
             <Flex className="mobile-header-top" >
                 <Flex align="center">
-                    <Link className="mobile-header-rightlinks" href="https://example.com">
+                    <Link className="mobile-header-rightlinks" href="#">
                         Contact Us:
                     </Link>
                 </Flex>
                 <Flex align="center">
                     <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
-                    <Link className="mobile_sub-header-rightlinks" href="https://example.com">
+                    <Link className="mobile_sub-header-rightlinks" href="#">
                         Live Chat
                     </Link>
                 </Flex>
                 <Flex align="center">
-                    <Link className="mobile_sub-header-rightlinks" ml={10} mr={10} color="grey" href="https://example.com">
+                    <Link className="mobile_sub-header-rightlinks" ml={10} mr={10} color="grey" href="#">
                         or
                     </Link>
                 </Flex>
                 <Flex align="center">
                     <Image src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
-                    <Link className="mobile_sub-header-rightlinks" href="https://example.com">
+                    <Link className="mobile_sub-header-rightlinks" href="#">
                         +1 434-123-6987
                     </Link>
                 </Flex>
@@ -133,7 +133,9 @@ const HeaderMobile = () => {
                             </Box>
                         </Collapse>
 
-                        <Text className="search-by-category-text">ToyotaPartsDeal.com</Text>
+                        <Link mt={3} href="/">
+                            <Box as="img" className="logo-img" src="/images/logo.png" alt="Logo"  />
+                        </Link>
                     </Box>
                     <MenuList>
                         <MenuItem icon={<AddIcon/>} command='⌘T'>
