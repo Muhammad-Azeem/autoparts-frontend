@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
 import Cart from "../components/Cart";
-const HomePage = () => {
+const AddToCArt = () => {
     return (
         <div>
             <div className="main-header">
@@ -30,4 +30,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default AddToCArt;

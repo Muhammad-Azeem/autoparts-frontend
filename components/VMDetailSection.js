@@ -141,24 +141,55 @@ const DetailSection = ({title}) => {
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Model --
                                 </MenuButton>
-                                <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">4-Runner</MenuItem>
+                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}}>
+                                    <MenuItem className="menu-item">4Runner</MenuItem>
                                     <MenuItem className="menu-item">86</MenuItem>
                                     <MenuItem className="menu-item">Avalon</MenuItem>
                                     <MenuItem className="menu-item">C-HR</MenuItem>
                                     <MenuItem className="menu-item">Camry</MenuItem>
+                                    <MenuItem className="menu-item">Celica</MenuItem>
+                                    <MenuItem className="menu-item">Corolla</MenuItem>
+                                    <MenuItem className="menu-item">Corolla Cross</MenuItem>
+                                    <MenuItem className="menu-item">Corolla iM</MenuItem>
+                                    <MenuItem className="menu-item">Corona</MenuItem>
+                                    <MenuItem className="menu-item">Cressida</MenuItem>
+                                    <MenuItem className="menu-item">Echo</MenuItem>
+                                    <MenuItem className="menu-item">Fj Cruiser</MenuItem>
+                                    <MenuItem className="menu-item">GR Supra</MenuItem>
+                                    <MenuItem className="menu-item">GR86</MenuItem>
+                                    <MenuItem className="menu-item">Highlander</MenuItem>
+                                    <MenuItem className="menu-item">Land Cruiser</MenuItem>
+                                    <MenuItem className="menu-item">MR2</MenuItem>
+                                    <MenuItem className="menu-item">MR2 Spyder</MenuItem>
+                                    <MenuItem className="menu-item">Matrix</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Year --
                                 </MenuButton>
-                                <MenuList zIndex={3} >
+                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}} zIndex={3} >
                                     <MenuItem className="menu-item">2023</MenuItem>
                                     <MenuItem className="menu-item">2022</MenuItem>
                                     <MenuItem className="menu-item">2021</MenuItem>
                                     <MenuItem className="menu-item">2020</MenuItem>
                                     <MenuItem className="menu-item">2019</MenuItem>
+                                    <MenuItem className="menu-item">2018</MenuItem>
+                                    <MenuItem className="menu-item">2017</MenuItem>
+                                    <MenuItem className="menu-item">2016</MenuItem>
+                                    <MenuItem className="menu-item">2015</MenuItem>
+                                    <MenuItem className="menu-item">2014</MenuItem>
+                                    <MenuItem className="menu-item">2013</MenuItem>
+                                    <MenuItem className="menu-item">2012</MenuItem>
+                                    <MenuItem className="menu-item">2011</MenuItem>
+                                    <MenuItem className="menu-item">2010</MenuItem>
+                                    <MenuItem className="menu-item">2009</MenuItem>
+                                    <MenuItem className="menu-item">2008</MenuItem>
+                                    <MenuItem className="menu-item">2007</MenuItem>
+                                    <MenuItem className="menu-item">2006</MenuItem>
+                                    <MenuItem className="menu-item">2005</MenuItem>
+                                    <MenuItem className="menu-item">2004</MenuItem>
+                                    <MenuItem className="menu-item">2003</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >

@@ -34,7 +34,7 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 
-const Cart = () => {
+const   Cart = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
 
     const toggleEstimateVisibility = () => {
@@ -74,7 +74,7 @@ const Cart = () => {
                                     <Td width="250px" textAlign="left">
                                         Part No.: 90341-12012
                                         PLUG, W/HEAD STRAIGH <br/>
-                                        <span style={{cursor:"pointer",fontSize:"12px" , textDecoration:"underline"}}>
+                                        <span style={{cursor:"pointer",fontSize:"12px"}}>
                                             Remove
                                         </span>
                                     </Td>

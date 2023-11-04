@@ -34,6 +34,8 @@ import {
 } from '@chakra-ui/icons';
 import '../styles//global.css';
 import * as PropTypes from "prop-types";
+import { DeleteIcon } from '@chakra-ui/icons';
+
 import AddVehicleModal from "./AddVehicleModal";
 
 function Backdrop(props) {
@@ -46,15 +48,21 @@ Backdrop.propTypes = {
     zIndex: PropTypes.string
 };
 const SubHeader = () => {
+    const [isAbcVisible, setIsAbcVisible] = useState(false);
+
     const [isOpen, setIsOpen] = useState(false);
     const navRef = useRef(null);
     const toggleNav = () => {
         setIsOpen(!isOpen);
+        setIsAbcVisible(!isAbcVisible);
+        // setTimeout(() => {
+        //     setIsAbcVisible(!isAbcVisible);
+        // }, 315);
     };
     const closeNav = () => {
         setIsOpen(false);
         // document.body.style.opacity = "1";
-
+        setIsAbcVisible(!isAbcVisible);
     };
 
 
@@ -111,12 +119,13 @@ const SubHeader = () => {
     const onModalOpen = () => setIsModalOpen(true);
     const onModalClose = () => setIsModalOpen(false);
     return (
-        <Flex className="sub-header" >
+        <Flex className="sub-header">
+            <div className={`abc ${isAbcVisible ? 'visible' : 'hidden'}`}></div>
             <Menu>
                 <Box className="search-by-category" ref={navRef}>
                     <IconButton
                         aria-label='Options'
-                        icon={<HamburgerIcon />}
+                        icon={<HamburgerIcon/>}
                         variant='outline'
                         border="none"
                         color="red"
@@ -125,50 +134,80 @@ const SubHeader = () => {
                         onClick={toggleNav}
                         className="HamburgerIcon"
                     />
-                    <Collapse  in={isOpen} animateOpacity>
+                    <Collapse in={isOpen} animateOpacity>
                         <Box
                             className="zindex"
                             position="fixed"
                             top="0"
                             left={isOpen ? 0 : '-250px'}  // Adjust the width of the navigation bar as needed
-                            width="250px"  // Set the desired width
+                            width="310px"  // Set the desired width
                             height="100%"
                             backgroundColor="gray.900"  // Customize the background color
                             // zIndex="99"  // Ensure it's on top of other content
                             transition="left 0.3s"
                         >
-                            <nav className="main-nav" >
-                                <ul className="main-nav-ul-top" >
-                                    <li className="main-nav-li" >
-                                        <Image mr={15} src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
-                                            Live Chat
+                            <nav className="main-nav">
+                                <ul className="main-nav-ul-top">
+                                    <li className="main-nav-li">
+                                        <Image mr={15} src="/images/chat.png" alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        Live Chat
                                     </li>
                                     <li className="main-nav-li">
-                                        <Image mr={15} src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
+                                        <Image mr={15} src="/images/phone.png" alt="Image Alt Text"
+                                               className="right-subheader-img"/>
                                         1-888-905-9199
                                     </li>
                                 </ul>
                                 <ul className="main-nav-ul-middle">
-                                    <li className="main-nav-li" >Toyota Parts</li>
-                                    <li className="main-nav-li">Toyota Accessories</li>
-                                    <li className="main-nav-li">Resources and Links</li>
+                                    <li display="flex" justifyContent="space-between" href="/" className="main-nav-li">
+                                        Toyota Parts
+                                        <span className="chevron-icon">
+                                            {/* Include your SVG chevron icon here */}
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16"
+                                                height="16"
+                                                fill="currentColor"
+                                                className="bi bi-chevron-right"
+                                                viewBox="0 0 16 16"
+                                            >
+                                              <path
+                                                  fillRule="evenodd"
+                                                  d="M5.293 4.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L8.586 8 5.293 4.707a1 1 0 010-1.414z"
+                                              />
+                                            </svg>
+                                          </span>
+                                    </li>
+                                    <li href="#" className="main-nav-li">Toyota Accessories</li>
+                                    <li href="#" className="main-nav-li">Resources and Links</li>
                                 </ul>
-                                <ul className="main-nav-ul-last" style={{borderBottom:"none"}}>
-                                    <li className="main-nav-li">
-                                        <Image mr={15} src="/images/logout.svg" alt="Image Alt Text" className="right-subheader-img" />
-                                        Login/Register</li>
-                                    <li className="main-nav-li">
-                                        <Image mr={15} src="/images/profile.png " alt="Image Alt Text" className="right-subheader-img" />
-                                        My Account</li>
-                                    <li className="main-nav-li">
-                                        <Image mr={15} src="/images/track.jpg " alt="Image Alt Text" className="right-subheader-img" />
-                                        Track Order</li>
-                                    <li className="main-nav-li">
-                                        <Image mr={15} src="/images/help.png " alt="Image Alt Text" className="right-subheader-img" />
-                                        Help Center</li>
-                                    <li className="main-nav-li">
-                                        <Image src="/images/email.jpg " alt="Image Alt Text" className="right-subheader-img" />
-                                        Contact Us</li>
+                                <ul className="main-nav-ul-last" style={{borderBottom: "none"}}>
+                                    <li href="#" className="main-nav-li">
+                                        <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        Login/Register
+                                    </li>
+                                    <li href="#" className="main-nav-li">
+                                        <Image mr={15} src="/images/profile.png " alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        My Account
+                                    </li>
+                                    <li href="#" className="main-nav-li">
+                                        <Image mr={15} src="/images/track.jpg " alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        Track Order
+                                    </li>
+                                    <li href="#" className="main-nav-li">
+                                        <Image mr={15} src="/images/help.png " alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        Help Center
+                                    </li>
+                                    <li href="#" className="main-nav-li">
+                                        <Image src="/images/email.jpg " alt="Image Alt Text"
+                                               className="right-subheader-img"/>
+                                        Contact Us
+                                    </li>
                                 </ul>
                             </nav>
                         </Box>
@@ -177,21 +216,21 @@ const SubHeader = () => {
                 </Box>
                 <MenuList>
                     <MenuItem icon={<AddIcon/>} command='⌘T'>
-                    New Tab
+                        New Tab
                     </MenuItem>
-                    <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
+                    <MenuItem icon={<ExternalLinkIcon/>} command='⌘N'>
                         New Window
                     </MenuItem>
-                    <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
+                    <MenuItem icon={<RepeatIcon/>} command='⌘⇧N'>
                         Open Closed Tab
                     </MenuItem>
-                    <MenuItem icon={<EditIcon />} command='⌘O'>
+                    <MenuItem icon={<EditIcon/>} command='⌘O'>
                         Open File...
                     </MenuItem>
                 </MenuList>
             </Menu>
             <Box>
-                <Link className="sub-header-links"  href="/">
+                <Link className="sub-header-links" href="/">
                     Toyota Parts
                 </Link>
                 <Link className="sub-header-links" href="#">
@@ -206,7 +245,7 @@ const SubHeader = () => {
             </Box>
             <div>
                 <Flex align="center" onMouseEnter={() => setIsDivOpen(true)}>
-                        <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img" />
+                    <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img"/>
                     <Link className="sub-header-rightlinks" href="#">
                         My Garage
                     </Link>
@@ -216,7 +255,7 @@ const SubHeader = () => {
                         ref={divRef}
                         style={{
                             position: 'absolute',
-                            top: '150px', // Adjust the positioning as needed
+                            top: '140px', // Adjust the positioning as needed
                             right: '200px',
                             width: '400px', // Set the desired width
                             background: 'white',
@@ -227,25 +266,147 @@ const SubHeader = () => {
                         onMouseLeave={handleMouseLeave}
                     >
                         {/* Content of the div */}
-                        <p className="vehicle-list" >Vehicle List</p>
-                        <p className="no-vehicles" >No Vehicles</p>
-                        <div className="vehicle-list-box" >
-                            <p onClick={onModalOpen} className="add-new-vehicle" >Add New Vehicle</p>
+                        <p className="vehicle-list">Vehicle List</p>
 
-                            <p className="clear-all" >Clear All</p>
+                        <ul style={{padding:'0px',overflowY: 'auto',maxHeight:'250px'}}>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">86</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Avalon</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">C-HR</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Camry</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Celixa</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Corolla</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Corolla Cross</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Corolla iM</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Corona</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Cressida</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">Echo</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                            <li className="no-vehicles"
+                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <input type="radio" id="other" name="gender" value="other"/>
+                                    <label htmlFor="other">FJ Cruiser</label>
+                                </div>
+                                <div>
+                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
+                                </div>
+                            </li>
+                        </ul>
+                        <div className="vehicle-list-box">
+                            <p onClick={onModalOpen} className="add-new-vehicle">Add New Vehicle</p>
+
+                            <p className="clear-all">Clear All</p>
                         </div>
                     </div>
                 )}
             </div>
-            {/*<AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
+            <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
             <Flex align="center">
-                <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img" />
+                <Image src="/images/chat.png" alt="Image Alt Text" className="right-subheader-img"/>
                 <Link className="sub-header-rightlinks" href="#">
                     Live Chat
                 </Link>
             </Flex>
             <Flex align="center">
-                <Image src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img" />
+                <Image src="/images/phone.png" alt="Image Alt Text" className="right-subheader-img"/>
                 <Link className="sub-header-rightlinks" href="#">
                     +1 434-123-6987
                 </Link>

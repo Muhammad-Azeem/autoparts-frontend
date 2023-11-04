@@ -17,7 +17,17 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, FormControl, FormLabel
+    Center,
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    ListItem,
+    List,
+    Icon,
+    FormControl,
+    FormLabel,
+    TableContainer,
+    Table, TableCaption, Thead, Th, Tr, Tbody, Td
 } from '@chakra-ui/react';
 import '../styles//global.css';
 
@@ -42,6 +52,26 @@ const AcctDash = () => {
     const handleHomeClick = () => {
         router.push('/');
     };
+
+    const [showTable1, setShowTable1] = useState(true);
+    const [showTable2, setShowTable2] = useState(false);
+    const [orangeBarStyle, setOrangeBarStyle] = useState({
+        width: '60px',
+        left: '25px',
+    });
+
+    const showTableOne = () => {
+        setShowTable1(true);
+        setShowTable2(false);
+        setOrangeBarStyle({ width: '60px', left: '25px' });
+    };
+
+    const showTableTwo = () => {
+        setShowTable1(false);
+        setShowTable2(true);
+        setOrangeBarStyle({ width: '123px', left: '85px' });
+    };
+
     return (
         <Box >
             <Grid
@@ -95,20 +125,56 @@ const AcctDash = () => {
                     <Flex>
                         <Box width="100%">
                             <Grid className="list-grid" >
-                                <Heading className="success-heading" as="h3" >
-                                    Order History
-                                </Heading>
+                                    <Heading className="success-heading" as="h3" >
+                                        Order History
+                                    </Heading>
+                                    <Box className="horizontal-listbox">
+                                        <Text className="horizontal-listmenu" mr={5} onClick={showTableOne}>Orders</Text>
+                                        <Text className="horizontal-listmenu"   onClick={showTableTwo}>Canceled Orders</Text>
+                                        <Box  style={{
+                                            width: orangeBarStyle.width,
+                                            left: orangeBarStyle.left,
+                                        }} className="orange-bar">
+                                    </Box>
+
+
+                                </Box>
                                 <Box>
-                                    <Text  className="success-message" >
-                                        Congratulations, your autoparts.com account has been created,
-                                        <Link href="/" className="bussiness-url">click here </Link>
-                                        to go shopping.
-                                    </Text>
-                                    <Text  className="success-message" >
-                                        An email will be sent to you shortly. If you do not receive an email, check your
-                                        <span style={{fontWeight:"600"}}> &quot;Bulk/Junk Mail&quot; </span>
-                                        folder to ensure that the email did not get flagged.
-                                    </Text>
+                                    {showTable1 && (
+                                        // <Table>
+                                        //     <Thead>
+                                        //         <Tr>
+                                        //             <Th>Table 1 Header</Th>
+                                        //         </Tr>
+                                        //     </Thead>
+                                        //     <Tbody>
+                                        //         <Tr>
+                                        //             <Td>Table 1 Data</Td>
+                                        //         </Tr>
+                                        //     </Tbody>
+                                        // </Table>
+                                        <Text padding="0px 30px">
+                                            Your order list is empty
+                                        </Text>
+                                    )}
+
+                                    {showTable2 && (
+                                        // <Table>
+                                        //     <Thead>
+                                        //         <Tr>
+                                        //             <Th>Table 2 Header</Th>
+                                        //         </Tr>
+                                        //     </Thead>
+                                        //     <Tbody>
+                                        //         <Tr>
+                                        //             <Td>Table 2 Data</Td>
+                                        //         </Tr>
+                                        //     </Tbody>
+                                        // </Table>
+                                        <Text padding="0px 30px">
+                                            Your canceled orders list is empty
+                                        </Text>
+                                    )}
                                 </Box>
                             </Grid>
                         </Box>
@@ -243,30 +309,122 @@ const AcctDash = () => {
                     </Flex>
                 </GridItem>
                 }
+
                 {activeGridItem === 3 &&
-                    <GridItem colSpan={1} bg='#fff'>
+                    <GridItem  colSpan={1} bg='#fff'>
                         <Flex>
                             <Box width="100%">
-                                <Grid className="list-grid">
-                                    <Heading className="success-heading" as="h3">
-                                        Address Book
+                                <Grid className="list-grid" >
+                                    <Heading className="account-setting-heading" as="h3" >
+                                        Account Settings
                                     </Heading>
                                     <Box>
-                                        <Text className="success-message">
-                                            Congratulations, your autoparts.com account has been created,
-                                            <Link href="/" className="bussiness-url">click here </Link>
-                                            to go shopping.
-                                    </Text>
-                                    <Text  className="success-message" >
-                                        An email will be sent to you shortly. If you do not receive an email, check your
-                                        <span style={{fontWeight:"600"}}> &quot;Bulk/Junk Mail&quot; </span>
-                                        folder to ensure that the email did not get flagged.
-                                    </Text>
-                                </Box>
-                            </Grid>
-                        </Box>
-                    </Flex>
-                </GridItem>
+                                        <Text  className="account-subhead" >
+                                            Manage your shipping addresses.
+                                            <span className="bussiness-url">
+                                                Add a Shipping New Address
+                                            </span>
+                                        </Text>
+
+                                            <Box className="editBox2 account-sectionbox">
+                                                <Heading mt={10} className="account-login" as="h3" >
+                                                    Add a New Shipping Address
+                                                    <span style={{color:'grey' , fontWeight:'200'}}>
+                                                         (English Only)
+                                                    </span>
+                                                </Heading>
+                                                <Box mt={10} borderBottom="1px solid #d0d0d0">
+                                                </Box>
+                                                <Box className="form-box-width"  mt={10}>
+                                                    <form>
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>Country/Territory:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1} pr={4}>First
+                                                                Name:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1} pr={4}>Last
+                                                                Name:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>Company:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>City:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>State/Province:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>Zipcode/Postalcode:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1} pr={4}>Address
+                                                                line 1:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1} pr={4}>Address
+                                                                line 2:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1}
+                                                                       pr={4}>Phone:</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel className="account-label" flex={1} pr={4}>Save
+                                                                Address As (Optional):</FormLabel>
+                                                            <Input className="account-input" flex={2} type="text"/>
+                                                        </FormControl>
+                                                        <FormControl className="acctSet-inputbox">
+                                                            <FormLabel mt={10} mb={10} textAlign="center" className="shippingCheckbox-label" flex={1} pr={4}>
+                                                                <Input className="shippingCheckbox-input" flex={2} type="checkbox"/>
+                                                                <span>Set as my default address</span>
+                                                            </FormLabel>
+
+
+                                                        </FormControl>
+
+                                                        <Box className="acctSet-butbox">
+                                                            <Button onClick={toggleEditBoxVisibility} mr={10}
+                                                                    className="discard-btn">Discard Changes</Button>
+                                                            <Button className="account-save-btn" type="submit">Save
+                                                                Changes</Button>
+                                                        </Box>
+                                                    </form>
+                                                </Box>
+                                            </Box>
+
+                                    </Box>
+                                </Grid>
+                            </Box>
+                        </Flex>
+                    </GridItem>
                 }
             </Grid>
         </Box>

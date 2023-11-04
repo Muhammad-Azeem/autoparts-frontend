@@ -11,6 +11,7 @@ import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
 import MobileTopSection from "../components/MobileTopSection";
 import MainModelSection from "../components/MainModelSection";
+import {Box, Collapse, Image} from "@chakra-ui/react";
 const HomePage = () => {
     return (
         <div>

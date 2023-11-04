@@ -72,7 +72,7 @@ const SignUpForm = () => {
                         Create a free business account.
                     </span>
                 </Heading>
-                <form className="returning-form">
+                <form className="returning-form2">
                     <Heading className="returning-heading" as="h3">Account Registration</Heading>
 
                     <FormControl  mt={20}>

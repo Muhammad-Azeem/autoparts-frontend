@@ -24,6 +24,8 @@ import '../styles//global.css';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
+import ViewMoreList from "../components/ViewMoreList";
+import AddVehicleModal from "./AddVehicleModal";
 
 const ProductDetail = () => {
 
@@ -54,6 +56,99 @@ const ProductDetail = () => {
     const handleHomeClick = () => {
         router.push('/');
     };
+    const handleProductClick = () => {
+        router.push('/Product');
+    };
+
+    const initialVisibleItems = 2; // Initial number of visible items
+    const [visibleItems, setVisibleItems] = useState(initialVisibleItems);
+    const items = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+
+    const toggleItems = () => {
+        if (visibleItems === initialVisibleItems) {
+            setVisibleItems(items.length);
+        } else {
+            setVisibleItems(initialVisibleItems);
+        }
+    };
+    const itemsList1 = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+    const itemsList2 = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+    const itemsList3 = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+    const itemsList4 = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+    const itemsList5 = [
+        '4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..',
+        'Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...',
+        'C-HR| 2017-2022| 4 Cyl 2.0L',
+        'Camry| 1987-2022| CE, DX, LE, N, No Grade... | 4 Cyl 2.0L, 4 Cyl 2.2L...',
+        'Celica| 1988-2005, 1984-1985| GT, GTS, ST...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla| 1984-2022| CE, D, DX, ECO...| 4 Cyl 1.6L, 4 Cyl 1.8L...',
+        'Corolla Cross| 2022',
+        'Corolla iM| 2017-2018| N| 4 Cyl 1.8L',
+        'Cressida| 1985-1992| GLX| 6 Cyl 2.8L, 6 Cyl 3.0L',
+        'Echo| 2000-2005| 4 Cyl 1.5L'
+        // Add more items here
+    ];
+
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
@@ -109,24 +204,55 @@ const ProductDetail = () => {
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Model --
                                 </MenuButton>
-                                <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">4-Runner</MenuItem>
+                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}}>
+                                    <MenuItem className="menu-item">4Runner</MenuItem>
                                     <MenuItem className="menu-item">86</MenuItem>
                                     <MenuItem className="menu-item">Avalon</MenuItem>
                                     <MenuItem className="menu-item">C-HR</MenuItem>
                                     <MenuItem className="menu-item">Camry</MenuItem>
+                                    <MenuItem className="menu-item">Celica</MenuItem>
+                                    <MenuItem className="menu-item">Corolla</MenuItem>
+                                    <MenuItem className="menu-item">Corolla Cross</MenuItem>
+                                    <MenuItem className="menu-item">Corolla iM</MenuItem>
+                                    <MenuItem className="menu-item">Corona</MenuItem>
+                                    <MenuItem className="menu-item">Cressida</MenuItem>
+                                    <MenuItem className="menu-item">Echo</MenuItem>
+                                    <MenuItem className="menu-item">Fj Cruiser</MenuItem>
+                                    <MenuItem className="menu-item">GR Supra</MenuItem>
+                                    <MenuItem className="menu-item">GR86</MenuItem>
+                                    <MenuItem className="menu-item">Highlander</MenuItem>
+                                    <MenuItem className="menu-item">Land Cruiser</MenuItem>
+                                    <MenuItem className="menu-item">MR2</MenuItem>
+                                    <MenuItem className="menu-item">MR2 Spyder</MenuItem>
+                                    <MenuItem className="menu-item">Matrix</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Year --
                                 </MenuButton>
-                                <MenuList zIndex={3} >
+                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}} zIndex={3} >
                                     <MenuItem className="menu-item">2023</MenuItem>
                                     <MenuItem className="menu-item">2022</MenuItem>
                                     <MenuItem className="menu-item">2021</MenuItem>
                                     <MenuItem className="menu-item">2020</MenuItem>
                                     <MenuItem className="menu-item">2019</MenuItem>
+                                    <MenuItem className="menu-item">2018</MenuItem>
+                                    <MenuItem className="menu-item">2017</MenuItem>
+                                    <MenuItem className="menu-item">2016</MenuItem>
+                                    <MenuItem className="menu-item">2015</MenuItem>
+                                    <MenuItem className="menu-item">2014</MenuItem>
+                                    <MenuItem className="menu-item">2013</MenuItem>
+                                    <MenuItem className="menu-item">2012</MenuItem>
+                                    <MenuItem className="menu-item">2011</MenuItem>
+                                    <MenuItem className="menu-item">2010</MenuItem>
+                                    <MenuItem className="menu-item">2009</MenuItem>
+                                    <MenuItem className="menu-item">2008</MenuItem>
+                                    <MenuItem className="menu-item">2007</MenuItem>
+                                    <MenuItem className="menu-item">2006</MenuItem>
+                                    <MenuItem className="menu-item">2005</MenuItem>
+                                    <MenuItem className="menu-item">2004</MenuItem>
+                                    <MenuItem className="menu-item">2003</MenuItem>
                                 </MenuList>
                             </Menu>
                             <Menu >
@@ -246,31 +372,30 @@ const ProductDetail = () => {
                         <Flex className="productDetail-box2-flex" >
                             {/* Left Sub-Column */}
                             <Box className="productDetail-box2-heads">
-                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
-                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
+                                <Text onClick={handleProductClick} cursor="pointer" className="detail-box2-title"
+                                      fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
+                                <Text className="detail-box2-heading1" fontSize="md">Part Number:
                                     <span className="detail-box2-partno">90341-12012</span>
                                 </Text>
                                 <Button mb={10} className="vs-btn">Vehicle Specific</Button>
 
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For
+                                    Oil Pan Drain)</Text>
+                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces:
+                                    90341-12026</Text>
 
-                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
-                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
-                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
-                                <UnorderedList className="detail-box2-subheading" padding={0}>
-                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
-                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
-                                </UnorderedList>
-                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
+                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600">Fits the
+                                    following Toyota Models:</Text>
+
+                                <ViewMoreList items={itemsList1} />
                             </Box>
 
                             {/* Right Sub-Column */}
                             <Box className="product-price-box">
                                 <Text className="product-price" fontSize="xl">$99.99
-                                <span className="product-price-span" >
+                                    <span className="product-price-span">
                                     MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
+                                    <span style={{textDecoration: 'line-through'}}>
                                         $6.55
                                     </span>
                                 </span>
@@ -282,234 +407,7 @@ const ProductDetail = () => {
                                     <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
                                     <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
                                 </Box>
-                            </Box>
-                        </Flex>
-                    </Box>
-                </Flex>
-                <Flex className="productDetail-innerbox" >
-                    <Box className="productDetail-box1" display="flex" flexDirection="column">
-                        <Box mb={4}>
-                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
-                        </Box>
-                        <Box mb={4}>
-                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
-                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
-                                View related parts
-                            </Text>
-                        </Box>
-                    </Box>
 
-                    <Box className="productDetail-box2" flex="1">
-                        <Flex className="productDetail-box2-flex" >
-                            {/* Left Sub-Column */}
-                            <Box className="productDetail-box2-heads">
-                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
-                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
-                                    <span className="detail-box2-partno">90341-12012</span>
-                                </Text>
-                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
-
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
-
-                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
-                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
-                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
-                                <UnorderedList className="detail-box2-subheading" padding={0}>
-                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
-                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
-                                </UnorderedList>
-                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
-                            </Box>
-
-                            {/* Right Sub-Column */}
-                            <Box className="product-price-box">
-                                <Text className="product-price" fontSize="xl">$99.99
-                                    <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        $6.55
-                                    </span>
-                                </span>
-                                </Text>
-                                <Text className="save-price" fontSize="xl">4
-                                    You Save: $1.86 (29%)
-                                </Text>
-                                <Box display="grid">
-                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                                </Box>
-                            </Box>
-                        </Flex>
-                    </Box>
-                </Flex>
-                <Flex className="productDetail-innerbox" >
-                    <Box className="productDetail-box1" display="flex" flexDirection="column">
-                        <Box mb={4}>
-                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
-                        </Box>
-                        <Box mb={4}>
-                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
-                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
-                                View related parts
-                            </Text>
-                        </Box>
-                    </Box>
-
-                    <Box className="productDetail-box2" flex="1">
-                        <Flex className="productDetail-box2-flex" >
-                            {/* Left Sub-Column */}
-                            <Box className="productDetail-box2-heads">
-                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
-                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
-                                    <span className="detail-box2-partno">90341-12012</span>
-                                </Text>
-                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
-
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
-
-                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
-                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
-                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
-                                <UnorderedList className="detail-box2-subheading" padding={0}>
-                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
-                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
-                                </UnorderedList>
-                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
-                            </Box>
-
-                            {/* Right Sub-Column */}
-                            <Box className="product-price-box">
-                                <Text className="product-price" fontSize="xl">$99.99
-                                    <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        $6.55
-                                    </span>
-                                </span>
-                                </Text>
-                                <Text className="save-price" fontSize="xl">4
-                                    You Save: $1.86 (29%)
-                                </Text>
-                                <Box display="grid">
-                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                                </Box>
-                            </Box>
-                        </Flex>
-                    </Box>
-                </Flex>
-                <Flex className="productDetail-innerbox" >
-                    <Box className="productDetail-box1" display="flex" flexDirection="column">
-                        <Box mb={4}>
-                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
-                        </Box>
-                        <Box mb={4}>
-                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
-                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
-                                View related parts
-                            </Text>
-                        </Box>
-                    </Box>
-
-                    <Box className="productDetail-box2" flex="1">
-                        <Flex className="productDetail-box2-flex" >
-                            {/* Left Sub-Column */}
-                            <Box className="productDetail-box2-heads">
-                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
-                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
-                                    <span className="detail-box2-partno">90341-12012</span>
-                                </Text>
-                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
-
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
-
-                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
-                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
-                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
-                                <UnorderedList className="detail-box2-subheading" padding={0}>
-                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
-                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
-                                </UnorderedList>
-                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
-                            </Box>
-
-                            {/* Right Sub-Column */}
-                            <Box className="product-price-box">
-                                <Text className="product-price" fontSize="xl">$99.99
-                                    <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        $6.55
-                                    </span>
-                                </span>
-                                </Text>
-                                <Text className="save-price" fontSize="xl">4
-                                    You Save: $1.86 (29%)
-                                </Text>
-                                <Box display="grid">
-                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                                </Box>
-                            </Box>
-                        </Flex>
-                    </Box>
-                </Flex>
-                <Flex className="productDetail-innerbox" >
-                    <Box className="productDetail-box1" display="flex" flexDirection="column">
-                        <Box mb={4}>
-                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
-                        </Box>
-                        <Box mb={4}>
-                            {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
-                            <Text className="bussiness-url" margin="0" as="h5" mt={4}>
-                                View related parts
-                            </Text>
-                        </Box>
-                    </Box>
-
-                    <Box className="productDetail-box2" flex="1">
-                        <Flex className="productDetail-box2-flex" >
-                            {/* Left Sub-Column */}
-                            <Box className="productDetail-box2-heads">
-                                <Text className="detail-box2-title" fontSize="xl">Toyota Plug, W/HEAD STRAIGH</Text>
-                                <Text  className="detail-box2-heading1" fontSize="md">Part Number:
-                                    <span className="detail-box2-partno">90341-12012</span>
-                                </Text>
-                                <Button mb={10} className="vs-btn">Vehicle Specific</Button>
-
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Other Name: Plug(For Oil Pan Drain)</Text>
-                                <Text className="detail-box2-subheading" margin={0} fontSize="xl">Replaces: 90341-12026</Text>
-
-                                <Text className="detail-box2-subheading" mt={10} fontSize="xl" fontWeight="600" >Fits the following Toyota Models:</Text>
-                                {/*<Text margin={0} fontSize="sm">4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</Text>*/}
-                                {/*<Text margin={0} fontSize="xl">Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</Text>*/}
-                                <UnorderedList className="detail-box2-subheading" padding={0}>
-                                    <ListItem>4Runner| 1984-2022| DLX, LULI, Limited, SDT,S...| 4 Cyl 2.4L, 4 Cyl..</ListItem>
-                                    <ListItem>Avalon| 1995-2022| Limited, XL, XLE, XLE Pre...| 4 Cyl 2.5L, 6 Cyl...</ListItem>
-                                </UnorderedList>
-                                <Text className="detail-box2-subheading" color="grey" margin={0} fontSize="14px">View More</Text>
-                            </Box>
-
-                            {/* Right Sub-Column */}
-                            <Box className="product-price-box">
-                                <Text className="product-price" fontSize="xl">$99.99
-                                    <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        $6.55
-                                    </span>
-                                </span>
-                                </Text>
-                                <Text className="save-price" fontSize="xl">4
-                                    You Save: $1.86 (29%)
-                                </Text>
-                                <Box display="grid">
-                                    <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                                </Box>
                             </Box>
                         </Flex>
                     </Box>
