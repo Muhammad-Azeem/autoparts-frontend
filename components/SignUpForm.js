@@ -1,5 +1,5 @@
 // components/Header.js
-import React from 'react';
+import React, {useState} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -24,8 +24,60 @@ import ProductBox from "./ProductBox";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import LeftSide from "./LeftSide";
 import ProductBlock from "./ProductBlock";
+import {login, register} from "./API/api";
 const SignUpForm = () => {
     const router = useRouter();
+
+    const [email, setEmail] = useState('');
+    const [loginEmail, setLoginEmail] = useState('');
+    const [confirmEmail, setConfirmEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handleRegister = async () => {
+        if (email !== confirmEmail) {
+            setError("Emails don't match");
+            displayErrorAndHide();
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError("Passwords don't match");
+            displayErrorAndHide();
+            return;
+        }
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters');
+            displayErrorAndHide();
+            return;
+        }
+        try {
+            const userData = { email, password };
+            let response = await register(userData);
+            console.log('rest', response)
+            // await router.push('/login'); // Redirect to the login page after successful registration
+        } catch (error) {
+            console.error('Registration failed:', error);
+            setError('Registration failed. Please try again.');
+            displayErrorAndHide();
+        }
+    };
+    const handleLogin = async () => {
+        try {
+            const credentials = { email: loginEmail, password: loginPassword };
+            await login(credentials);
+            await router.push('/protected'); // Redirect to a protected route after successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
+    const displayErrorAndHide = () => {
+        setTimeout(() => {
+            setError('');
+        }, 10000);
+    };
 
     const handleBussinessAccountClick = () => {
         // Use router.push to navigate to the product list page
@@ -42,13 +94,13 @@ const SignUpForm = () => {
                         <FormLabel className="returing-label">Email:
                             <sup style={{color:'#E52222'}}>*</sup>
                         </FormLabel>
-                        <Input className="returning-input" type="email" />
+                        <Input className="returning-input" type="email"  value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} />
                     </FormControl>
                     <FormControl  mt={20}>
                         <FormLabel className="returing-label">Password:
                             <sup style={{color: '#E52222'}}>*</sup>
                         </FormLabel>
-                        <Input className="returning-input" type="password" />
+                        <Input className="returning-input" type="password"  value={loginPassword}  onChange={(e) => setLoginPassword(e.target.value)} />
                     </FormControl>
                     <Flex className="returning-checkbox" mt={20}>
                         <label className="remember-me-checkbox">
@@ -56,7 +108,7 @@ const SignUpForm = () => {
                             <span></span>
                             Remember Me
                         </label>
-                        <Button className="returning-button" colorScheme="teal" type="submit">
+                        <Button className="returning-button" colorScheme="teal" type="button" onClick={handleLogin}>
                             Login
                         </Button>
                     </Flex>
@@ -71,6 +123,9 @@ const SignUpForm = () => {
                     <span className="bussiness-url" onClick={handleBussinessAccountClick}  >
                         Create a free business account.
                     </span>
+                    {error && (
+                        <p style={{ color: 'red' }}>{error}</p>
+                    )}
                 </Heading>
                 <form className="returning-form">
                     <Heading className="returning-heading" as="h3">Account Registration</Heading>
@@ -79,13 +134,13 @@ const SignUpForm = () => {
                         <FormLabel className="returing-label">Email:
                             <sup style={{color:'#E52222'}}>*</sup>
                         </FormLabel>
-                        <Input className="returning-input" type="email" />
+                        <Input className="returning-input" type="email"  placeholder="Email"  value={email} onChange={(e) => setEmail(e.target.value)} />
                     </FormControl>
                     <FormControl  mt={20}>
                         <FormLabel className="returing-label">Confirm Email:
                             <sup style={{color:'#E52222'}}>*</sup>
                         </FormLabel>
-                        <Input className="returning-input" type="email" />
+                        <Input className="returning-input" type="email" placeholder="Confirm Email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} />
                     </FormControl>
                     <FormControl  mt={20}>
                         <FormLabel placeholder="atleat 6 characters" className="returing-label">Password:
@@ -95,6 +150,8 @@ const SignUpForm = () => {
                             className="returning-input"
                             type="password"
                             placeholder="(at least 6 characters)"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </FormControl>
                     <FormControl  mt={20}>
@@ -104,11 +161,13 @@ const SignUpForm = () => {
                         <Input
                             className="returning-input"
                             type="password"
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            value={confirmPassword}
                         />
                     </FormControl>
                     <Flex  mt={20}>
 
-                        <Button className="account-button" colorScheme="teal" type="submit">
+                        <Button className="account-button" colorScheme="teal" type="button" onClick={handleRegister} >
                             Register
                         </Button>
                     </Flex>

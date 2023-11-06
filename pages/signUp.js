@@ -1,5 +1,8 @@
 // pages/index.js
-import React from 'react';
+import React, from 'react';
+import { register } from '../components/API/api';
+import { useRouter } from 'next/router';
+
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 
