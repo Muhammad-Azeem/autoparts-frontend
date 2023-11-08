@@ -51,8 +51,11 @@ const Header = () => {
     const router = useRouter();
 
     const handleLoginClick = () => {
-        // Use router.push to navigate to the product list page
-        router.push('/signUp'); // Replace '/productlist' with the actual URL of your product list page
+        router.push('/signUp');
+    };
+
+    const handleCartClick = () => {
+        router.push('/AddToCart');
     };
 
     return (
@@ -78,13 +81,6 @@ const Header = () => {
                         Select Vehicle
                         </Text>
                     </MenuButton>
-                    {/*<MenuList className="menu-list">*/}
-                    {/*    <MenuItem className="menu-item">Download</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Create a Copy</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Mark as Draft</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Delete</MenuItem>*/}
-                    {/*    <MenuItem className="menu-item">Attend a Workshop</MenuItem>*/}
-                    {/*</MenuList>*/}
                 </Menu>
                 <Box
                     background="#F1F1F1"
@@ -154,7 +150,7 @@ const Header = () => {
                         background="transparent"
 
                     >
-                        <Box display="flex" alignItems="center">
+                        <Box onClick={handleCartClick} cursor="pointer" display="flex" alignItems="center">
                             <Icon as={FaShoppingCart} boxSize="24px" mr={10} style={{ color: "#2E5BA5" }} />
                         </Box>
                         <Box display="flex" flexDir="column" textAlign="left">

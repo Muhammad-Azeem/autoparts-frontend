@@ -92,11 +92,11 @@ const ProductListing = () => {
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
-                <BreadcrumbItem fontSize="14px">
-                    <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
+                <BreadcrumbItem ml={4} fontSize="14px">
+                    <BreadcrumbLink  textDecoration="underline" cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
                 </BreadcrumbItem >
                 <BreadcrumbItem fontSize="14px" isCurrentPage>
-                    <BreadcrumbLink href="#">Category</BreadcrumbLink>
+                    <BreadcrumbLink fontWeight="600" href="#">Category</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
 
@@ -118,7 +118,7 @@ const ProductListing = () => {
                                     Change Vehicle
                                 </a>
                             </Text>
-                            <Box className="vm-leftside-box" fontSize="lg" fontWeight="600" color="black">
+                            <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
                                 2022 Toyota 4Runner
                             </Box>
                         </Box>

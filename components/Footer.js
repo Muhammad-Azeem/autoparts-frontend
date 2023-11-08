@@ -26,46 +26,46 @@ const Footer = () => {
         <Container>
             <Center bg='#F1F1F1' padding="35px 0px">
                 <Box w='20%' p={4} color='black'>
-                    <Text fontWeight="600" className="footer-padding">
+                    <Link fontWeight="600" className="footer-padding">
                         Wholesale
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         About Us
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         Customer Reviews
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         Contact Us
-                    </Text>
+                    </Link>
                 </Box>
                 <Box w='20%' p={4} color='black'>
                     <Text className="footer-padding" fontWeight="600">
                         Policies
                     </Text>
-                    <Text className="footer-padding">
+                    <Link href="/SalesPolicy" display="block" className="foot-text footer-padding">
                         Sales Policy
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link  href="/ReturnPolicy" display="block" className="foot-text footer-padding">
                         Return Policy
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="/PrivacyPolicy" display="block" className="foot-text footer-padding">
                         Privacy Policy
-                    </Text>
+                    </Link>
                 </Box>
                 <Box w='20%' p={4} color='black'>
-                    <Text className="footer-padding" fontWeight="600">
+                    <Link href="#" className="foot-text footer-padding" fontWeight="600">
                         Customer Services
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         My Account
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         Track Order
-                    </Text>
-                    <Text className="footer-padding">
+                    </Link>
+                    <Link href="#" className="foot-text footer-padding">
                         Help Center
-                    </Text>
+                    </Link>
                 </Box>
                 <Box w='20%' h='150px' p={4} color='black'>
                     <Text fontWeight="600">

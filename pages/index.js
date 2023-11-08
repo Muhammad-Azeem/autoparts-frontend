@@ -5,12 +5,13 @@ import SubHeader from "../components/SubHeader";
 import TopSection from "../components/TopSection";
 import DetailSection from "../components/DetailSection";
 import GeniunePartsSection from "../components/GeniunePartsSection";
-import ModelSection from "../components/ModelSection";
 import WholeSaleSection from "../components/WholeSaleSection";
 import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
 import MobileTopSection from "../components/MobileTopSection";
+import MainModelSection from "../components/MainModelSection";
+import {Box, Collapse, Image} from "@chakra-ui/react";
 const HomePage = () => {
     return (
         <div>
@@ -31,7 +32,7 @@ const HomePage = () => {
                 </div>
                 <DetailSection/>
                 <GeniunePartsSection/>
-                <ModelSection/>
+                <MainModelSection/>
                 <WholeSaleSection/>
             </main>
             <div className="main-footer">

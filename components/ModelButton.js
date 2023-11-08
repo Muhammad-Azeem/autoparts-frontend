@@ -20,9 +20,8 @@ import {
 } from '@chakra-ui/react';
 import '../styles//global.css';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import LeftSide from "./LeftSide";
-import ProductBlock from "./ProductBlock";
-const ModelRows = ({title}) => {
+
+const ModelButton = ({title}) => {
     return (
         <Button className="models-button" variant='solid'>
             {title}
@@ -31,4 +30,4 @@ const ModelRows = ({title}) => {
     );
 };
 
-export default ModelRows;
+export default ModelButton;

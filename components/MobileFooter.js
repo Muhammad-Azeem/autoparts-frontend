@@ -54,7 +54,7 @@ const MobileFooter = () => {
                         <UnorderedList className="mobile-footer-ul">
                             <ListItem>About Us</ListItem>
                             <ListItem>Customer Reviews</ListItem>
-                            <ListItem>VIN Decoder</ListItem>
+                            <ListItem>Contact Us</ListItem>
                         </UnorderedList>
                     </AccordionPanel>
                 </AccordionItem>
@@ -70,9 +70,21 @@ const MobileFooter = () => {
                     </h2>
                     <AccordionPanel pb={4}>
                         <UnorderedList className="mobile-footer-ul">
-                            <ListItem>About Us</ListItem>
-                            <ListItem>Customer Reviews</ListItem>
-                            <ListItem>VIN Decoder</ListItem>
+                            <ListItem>
+                                <Link color="grey" href="/SalesPolicy" display="block" className="foot-text footer-padding">
+                                    Sales Policy
+                                </Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link color="grey"  href="/ReturnPolicy" display="block" className="foot-text footer-padding">
+                                    Return Policy
+                                </Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link color="grey" href="/PrivacyPolicy" display="block" className="foot-text footer-padding">
+                                    Privacy Policy
+                                </Link>
+                            </ListItem>
                         </UnorderedList>
                     </AccordionPanel>
                 </AccordionItem>

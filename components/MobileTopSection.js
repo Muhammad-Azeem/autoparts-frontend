@@ -4,6 +4,7 @@ import {Heading,Input,Grid, GridItem ,Box,Container, Image,Text, Flex, Link, But
 import '../styles//global.css';
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageCarousel from '../components/ImageCarousel';
+import {useRouter} from "next/router";
 const MobileTopSection = () => {
     const images = [
         '/images/engine.png',
@@ -21,6 +22,10 @@ const MobileTopSection = () => {
     const handleButton2Click = () => {
         setShowTopSection1(false);
         setShowTopSection2(true);
+    };
+    const router = useRouter();
+    const handleFindPartsClick = () => {
+        router.push('/ProductList');
     };
 
     return (
@@ -76,7 +81,7 @@ const MobileTopSection = () => {
                         </Box>
 
                         <Flex >
-                            <Button  className="mobile_find-parts-btn" >Find My Parts</Button>
+                            <Button onClick={handleFindPartsClick}  className="mobile_find-parts-btn" >Find My Parts</Button>
                         </Flex>
                         <Text className="box-one-text" >
                             For the most accurate results, search by your VIN (vehicle identification number).
@@ -90,41 +95,70 @@ const MobileTopSection = () => {
                             <MenuButton className="topsection-input_lowerpart" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Year --
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                            <MenuList style={{overflowY: 'auto',maxHeight:'250px'}} zIndex={3} >
+                                <MenuItem className="menu-item">2023</MenuItem>
+                                <MenuItem className="menu-item">2022</MenuItem>
+                                <MenuItem className="menu-item">2021</MenuItem>
+                                <MenuItem className="menu-item">2020</MenuItem>
+                                <MenuItem className="menu-item">2019</MenuItem>
+                                <MenuItem className="menu-item">2018</MenuItem>
+                                <MenuItem className="menu-item">2017</MenuItem>
+                                <MenuItem className="menu-item">2016</MenuItem>
+                                <MenuItem className="menu-item">2015</MenuItem>
+                                <MenuItem className="menu-item">2014</MenuItem>
+                                <MenuItem className="menu-item">2013</MenuItem>
+                                <MenuItem className="menu-item">2012</MenuItem>
+                                <MenuItem className="menu-item">2011</MenuItem>
+                                <MenuItem className="menu-item">2010</MenuItem>
+                                <MenuItem className="menu-item">2009</MenuItem>
+                                <MenuItem className="menu-item">2008</MenuItem>
+                                <MenuItem className="menu-item">2007</MenuItem>
+                                <MenuItem className="menu-item">2006</MenuItem>
+                                <MenuItem className="menu-item">2005</MenuItem>
+                                <MenuItem className="menu-item">2004</MenuItem>
+                                <MenuItem className="menu-item">2003</MenuItem>
                             </MenuList>
                         </Menu>
                         <Menu >
                             <MenuButton mt={10} className="topsection-input_lowerpart" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Make --
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                            <MenuList zIndex="1">
+                                <MenuItem className="menu-item">Toyota</MenuItem>
+                                <MenuItem className="menu-item">Scion</MenuItem>
+
                             </MenuList>
                         </Menu>
                         <Menu >
                             <MenuButton mt={10} className="topsection-input_lowerpart" as={Button} rightIcon={<ChevronDownIcon />}>
                                 -- Select Model --
                             </MenuButton>
-                            <MenuList>
-                                <MenuItem>Download</MenuItem>
-                                <MenuItem>Create a Copy</MenuItem>
-                                <MenuItem>Mark as Draft</MenuItem>
-                                <MenuItem>Delete</MenuItem>
-                                <MenuItem>Attend a Workshop</MenuItem>
+                            <MenuList style={{overflowY: 'auto',maxHeight:'250px'}} zIndex={3}>
+                                <MenuItem className="menu-item">4Runner</MenuItem>
+                                <MenuItem className="menu-item">86</MenuItem>
+                                <MenuItem className="menu-item">Avalon</MenuItem>
+                                <MenuItem className="menu-item">C-HR</MenuItem>
+                                <MenuItem className="menu-item">Camry</MenuItem>
+                                <MenuItem className="menu-item">Celica</MenuItem>
+                                <MenuItem className="menu-item">Corolla</MenuItem>
+                                <MenuItem className="menu-item">Corolla Cross</MenuItem>
+                                <MenuItem className="menu-item">Corolla iM</MenuItem>
+                                <MenuItem className="menu-item">Corona</MenuItem>
+                                <MenuItem className="menu-item">Cressida</MenuItem>
+                                <MenuItem className="menu-item">Echo</MenuItem>
+                                <MenuItem className="menu-item">Fj Cruiser</MenuItem>
+                                <MenuItem className="menu-item">GR Supra</MenuItem>
+                                <MenuItem className="menu-item">GR86</MenuItem>
+                                <MenuItem className="menu-item">Highlander</MenuItem>
+                                <MenuItem className="menu-item">Land Cruiser</MenuItem>
+                                <MenuItem className="menu-item">MR2</MenuItem>
+                                <MenuItem className="menu-item">MR2 Spyder</MenuItem>
+                                <MenuItem className="menu-item">Matrix</MenuItem>
                             </MenuList>
                         </Menu>
 
                         <Flex justify="end">
-                            <Button mt={14} className="mobile_find-parts-btn" >Find My Parts</Button>
+                            <Button onClick={handleFindPartsClick} mt={14} className="mobile_find-parts-btn" >Find My Parts</Button>
                         </Flex>
                     </Box>
                     )}

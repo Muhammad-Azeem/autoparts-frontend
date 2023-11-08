@@ -19,16 +19,22 @@ import {
     Center
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import {ChevronDownIcon} from "@chakra-ui/icons";
+import { useRouter } from 'next/router';
 
 const Product = ({ description, image }) => {
+
+    const router = useRouter();
+
+    const handleProductDetailClick = () => {
+        router.push('/Product-Detail');
+    };
     return (
         <Flex>
             <Box width="100%">
                 <Grid className="productblock-grid" >
                     {/* Your existing content */}
-                    <GridItem className="product-box">
-                        <Box className="grid-product_box" >
+                    <GridItem onClick={handleProductDetailClick} className="product-box">
+                        <Box  className="grid-product_box" >
                             <Image src={image} className="images-product_box" alt="Image Alt Text"  />
                             <Text className="title-product_block">{description}</Text>
                         </Box>

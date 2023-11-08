@@ -127,7 +127,7 @@ const SignUpForm = () => {
                         <p style={{ color: 'red' }}>{error}</p>
                     )}
                 </Heading>
-                <form className="returning-form">
+                <form className="returning-form2">
                     <Heading className="returning-heading" as="h3">Account Registration</Heading>
 
                     <FormControl  mt={20}>
