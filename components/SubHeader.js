@@ -21,7 +21,8 @@ import {
     MenuList,
     MenuItem,
     Collapse,
-    Tooltip
+    Tooltip,
+    CloseIcon,
 } from '@chakra-ui/react';
 import {
     AddIcon,
@@ -148,6 +149,9 @@ const SubHeader = () => {
                         >
                             <nav className="main-nav">
                                 <ul className="main-nav-ul-top">
+                                    <Text onClick={closeNav}  style={{float:'right',color:'black',cursor:'pointer'}}>
+                                        x
+                                    </Text>
                                     <li className="main-nav-li">
                                         <Image mr={15} src="/images/chat.png" alt="Image Alt Text"
                                                className="right-subheader-img"/>
@@ -160,7 +164,7 @@ const SubHeader = () => {
                                     </li>
                                 </ul>
                                 <ul className="main-nav-ul-middle">
-                                    <li display="flex" justifyContent="space-between" href="/" className="main-nav-li">
+                                    <Link display="flex" color="black" textDecoration="none" justifyContent="space-between" href="/" className="main-nav-li">
                                         Toyota Parts
                                         <span className="chevron-icon">
                                             {/* Include your SVG chevron icon here */}
@@ -178,26 +182,26 @@ const SubHeader = () => {
                                               />
                                             </svg>
                                           </span>
-                                    </li>
+                                    </Link>
                                     <li href="#" className="main-nav-li">Toyota Accessories</li>
                                     <li href="#" className="main-nav-li">Resources and Links</li>
                                 </ul>
                                 <ul className="main-nav-ul-last" style={{borderBottom: "none"}}>
-                                    <li href="#" className="main-nav-li">
+                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/signUp" className="main-nav-li">
                                         <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
                                                className="right-subheader-img"/>
                                         Login/Register
-                                    </li>
+                                    </Link>
                                     <li href="#" className="main-nav-li">
                                         <Image mr={15} src="/images/profile.png " alt="Image Alt Text"
                                                className="right-subheader-img"/>
                                         My Account
                                     </li>
-                                    <li href="#" className="main-nav-li">
+                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/TrackOrder" className="main-nav-li">
                                         <Image mr={15} src="/images/track.jpg " alt="Image Alt Text"
                                                className="right-subheader-img"/>
                                         Track Order
-                                    </li>
+                                    </Link>
                                     <li href="#" className="main-nav-li">
                                         <Image mr={15} src="/images/help.png " alt="Image Alt Text"
                                                className="right-subheader-img"/>

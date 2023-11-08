@@ -63,7 +63,7 @@ const TrackingPage = () => {
 
                     <Flex className="returning-checkbox" mr={5} mt={20} >
                         <Button className="track-button" colorScheme="teal" type="submit">
-                            Track My Order {'>'}
+                            Track My Order
                         </Button>
                     </Flex>
 

@@ -21,7 +21,7 @@ import {
 import '../styles//global.css';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 
-const ModelRows = ({title}) => {
+const ModelButton = ({title}) => {
     return (
         <Button className="models-button" variant='solid'>
             {title}
@@ -30,4 +30,4 @@ const ModelRows = ({title}) => {
     );
 };
 
-export default ModelRows;
+export default ModelButton;

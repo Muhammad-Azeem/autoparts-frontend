@@ -88,7 +88,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                     <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                         -- Select Make --
                                     </MenuButton>
-                                    <MenuList >
+                                    <MenuList zIndex="1" >
                                         <MenuItem className="menu-item">Toyota</MenuItem>
                                         <MenuItem className="menu-item">Scion</MenuItem>
 

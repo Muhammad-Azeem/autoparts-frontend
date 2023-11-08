@@ -90,7 +90,7 @@ const TopSection = () => {
                                 -- Select Make --
                             </MenuButton>
                             <Box maxHeight="200px" overflowY="auto">
-                                <MenuList >
+                                <MenuList zIndex="1">
                                     <MenuItem className="menu-item">Toyota</MenuItem>
                                     <MenuItem className="menu-item">Scion</MenuItem>
 

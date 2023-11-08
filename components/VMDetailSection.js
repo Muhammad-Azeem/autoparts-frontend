@@ -335,11 +335,11 @@ const DetailSection = ({title}) => {
                                         <Box width="100%">
                                             <Breadcrumb className="breadcrum" spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
                                                 <BreadcrumbItem className="breadcrum-ol" >
-                                                    <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
+                                                    <BreadcrumbLink textDecoration="underline"  cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
                                                 </BreadcrumbItem>
 
                                                 <BreadcrumbItem  className="breadcrum-ol" isCurrentPage>
-                                                    <BreadcrumbLink href='#'>Popular Toyota Body Parts</BreadcrumbLink>
+                                                    <BreadcrumbLink fontWeight="600" href='#'>Popular Toyota Body Parts</BreadcrumbLink>
                                                 </BreadcrumbItem>
                                             </Breadcrumb>
                                             <Heading className="section-headings" as="h2">

@@ -101,6 +101,7 @@ const AcctDash = () => {
                             </Box>
                         </Box>
 
+
                         <Box position="sticky" top="0px" mt={15} border="1px solid #b0b0b0" alignItems="center">
                             <Text  className="vm-leftside-heading" size="lg">
                                 Help Center
@@ -120,6 +121,24 @@ const AcctDash = () => {
                         </Box>
                     </GridItem>
                 </Grid>
+
+                <Menu className="menu-show" >
+                    <MenuButton className="menu-show endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
+                        -- Select Category --
+                    </MenuButton>
+                    <MenuList zIndex={3} >
+                        <MenuItem   className="menu-item">
+                            <Link className="success-leftside-link"  href="/">
+                                Dashboard
+                            </Link>
+                        </MenuItem>
+                        <MenuItem onClick={() => setActiveGridItem(1)} className="menu-item">Order History</MenuItem>
+                        <MenuItem onClick={() => setActiveGridItem(2)} className="menu-item">Account Setting</MenuItem>
+                        <MenuItem onClick={() => setActiveGridItem(3)}  className="menu-item">Address Book</MenuItem>
+                    </MenuList>
+                </Menu>
+
+
                 {activeGridItem === 1 &&
                 <GridItem  colSpan={1} bg='#fff'>
                     <Flex>

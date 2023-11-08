@@ -32,7 +32,18 @@ const CorePolicyPage = () => {
     const handleHomeClick = () => {
         router.push('/');
     };
-
+    const handleSalesClick = () => {
+        router.push('/SalesPolicy');
+    };
+    const handleReturnClick = () => {
+        router.push('/ReturnPolicy');
+    };
+    const handlePrivacyClick = () => {
+        router.push('/PrivacyPolicy');
+    };
+    const handleCoreClick = () => {
+        router.push('/CorePolicy');
+    };
     const items = [
         'Starters',
         'ABS Modulators',
@@ -74,18 +85,22 @@ const CorePolicyPage = () => {
                             </Box>
                             <Box>
                                 <Box
+                                    onClick={handleSalesClick}
                                     className="vm-leftside-box" fontSize="small" >
                                     Sales Policy
                                 </Box>
                                 <Box
+                                    onClick={handleReturnClick}
                                     className="vm-leftside-box" fontSize="small" >
                                     Return Policy
                                 </Box>
                                 <Box
+                                    onClick={handlePrivacyClick}
                                     className="vm-leftside-box" fontSize="small" >
                                     Privacy Policy
                                 </Box>
                                 <Box
+                                    onClick={handleCoreClick}
                                     className="vm-leftside-box" fontSize="small" >
                                     Remanufactured Parts/Core Policy
                                 </Box>
@@ -93,14 +108,34 @@ const CorePolicyPage = () => {
                         </Box>
                     </GridItem>
                 </Grid>
-
+                <Menu className="menu-show" >
+                    <MenuButton className="menu-show endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
+                        -- Select Category --
+                    </MenuButton>
+                    <MenuList zIndex={3} >
+                        <MenuItem   className="menu-item">
+                            <Link className="success-leftside-link"  href="/">
+                                Contact Us
+                            </Link>
+                        </MenuItem>
+                        <MenuItem   className="menu-item">
+                            <Link className="success-leftside-link"  href="/">
+                                Help Center
+                            </Link>
+                        </MenuItem>
+                        <MenuItem   onClick={handleSalesClick} className="menu-item">Sales Policy</MenuItem>
+                        <MenuItem   onClick={handleReturnClick} className="menu-item">Return Policy</MenuItem>
+                        <MenuItem   onClick={handlePrivacyClick}  className="menu-item">Privacy Policy</MenuItem>
+                        <MenuItem   onClick={handleCoreClick} className="menu-item">Remanufactured Parts/Core Policy</MenuItem>
+                    </MenuList>
+                </Menu>
                 <GridItem  colSpan={1} bg='#fff'>
                     <Breadcrumb className="policy-breadcrum"  separator=">">
                         <BreadcrumbItem fontSize="14px">
-                            <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
+                            <BreadcrumbLink  textDecoration="underline"  cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
                         </BreadcrumbItem >
                         <BreadcrumbItem fontSize="14px" isCurrentPage>
-                            <BreadcrumbLink href="#">Return Policy</BreadcrumbLink>
+                            <BreadcrumbLink  fontWeight="600" href="#">Remanufactured Parts/Core Policy</BreadcrumbLink>
                         </BreadcrumbItem>
                     </Breadcrumb>
                     <Flex>

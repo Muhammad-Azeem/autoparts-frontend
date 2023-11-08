@@ -273,6 +273,20 @@ body{
     background: #bc0000;
     color: white;
 }
+.acsry-models-button{
+    background: white;
+    color: black;
+    border: 1px solid #D0D0D0;
+    border-radius: 4px;
+    width: 250px;
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.5s ease;
+}
+.acsry-models-button:hover{
+    background: #bc0000;
+    color: white;
+}
 .wholesale-heading{
     color: #2E5BA5;
     font-weight: 700;
@@ -343,6 +357,7 @@ body{
 }
 .breadcrum-ol{
     font-size: 14px;
+
 }
 .chakra-breadcrumb__list{
     padding: 0px;
@@ -432,6 +447,12 @@ body{
     padding: 0px 5px;
     margin-top: 20px;
     grid-template-columns: repeat(4,1fr);
+    margin-left: 25px;
+}
+.acsry-productblock-grid{
+    padding: 0px 5px;
+    margin-top: 20px;
+    grid-template-columns: repeat(5,1fr);
     margin-left: 25px;
 }
 .productdetail-grid{
@@ -649,13 +670,14 @@ body{
     border: 1px solid #333;
 }
 .modalContent{
-   padding: 250px;
+   padding: 150px 250px;
     background-color: rgba(0,0,0,.45);
 
 }
 .modalBody{
     justify-content: center;
     display: flex;
+    margin-bottom: 150px;
 }
 
 .clear-all{
@@ -1302,7 +1324,7 @@ body{
 .category-list-item{
     color: #406cc8;
     display: block;
-    padding: 0.20rem 0;
+    padding: 5px 0;
     white-space: normal;
     border-bottom: 1px dotted #d0d0d0;
     cursor: pointer;
@@ -1327,6 +1349,9 @@ body{
 }
 .Product-listing-heading{
     padding: 0px 150px;
+}
+.Product-detail-heading{
+    padding: 0px 160px;
 }
 .Product-detail-heading{
     padding: 0px 160px;
@@ -1919,6 +1944,20 @@ body{
 .pp-row2{
     border-top: 1px solid #b0b0b0;
 }
+.acc-banner{
+    padding: 0px 150px;
+    position: relative;
+}
+.acc-banner img{
+    height: 235px;
+    width: 100%;
+    margin-left: 10px;
+}
+.acsry-text-bottom{
+    padding: 0px 150px;
+    color: #606060;
+    font-size: 14px;
+}
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {
@@ -2111,18 +2150,146 @@ li {
         width: 60px;
     }
 }
+@media(max-width:1440px){
+    .pp-price-box2 {
+        right: -50px;
+    }
+    .pp-price-box {
+        right: -50px;
+    }
+    .pp-box2-title {
+        font-size: 20px;
+    }
+}
 
 @media(max-width:1360px){
     .product-box{
         padding: 8px;
     }
+    .pp-price-box {
+        width: 225px;
+    }
+    .pp-price-box2 {
+        width: 225px;
+    }
+}
+@media only screen and (min-width: 1024px) and (min-height: 1366px){
+    .sub-header-rightlinks {
+        font-size: 12px;
+    }
+    .sub-header-links {
+        font-size: 12px !important;
+    }
+    .models-button {
+        width: 200px!important;
+        padding: 5px 10px;
+    }
+    .acsry-models-button {
+        width: 200px!important;
+        padding: 5px 10px;
+    }
+    .productblock-grid{
+        grid-template-columns: repeat(3,1fr);
+    }
+    /*.search-by-category-text {*/
+    /*    font-size: 10px;*/
+    /*}*/
+    /*.models-button {*/
+    /*    width: 250px;*/
+    /*}*/
+    .pp-box2-title {
+        font-size: 15px;
+    }
+    .pp-box1-simg {
+         height: 35px;
+    }
+    .pp-box1-img {
+        height: 110px;
+        margin-bottom: 15px;
+    }
+    .ppdetail-grid {
+        grid-template-columns: repeat(4,1fr);
+    }
+    .pp-price-box {
+        width: 200px;
+    }
+    .pp-price-box2 {
+            width: 200px;
+        }
+    .pp-box {
+        padding: 0px 70px;
+    }
+
+    .pp-productDetail-main-box {
+        margin: 10px 70px;
+    }
+    .pp-table-box {
+        width: 90%;
+        padding: 0px 35px;
+    }
+    .pp-table-box2 {
+        width: 90%;
+        padding: 0px 35px;
+    }
+    .Product-detail-heading {
+        padding: 0px 70px;
+    }
+    .Product-listing-breadcrum {
+        padding: 0px 70px;
+    }
+    .productDetail-middle-section {
+
+        margin: 10px 70px;
+    }
+    .endbar-topsection-input2 {
+        width: auto;
+        padding: 5px 7px;
+    }
+    .endbar-topsection-input {
+        width: auto;
+        padding: 5px 7px;
+        margin-left: 5px;
+    }
+    .middlebar_red-btn{
+        padding: 3px 5px;
+    }
+    .text-below-box {
+        padding: 0px 70px;
+    }
+    .productDetail-main-box {
+        margin: 10px 70px;
+        border-top: 1px solid #d0d0d0;
+    }
+    .productdetail-grid {
+        grid-template-columns: repeat(4,1fr);
+    }
+    .box-one-text {
+
+        font-size: 14px;
+    }
+    .topSection_main-padding {
+        padding: 0px 65px;
+    }
+    .or-image {
+        left: -20px;
+    }
 }
 @media(max-width:1280px){
+    .endbar-topsection-input{
+        margin-left: 15px;
+        width: 115px;
+        padding: 5px;
+    }
+    .endbar-topsection-input2{
+        margin-left: 15px;
+        width: 140px;
+        padding: 5px;
+    }
     .product-box{
         padding: 3px;
     }
     .search-by-category-text{
-        font-size: 16px;
+        font-size: 14px;
     }
     .sub-header-links{
         margin-right: 15px;
@@ -2134,9 +2301,36 @@ li {
     .vm-leftside-heading{
         font-size: 14px ;
     }
+    .box-one-text {
+        margin-top: 30px;
+    }
+    .productblock-grid {
+
+        grid-template-columns: repeat(3,1fr);;
+    }
+    .models-button {
+        width: 250px;
+    }
+    .acsry-models-button {
+        width: 250px;
+    }
+    .footer_images-bottom{
+        width: 50px;
+    }
+
 }
 
 @media(max-width:1024px){
+    .acsry-text-bottom {
+        padding: 0px 45px;
+    }
+    .acc-banner {
+        padding: 0px 40px;
+    }
+    .productDetail-middle-section {
+        width: 90%;
+        margin: 10px 55px;
+    }
     .header{
         padding: 20px 35px;
     }
@@ -2157,8 +2351,15 @@ li {
     .footer_images-top {
         width: 120px;
     }
-    .or-image{
-        left: 44%;
+    .or-image {
+        left: -20px;
+    }
+    .models-button {
+        padding: 5px 10px;
+    }
+    .acsry-models-button {
+        padding: 5px 10px;
+        width: 220px;
     }
     .sub-header {
         padding: 10px 35px;
@@ -2168,9 +2369,6 @@ li {
     }
     .genuine-parts-para{
         padding: 0px 115px;
-    }
-    .models-button{
-        padding: 5px 50px;
     }
     .wholesale-para {
         padding: 0px 170px;
@@ -2189,10 +2387,34 @@ li {
     .search-placeholder {
         width: 135px;
     }
+    .left-row {
+        width: 175px;
+    }
     .images-product_box {
         width: 100px;
         height: 80px;
 
+    }
+    .sub-header-rightlinks {
+        font-size: 9px;
+    }
+    .sub-header-links {
+        font-size: 9px;
+    }
+    .models-button {
+        width: 175px;
+    }
+    .acsry-models-button {
+        width: 175px;
+    }
+    .productblock-grid{
+        grid-template-columns: repeat(3,1fr);
+    }
+    .search-by-category-text {
+        font-size: 10px;
+    }
+    .genuine-parts-heading {
+        top: -225px;
     }
     .footer_images-top {
         width: 95px;
@@ -2206,14 +2428,27 @@ li {
     .models-button {
         padding: 5px 35px;
     }
+    .acsry-models-button {
+        padding: 5px 35px;
+    }
     .genuine-parts-para {
         padding: 0px 45px;
     }
     .wholesale-para {
         padding: 0px 115px;
     }
-}
-@media(max-width:768px) {
+    .topSection_main-padding {
+        padding: 0px 30px;
+    }
+    .or-image {
+
+        top: -7px;
+        left: -20px;
+
+        border: 4px solid #003566;
+        border-radius: 50%;
+        font-size: 10px;
+    }
     .header-select-vehicle {
         display: none;
     }
@@ -2236,6 +2471,9 @@ li {
         padding: 3px 10px;
     }
 }
+/*@media(max-width:768px) {*/
+/*    */
+/*}*/
 @media(max-width:480px) {
 
     .wholesale-heading{
@@ -2333,6 +2571,9 @@ li {
     .models-button {
         padding: 5px 35px;
     }
+    .acsry-models-button {
+        padding: 5px 35px;
+    }
     .carousel.carousel-slider{
         height: auto;
     }
@@ -2414,7 +2655,8 @@ li {
         padding: 0px 18px;
     }
     .list-category{
-        padding: 3px 0px;
+        padding: 5px 0px;
+        font-size: 15px;
     }
     .list-grid {
         margin-left: 7px;
@@ -2424,6 +2666,7 @@ li {
     }
     .category-list-ul{
         padding: 0px;
+        margin: 0;
     }
     .bussiness-box1 {
         padding: 0px;
@@ -2466,9 +2709,17 @@ li {
     .product-price-box{
         position: relative;
     }
-    .pp-price-box{
+    /*.pp-price-box{*/
+    /*    position: relative;*/
+    /*    width: 250px;*/
+    /*    right: -30px;*/
+    /*}*/
+    .pp-price-box {
         position: relative;
-        width: 315px;
+        /* width: 250px; */
+        right: -10px;
+        width: auto;
+        margin: 5px;
     }
     .productDetail-box2-heads{
         padding: 0px;
@@ -2489,6 +2740,9 @@ li {
         grid-template-columns: repeat(2,1fr);
     }
     .models-button {
+        width: 150px;
+    }
+    .acsry-models-button {
         width: 150px;
     }
     .cart-main-padding {
@@ -2533,6 +2787,7 @@ li {
     }
     .category-list-item{
         font-size: 15px;
+        margin: 0;
     }
     .success-heading {
         padding: 5px 20px;
@@ -2643,4 +2898,47 @@ li {
     .pp-question {
         padding: 10px;
     }
+    .some-text{
+        padding: 0px 10px;
     }
+    .modalContent {
+        padding: 160px 0px;
+    }
+    .chakra-modal__close-btn {
+        right: 10px;
+    }
+    .box-one-text {
+        margin-top: 25px;
+    }
+        .or-image {
+        left: -35px;
+    }
+    .pp-checkbtn{
+        width: 110px;
+        font-size: 12px;
+        padding: 8px 10px;
+        margin-right: 15px;
+    }
+    .endbar-topsection-input2{
+        margin-left: 0px;
+        margin-top: 15px;
+    }
+    .add-new-vehicle {
+        padding: 5px 10px;
+    }
+    .footer-padding {
+        padding: 0px;
+    }
+    .acsry-productblock-grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .acc-banner {
+        padding: 0px 7px;
+        margin-top: 10px;
+    }
+    .acc-banner img {
+        height: 150px;
+        width: 100%;
+        margin-left: 10px;
+    }
+}

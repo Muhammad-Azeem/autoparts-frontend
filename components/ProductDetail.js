@@ -152,7 +152,7 @@ const ProductDetail = () => {
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
-                <BreadcrumbItem fontSize="14px">
+                <BreadcrumbItem ml={12} fontSize="14px">
                     <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
                 </BreadcrumbItem >
                 <BreadcrumbItem fontSize="14px" isCurrentPage>
@@ -204,7 +204,7 @@ const ProductDetail = () => {
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Model --
                                 </MenuButton>
-                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}}>
+                                <MenuList style={{zIndex:'3',overflowY: 'auto',maxHeight:'250px'}} zIndex={3}>
                                     <MenuItem className="menu-item">4Runner</MenuItem>
                                     <MenuItem className="menu-item">86</MenuItem>
                                     <MenuItem className="menu-item">Avalon</MenuItem>
@@ -405,7 +405,7 @@ const ProductDetail = () => {
                                 </Text>
                                 <Box display="grid">
                                     <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleGoToCartClick} mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                    <Button onClick={handleProductClick} mt={10} className="add-to-cart-btn" colorScheme="teal">View Details</Button>
                                 </Box>
 
                             </Box>

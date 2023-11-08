@@ -79,13 +79,13 @@ const ProductPage = () => {
 
     <Box >
         <Box className="pp-box">
-            <Breadcrumb className="breadcrum" spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
+            <Breadcrumb  spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
                 <BreadcrumbItem className="breadcrum-ol" >
-                    <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
+                    <BreadcrumbLink textDecoration="underline" cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
                 </BreadcrumbItem>
 
                 <BreadcrumbItem  className="breadcrum-ol" isCurrentPage>
-                    <BreadcrumbLink href='#'>Toyota 9034112012</BreadcrumbLink>
+                    <BreadcrumbLink fontWeight="600" href='#'>Toyota 9034112012</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
 
@@ -454,7 +454,7 @@ const ProductPage = () => {
             </Text>
             <div style={{marginTop:'15px'}} className="grey-line"></div>
 
-            <Text mt={10}>
+            <Text className="some-text" mt={10}>
                 {/*eslint-disable-next-line react/no-unescaped-entities*/}
                 If you have any questions about this product, please don't hesitate to ask us. We will be happy to help you!
             </Text>
@@ -462,15 +462,15 @@ const ProductPage = () => {
                 Ask a Question
             </Text>
 
-            <Text mt={10}>
+            <Text className="some-text"  mt={10}>
                 Genuine Toyota Part 90341-18057, the Right Choice
             </Text>
-            <Text className="pp-lower-para" mt={10}>
+            <Text  className="some-text pp-lower-para" mt={10}>
                 {/*eslint-disable-next-line react/no-unescaped-entities*/}
                 Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
             </Text>
 
-            <Text mb={25} className="pp-lower-para" mt={10}>
+            <Text mb={25} className="some-text pp-lower-para" mt={10}>
                 {/*eslint-disable-next-line react/no-unescaped-entities*/}
                 Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
             </Text>
