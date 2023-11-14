@@ -1,5 +1,6 @@
 // components/Header.js
-import React from 'react';
+import React, {useEffect,useState} from 'react';
+import { useRouter } from 'next/router';
 import {
     Heading,
     Input,
@@ -27,35 +28,60 @@ import FourthProductBlock from "./FourthProductBlock";
 import FifthProductBlock from "./FifthProductBlock";
 import SixthProductBlock from "./SixthProductBlock";
 import SeventhProductBlock from "./SeventhProductBlock";
-
+import Product from './Product';
+import {getAllProductsByCategory } from './API/api';
 const ProductBox = () => {
+    const router = useRouter();
+
+    const handleViewMoreClick = () => {
+        // Use router.push to navigate to the product list page
+        router.push('/ViewMore'); // Replace '/productlist' with the actual URL of your product list page
+    };
+
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getAllProductsByCategory();
+                setProducts(data);
+            
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
     return (
         <Flex>
             <Box colSpan={4} bg='#F4F4F4'>
-
-                <ProductBlock
-                    title="Power Train/Chassis Parts"
-                />
-                <SecondProductBlock
-                    title="Body Parts"
-                />
-                <ThirdProductBlock
-                    title="Engine/Fuel/Tool Parts"
-                />
-                <FourthProductBlock
-                    title="Electrical Parts"
-                />
-                <FifthProductBlock
-                    title="Exterior Accessories"
-                />
-                <SixthProductBlock
-                    title="Interior Accessories"
-                />
-                <SeventhProductBlock
-                    title="Other Toyota Accessories"
-                />
+            {products.map((product, index) => (
+                <Flex>
+                    <Box width="100%">
+                        <Heading ml={15} fontStyle="bold" color="black" as="h4" size="lg" mb={4}>
+                            {product.name}
+                        </Heading>
+                        <Grid className="item productblock-grid"   gap={6}>
+                        {product.products.map((product, productIndex) => (
+                            <Product
+                                image={product.images}
+                                description={product.name}
+                            >
+                            </Product>
+                            ))}
+                        
+                        </Grid>
+                        <Center>
+                            <Button onClick={handleViewMoreClick} className="product-red-btn" mt={15} >
+                                VIEW MORE
+                            </Button>
+                        </Center>
+                    </Box>
+                </Flex>
+                 ))}
             </Box>
-
         </Flex>
     )
 };

@@ -1,5 +1,5 @@
 // components/Header.js
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import {
     Heading,
     Input,
@@ -21,7 +21,10 @@ import {
 import '../styles//global.css';
 import ProductBox from "./ProductBox";
 import LeftSide from "./LeftSide";
+
+
 const DetailSection = () => {
+ 
     return (
 
         <Grid

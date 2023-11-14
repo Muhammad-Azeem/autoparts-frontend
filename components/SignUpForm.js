@@ -20,10 +20,7 @@ import {
     Center, FormControl, FormLabel
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import ProductBox from "./ProductBox";
-import {ChevronDownIcon} from "@chakra-ui/icons";
-import LeftSide from "./LeftSide";
-import ProductBlock from "./ProductBlock";
+
 import {login, register} from "./API/api";
 const SignUpForm = () => {
     const router = useRouter();
@@ -37,6 +34,7 @@ const SignUpForm = () => {
     const [error, setError] = useState('');
 
     const handleRegister = async () => {
+
         if (email !== confirmEmail) {
             setError("Emails don't match");
             displayErrorAndHide();
@@ -68,7 +66,7 @@ const SignUpForm = () => {
         try {
             const credentials = { email: loginEmail, password: loginPassword };
             await login(credentials);
-            await router.push('/protected'); // Redirect to a protected route after successful login
+            await router.push('/AccountDashboard'); // Redirect to a protected route after successful login
         } catch (error) {
             console.error('Login failed:', error);
         }

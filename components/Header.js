@@ -18,7 +18,8 @@ import { ArrowUpDownIcon } from '@chakra-ui/icons';
 import '../styles//global.css';
 import { useRouter } from 'next/router';
 import { FaUser ,FaShoppingCart } from "react-icons/fa";
-
+import { RiDashboardLine, RiSettingsLine, RiHistoryLine } from "react-icons/ri";
+import {login, logout} from '../components/API/api'
 const Header = () => {
     const [isDivOpen, setIsDivOpen] = useState(false);
     const divRef = useRef();
@@ -48,6 +49,12 @@ const Header = () => {
         };
     }, [isDivOpen]);
 
+    const [User, setUser] = useState();
+    useEffect(() => {
+        // const token = localStorage.getItem('token');
+        setUser(localStorage.getItem('token'))
+    }, []);
+
     const router = useRouter();
 
     const handleLoginClick = () => {
@@ -58,6 +65,23 @@ const Header = () => {
         router.push('/AddToCart');
     };
 
+    const handleDashClick = () => {
+        router.push('/');
+    };
+
+    const handleAcctSettingClick = () => {
+        router.push('/AccountDashboard');
+    };
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            // window.location.reload();
+            await router.push('/signUp');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
     return (
         <Flex className="header" as="header" >
             {/* Left-aligned logo */}
@@ -107,11 +131,47 @@ const Header = () => {
                             <Icon as={FaUser} boxSize="24px" mr={10} style={{ color: "#2E5BA5" }} />
                         </Box>
                         <div>
-                        <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
+                            <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
                             <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
                                 <span className="blue-text">My Account </span>
                                 </Text>
                             {isDivOpen && (
+                            User ? (
+                                <div
+                                    ref={divRef}
+                                    style={{
+                                            position: 'absolute',
+                                            top: '55px', // Adjust the positioning as needed
+                                            right: '-25px',
+                                            width: '170px', // Set the desired width
+                                            // height: '75px',
+                                            background: 'white',
+                                            boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                                            zIndex: '9',
+                                            // textAlign: 'center'
+                                        // Add other styles as needed
+                                    }}
+                                    onMouseLeave={handleMouseLeave}
+                                >
+                                    <div className="container">
+                                        <div onClick={handleDashClick}  className="dash-row">
+                                            <div className="dash-icon"><Icon as={RiDashboardLine} boxSize={20}/></div>
+                                            <div className="dash-text">Dashboard</div>
+                                        </div>
+                                        <div onClick={handleAcctSettingClick}  className="dash-row">
+                                            <div className="dash-icon"><Icon as={RiSettingsLine} boxSize={20}/></div>
+                                            <div className="dash-text">Account Settings</div>
+                                        </div>
+                                        <div onClick={handleAcctSettingClick} className="dash-row">
+                                            <div className="dash-icon"><Icon as={RiHistoryLine} boxSize={20}/></div>
+                                            <div className="dash-text">Order History</div>
+                                        </div>
+                                        <div onClick={handleLogout} className="dash-row" style={{justifyContent:'center'}}>
+                                            <div className="logout-text">Logout</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
                                 <div
                                     ref={divRef}
                                     style={{
@@ -135,6 +195,7 @@ const Header = () => {
                                         </p>
 
                                 </div>
+                            )
                             )}
                         </Box>
                         </div>

@@ -1958,6 +1958,77 @@ body{
     color: #606060;
     font-size: 14px;
 }
+.my-account-dash{
+    display: flex;
+    align-items: center;
+
+}
+.my-account-dash1{
+    display: flex;
+    align-items: center;
+}
+.my-account-dash2{
+    display: flex;
+    align-items: center;
+
+}
+.my-account-dash img {
+    height: 40px;
+}
+.my-account-dash1 img{
+    height: 30px;
+}
+.my-account-dash2 img{
+    height: 25px;
+}
+.my-account-dash span{
+    /*margin-right: 10px;*/
+    color: #939393;
+}
+.my-account-dash1 span{
+    /*margin-right: 10px;*/
+    color: #939393;
+}
+.my-account-dash2 span{
+    /*margin-right: 10px;*/
+    color: #939393;
+}
+.container {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*height: 100vh;*/
+}
+
+.dash-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.dash-icon {
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.dash-icon img {
+    width: 50px; /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+}
+
+.dash-text {
+    text-align: center;
+}
+.logout-text{
+    padding: 5px 30px;
+    background: #f0f0f0;
+    border: 1px solid #b0b0b0;
+    color: #333;
+    text-align: center;
+    cursor: pointer;
+}
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {

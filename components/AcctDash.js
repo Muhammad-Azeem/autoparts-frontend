@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -30,11 +30,57 @@ import {
     Table, TableCaption, Thead, Th, Tr, Tbody, Td
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
+import {checkAuth, register} from '../components/API/api'
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import Product from "./Product";
-import {FaMinus, FaPlus} from "react-icons/fa";
+import {changeEmail} from './API/api'
 const AcctDash = () => {
+    const [currentEmail, setCurrentEmail] = useState('');
+    const [newEmail, setNewEmail] = useState('');
+    const [confirmEmail, setConfirmEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [user, setUser] = useState('');
+    const [error, setError] = useState('');
+
+    const displayErrorAndHide = () => {
+        setTimeout(() => {
+            setError('');
+        }, 10000);
+    };
+
+    useEffect(() => {
+        let temp= localStorage.getItem('user');
+
+        temp = JSON.parse(temp); 
+        setUser(temp);
+        setCurrentEmail(temp.email)
+        // console.log(JSON.parse(temp));
+    }, []);
+
+    const handleChangeEmail = async (e) => {
+        e.preventDefault();
+
+        // Form validation
+        if (newEmail !== confirmEmail) {
+            setError("Emails don't match");
+            displayErrorAndHide();
+            return;
+        }
+
+    
+        // Send the form data to your backend for validation and update
+        try {
+            const userData = { currentEmail, newEmail, password };
+            let response = await changeEmail(userData);
+            console.log('rest', response)
+            // await router.push('/login'); // Redirect to the login page after successful registration
+        } catch (error) {
+            console.error('Email Updation failed:', error);
+            setError('Email Updation failed. Please try again.');
+            displayErrorAndHide();
+        }
+    };
+
+
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isEditBox1Visible, setIsEditBox1Visible] = useState(true);
@@ -221,8 +267,8 @@ const AcctDash = () => {
                                             <Text fontWeight="600">
                                                 Current Email Address:
                                             </Text>
-                                            <Text>
-                                                xyz@gmail.com
+                                            <Text >
+                                               {user.email}
                                             </Text>
                                             <Text onClick={toggleEditBoxVisibility} className="account-edit-btn">
                                                 Edit
@@ -234,6 +280,9 @@ const AcctDash = () => {
                                         <Heading mt={10} className="account-login" as="h3" >
                                             Change Login Email
                                         </Heading>
+                                        {error && (
+                                            <p style={{ color: 'red' }}>{error}</p>
+                                        )}
                                         <Box mt={10} borderBottom="1px solid #d0d0d0">
                                         </Box>
                                         <Text className="log-subhead">
@@ -243,26 +292,28 @@ const AcctDash = () => {
                                             <form>
                                                 <FormControl className="acctSet-inputbox">
                                                     <FormLabel className="account-label" flex={1} pr={4}>Current Email</FormLabel>
-                                                    <Text margin="0"> xyz@gmail.com</Text>
+                                                    <Text margin="0">
+                                                        {user.email}
+                                                    </Text>
                                                 </FormControl>
 
                                                 <FormControl className="acctSet-inputbox">
                                                     <FormLabel className="account-label" flex={1} pr={4}>New Email:</FormLabel>
-                                                    <Input className="account-input" flex={2} type="text" />
+                                                    <Input className="account-input" flex={2} type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                                                 </FormControl>
 
                                                 <FormControl className="acctSet-inputbox">
                                                     <FormLabel className="account-label" flex={1} pr={4}>Confirm New Email:</FormLabel>
-                                                    <Input className="account-input" flex={2} type="text" />
+                                                    <Input className="account-input" flex={2} type="email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} />
                                                 </FormControl>
 
                                                 <FormControl className="acctSet-inputbox">
                                                     <FormLabel className="account-label" flex={1} pr={4}>Password:</FormLabel>
-                                                    <Input className="account-input" flex={2} type="text" />
+                                                    <Input className="account-input" flex={2} type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                                 </FormControl>
                                                 <Box className="acctSet-butbox">
                                                     <Button onClick={toggleEditBoxVisibility} mr={10} className="discard-btn" >Discard Changes</Button>
-                                                    <Button className="account-save-btn" type="submit">Save Changes</Button>
+                                                    <Button onClick={handleChangeEmail} className="account-save-btn" type="button">Save Changes</Button>
                                                 </Box>
                                             </form>
                                         </Box>
@@ -450,4 +501,23 @@ const AcctDash = () => {
     );
 };
 
-export default AcctDash;
+const withAuth = (WrappedComponent) => {
+    return (props) => {
+        const router = useRouter();
+
+        useEffect(() => {
+            const checkAuthentication = async () => {
+                try {
+                    await checkAuth();
+                } catch (error) {
+                    router.push('/signUp'); // Redirect to the login page if not authenticated
+                }
+            };
+
+            checkAuthentication();
+        }, []);
+
+        return <WrappedComponent {...props} />;
+    };
+};
+export default withAuth(AcctDash);
