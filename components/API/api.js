@@ -36,7 +36,7 @@ export const changeEmail = async (userData) => {
     }
 
     try {
-      
+
         let data = new FormData();
         data.append('currentEmail', userData.currentEmail);
         data.append('newEmail', userData.newEmail);
@@ -47,8 +47,8 @@ export const changeEmail = async (userData) => {
             maxBodyLength: Infinity,
             url: `${API_BASE_URL}/changeEmail`,
             data : data,
-            headers: { 
-                'Authorization': `Bearer ${token}`, 
+            headers: {
+                'Authorization': `Bearer ${token}`,
               }
         };
 
@@ -100,14 +100,9 @@ export const checkAuth = async () => {
     }
 };
 export const vehicleYears = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        throw new Error('No token found');
-    }
 
     try {
         const response = await axios.get(`${API_BASE_URL}/vehicle/allYears`, {
-            headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
     } catch (error) {
@@ -116,14 +111,9 @@ export const vehicleYears = async () => {
 };
 
 export const vehicleModels = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        throw new Error('No token found');
-    }
 
     try {
         const response = await axios.get(`${API_BASE_URL}/vehicle/allModels`, {
-            headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
     } catch (error) {
@@ -132,14 +122,8 @@ export const vehicleModels = async () => {
 };
 
 export const vehicleCompany = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        throw new Error('No token found');
-    }
-
     try {
         const response = await axios.get(`${API_BASE_URL}/vehicle/allCompanies`, {
-            headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
     } catch (error) {
@@ -148,13 +132,24 @@ export const vehicleCompany = async () => {
 };
 
 export const getAllProductsByCategory = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/getAllProductsByCategory`, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+export const getMyGarage = async () => {
     const token = localStorage.getItem('token');
+    let temp= localStorage.getItem('user');
+    temp = JSON.parse(temp);
+
     if (!token) {
         throw new Error('No token found');
     }
 
     try {
-        const response = await axios.get(`${API_BASE_URL}/product/getAllProductsByCategory`, {
+        const response = await axios.get(`${API_BASE_URL}/getMyGarage/`+temp.id, {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
