@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState , useEffect} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -20,11 +20,28 @@ import {
     Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
+import {getAllCategories } from './API/api';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
 const ProductListing = () => {
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const data = await getAllCategories();
+                setCategories(data);
+            
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -74,21 +91,68 @@ const ProductListing = () => {
         }
     };
 
-    const powerTrainChassisRef = useRef();
-    const engineFuelToolChassisRef = useRef();
-    const electricalChassisRef = useRef();
-    const bodyPartsChassisRef = useRef();
+    const isCategoryOpen = (categoryName) => {
+        switch (categoryName) {
+          case 'BodyParts':
+            return isBodyPartsOpen;
+          case 'Electrical':
+            return isElectricalOpen;
+          case 'EngineFuelTool':
+            return isEngineFuelToolOpen;
+          case 'PowerTrainChassis':
+            return isPowerTrainChassisOpen;
+          // Add cases for other categories
+          default:
+            return false;
+        }
+      };
 
     const scrollToListSection = (ref) => {
         if (ref && ref.current) {
             ref.current.scrollIntoView({ behavior: 'smooth' });
         }
     };
+    // const refs = categories.map(() => useRef());
+
+    // const powerTrainChassisRef = useRef();
+    // const engineFuelToolChassisRef = useRef();
+    // const electricalChassisRef = useRef();
+    // const bodyPartsChassisRef = useRef();
+
+   
     const router = useRouter();
 
     const handleHomeClick = () => {
         router.push('/');
     };
+    const [isDivOpen, setIsDivOpen] = useState(false);
+    const divRef = useRef();
+
+    // Close the div when clicking outside
+    const handleClickOutside = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setIsDivOpen(false);
+        }
+    };
+
+    // Close the div when the cursor hovers out
+    const handleMouseLeave = () => {
+        setIsDivOpen(false);
+    };
+
+    // Add click outside event listener when the div is open
+    useEffect(() => {
+        if (isDivOpen) {
+            document.addEventListener('click', handleClickOutside);
+        } else {
+            document.removeEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [isDivOpen]);
+
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
@@ -127,26 +191,18 @@ const ProductListing = () => {
                             <Text  className="vm-leftside-heading" size="lg">
                                 Categories
                             </Text>
-                            <Box
-                                onClick={() => {scrollToListSection(bodyPartsChassisRef);}}
-                                className="vm-leftside-box" fontSize="small" color="grey">
-                                Body Parts
-                            </Box>
-                            <Box
-                                onClick={() => {scrollToListSection(electricalChassisRef);}}
-                                className="vm-leftside-box" fontSize="small" color="grey">
-                                Electrical
-                            </Box>
-                            <Box
-                                onClick={() => {scrollToListSection(engineFuelToolChassisRef);}}
-                                className="vm-leftside-box" fontSize="small" color="grey">
-                                Engine/Fuel/Tool
-                            </Box>
-                            <Box
-                                onClick={() => {scrollToListSection(powerTrainChassisRef);}}
-                                 className="vm-leftside-box" fontSize="small" color="grey">
-                                Power Train/Chassis
-                            </Box>
+                            {categories.map((category, index) => (
+                                <Box
+                                key={index}
+                                onClick={() => scrollToListSection()}
+                                className="vm-leftside-box"
+                                fontSize="small"
+                                color="grey"
+                                // ref={refs[index]}
+                                >
+                                {category.name}
+                                </Box>
+                            ))}
                         </Box>
                     </GridItem>
                 </Grid>
@@ -158,184 +214,63 @@ const ProductListing = () => {
                                 <Heading className="list-heading" as="h3" >
                                     Parts and Categories
                                 </Heading>
-                                <Box className="list-category-box" >
-                                    <Heading  className="list-category"  onClick={() => toggleList('BodyParts')} as="h3">
-                                        {isBodyPartsOpen ? (
+                                
+                                    <Box className="list-category-box" >
+                                        {categories.map((category, index) => (
                                             <>
-                                                <Icon height="10px" as={FaMinus} mr={2} /> Body Parts
+                                                <Heading className="list-category"  onClick={() => toggleList(category.name)} as="h3">
+                                                    <Icon height="10px" as={FaPlus} mr={2} />  {category.name}
+                                                </Heading>
+                                                {(category.name) && (
+                                                    <List className="category-list-ul"
+                                                    spacing={3}
+                                                    >                                                        
+                                                        {category.sub_categories.map((subCategory, subIndex) => (
+                                                            <ListItem 
+                                                                onMouseLeave={handleMouseLeave}
+                                                                onMouseEnter={() => setIsDivOpen(true)}
+                                                                position="relative"
+                                                                key={subIndex} className="category-list-item">
+                                                                    {console.log(subCategory, 'start')}
+                                                                    {subCategory.name}
+                                                                    <Image float="right" height="15px"src="/images/search-list-category.png" mr="2"
+                                                            />
+                                                                <div>                                                                                      
+                                                                        {isDivOpen && (                                            
+                                                                            <div
+                                                                                ref={divRef}
+                                                                                style={{
+                                                                                        position: 'absolute',
+                                                                                        top: '8px', // Adjust the positioning as needed
+                                                                                        right: '35px',
+                                                                                        maxWidth:'370px',
+                                                                                        width:'100%',
+                                                                                        background: 'white',
+                                                                                        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                                                                                        zIndex: '9',
+                                                                                }}
+                                                                                onMouseLeave={handleMouseLeave}
+                                                                            >
+                                                                                <div className='sub-mod-box' >
+                                                                                    <Heading className='sub-mod-head'  margin="0" as="h2" mt={4}>
+                                                                                        Parts in {subCategory.name}
+                                                                                    </Heading>    
+                                                                                    <Box mt={5} className='sub-mod-innerbox' display='flex'>
+                                                                                        <Image className='sub-mod-innerbox-img' float="right" height="15px"src="/images/search-list-category.png" mr="2"/>
+                                                                                        <Text ml={25} mr={15} className='sub-mod-innerbox-text'>Product Name</Text>
+                                                                                    </Box>                                                                                             
+                                                                                </div>
+                                                                            </div>                                            
+                                                                        )}
+                                                                    
+                                                                </div>
+                                                            </ListItem>
+                                                        ))}
+                                                    </List>
+                                                    )}
                                             </>
-                                        ) : (
-                                            <>
-                                                <Icon height="10px" as={FaPlus} mr={2} /> Body Parts
-                                            </>
-                                        )}
-                                    </Heading>
-                                    {isBodyPartsOpen && (
-                                        <List className="category-list-ul" spacing={3} ref={bodyPartsChassisRef}>
-                                            <ListItem className="category-list-item">
-                                                Accelerator Link
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Armrest & Visor
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Lock & Hinge
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Panel & Glass
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Battery Carrier
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Cab Mounting & Body Mounting
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Caution Plate
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                        </List>
-                                    )}
-
-                                    <Heading className="list-category" onClick={() => toggleList('Electrical')} as="h3">
-                                        {isElectricalOpen ? (
-                                            <>
-                                                <Icon height="10px" as={FaMinus} mr={2} /> Electrical
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Icon height="10px" as={FaPlus} mr={2} /> Electrical
-                                            </>
-                                        )}
-                                    </Heading>
-                                    {isElectricalOpen && (
-                                        <List className="category-list-ul" spacing={3} ref={electricalChassisRef}>
-                                            <ListItem className="category-list-item">
-                                                Accelerator Link
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Armrest & Visor
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Lock & Hinge
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Panel & Glass
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Battery Carrier
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Cab Mounting & Body Mounting
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Caution Plate
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                        </List>
-                                    )}
-
-                                    <Heading className="list-category" onClick={() => toggleList('EngineFuelTool')} as="h3">
-                                        {isEngineFuelToolOpen ? (
-                                            <>
-                                                <Icon height="10px" as={FaMinus} mr={2} /> Engine/Fuel/Tool
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Icon height="10px" as={FaPlus} mr={2} /> Engine/Fuel/Tool
-                                            </>
-                                        )}
-                                    </Heading>
-                                    {isEngineFuelToolOpen && (
-                                        <List className="category-list-ul" spacing={3}  ref={engineFuelToolChassisRef}>
-                                            <ListItem className="category-list-item">
-                                                Accelerator Link
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Armrest & Visor
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Lock & Hinge
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Panel & Glass
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Battery Carrier
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Cab Mounting & Body Mounting
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Caution Plate
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                        </List>
-                                    )}
-
-                                    <Heading className="list-category" onClick={() => toggleList('PowerTrainChassis')} as="h3">
-                                        {isPowerTrainChassisOpen ? (
-                                            <>
-                                                <Icon height="10px" as={FaMinus} mr={2} /> Power Train/Chassis
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Icon height="10px" as={FaPlus} mr={2} /> Power Train/Chassis
-                                            </>
-                                        )}
-                                    </Heading>
-                                    {isPowerTrainChassisOpen && (
-                                        <List className="category-list-ul" spacing={3} ref={powerTrainChassisRef}>
-                                            <ListItem className="category-list-item">
-                                                Accelerator Link
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Armrest & Visor
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Lock & Hinge
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Back Door Panel & Glass
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Battery Carrier
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Cab Mounting & Body Mounting
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                            <ListItem className="category-list-item">
-                                                Caution Plate
-                                                <Image float="right" height="15px"  src="/images/search-list-category.png" mr="2" />
-                                            </ListItem>
-                                        </List>
-                                    )}
-                                </Box>
-
+                                        ))}                                         
+                                    </Box>                                 
                             </Grid>
                         </Box>
                     </Flex>

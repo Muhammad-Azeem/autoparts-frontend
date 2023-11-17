@@ -119,6 +119,14 @@ const SubHeader = () => {
 
     const onModalOpen = () => setIsModalOpen(true);
     const onModalClose = () => setIsModalOpen(false);
+
+    //cookies
+
+
+    const handleRemoveGarage = (index) => {
+        removeGarageFromCookie(index);
+        setGarage(getGarageFromCookie());
+    };
     return (
         <Flex className="sub-header">
             <div className={`abc ${isAbcVisible ? 'visible' : 'hidden'}`}></div>

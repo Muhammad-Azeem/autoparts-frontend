@@ -9,10 +9,79 @@ import {
     ModalCloseButton,
     Heading, Container, Box, Flex, Image, Input, Text, Menu, MenuButton, MenuList, MenuItem, GridItem
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
+import {vehicleCompany, vehicleModels , vehicleYears } from './API/api';
 
 const AddVehicleModal = ({ isOpen, onClose }) => {
+    //cookies
+    // const [garage, setGarage] = useState(getGarageFromCookie());
+    
+    // const handleAddGarage = () => {
+    //     const newGarage = { year: 2022, model: 'Example', car: 'CarType' };
+    //     addGarageToCookie(newGarage);
+    //     setGarage(getGarageFromCookie());
+    //   };
+
+      const [years, setYears] = useState([]);
+      const [models, setModels] = useState([]);
+      const [company, setCompany] = useState([]);
+  
+
+      useEffect(() => {
+          const fetchYears = async () => {
+            try {
+              const response = await vehicleYears();
+               setYears(response);
+            } catch (error) {
+              console.error('Error fetching years:', error);
+            }
+          };
+      
+          fetchYears();
+        }, []);
+  
+        useEffect(() => {
+          const fetchModels = async () => {
+            try {
+              const response = await vehicleModels();
+              setModels(response);
+            } catch (error) {
+              console.error('Error fetching models:', error);
+            }
+          };
+      
+          fetchModels();
+        }, []);
+  
+        useEffect(() => {
+          const fetchCompany = async () => {
+            try {
+              const response = await vehicleCompany();
+              setCompany(response);
+            } catch (error) {
+              console.error('Error fetching companies:', error);
+            }
+          };
+      
+          fetchCompany();
+        }, []);
+  
+        const handleYearSelection = (selectedYear) => {
+          // Do something with the selected year
+          console.log(selectedYear);
+        };
+        const handleModelSelection = (selectedModel) => {
+          // Do something with the selected year
+          console.log(selectedModel);
+        };
+        const [selectedCompany, setSelectedCompany] = useState(null);
+        const handleCompanySelection = (selectedCompany) => {
+            setSelectedCompany(selectedCompany);
+            // Add any other logic you need when a company is selected
+          };      
+        
+
     return (
         <Modal className="modal" isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={true}>
             <ModalOverlay className="modalOverlay" />
@@ -55,72 +124,47 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                 <Heading as="h3" size="lg" mb={4}>
                                     Select Vehicle by Model
                                 </Heading>
-
-                                <Menu >
-                                    <MenuButton className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                        -- Select Year --
-                                    </MenuButton>
-                                    <MenuList style={{overflowY: 'auto',maxHeight:'250px'}} zIndex={3} >
-                                        <MenuItem className="menu-item">2023</MenuItem>
-                                        <MenuItem className="menu-item">2022</MenuItem>
-                                        <MenuItem className="menu-item">2021</MenuItem>
-                                        <MenuItem className="menu-item">2020</MenuItem>
-                                        <MenuItem className="menu-item">2019</MenuItem>
-                                        <MenuItem className="menu-item">2018</MenuItem>
-                                        <MenuItem className="menu-item">2017</MenuItem>
-                                        <MenuItem className="menu-item">2016</MenuItem>
-                                        <MenuItem className="menu-item">2015</MenuItem>
-                                        <MenuItem className="menu-item">2014</MenuItem>
-                                        <MenuItem className="menu-item">2013</MenuItem>
-                                        <MenuItem className="menu-item">2012</MenuItem>
-                                        <MenuItem className="menu-item">2011</MenuItem>
-                                        <MenuItem className="menu-item">2010</MenuItem>
-                                        <MenuItem className="menu-item">2009</MenuItem>
-                                        <MenuItem className="menu-item">2008</MenuItem>
-                                        <MenuItem className="menu-item">2007</MenuItem>
-                                        <MenuItem className="menu-item">2006</MenuItem>
-                                        <MenuItem className="menu-item">2005</MenuItem>
-                                        <MenuItem className="menu-item">2004</MenuItem>
-                                        <MenuItem className="menu-item">2003</MenuItem>
-                                    </MenuList>
-                                </Menu>
-                                <Menu >
+                                
+                                <Menu>
                                     <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                        -- Select Make --
+                                        {selectedCompany || '-- Select Company --'}
                                     </MenuButton>
-                                    <MenuList zIndex="1" >
-                                        <MenuItem className="menu-item">Toyota</MenuItem>
-                                        <MenuItem className="menu-item">Scion</MenuItem>
-
+                                    <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
+                                        {company.length > 0 &&
+                                        company.map((company) => (
+                                            <MenuItem className="menu-item" key={company} onClick={() => handleModelSelection(company)} >
+                                            {company}
+                                            </MenuItem>
+                                        ))}
                                     </MenuList>
                                 </Menu>
-                                <Menu >
+                                <Menu>
                                     <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                         -- Select Model --
                                     </MenuButton>
-                                    <MenuList style={{overflowY: 'auto',maxHeight:'250px'}}>
-                                        <MenuItem className="menu-item">4Runner</MenuItem>
-                                        <MenuItem className="menu-item">86</MenuItem>
-                                        <MenuItem className="menu-item">Avalon</MenuItem>
-                                        <MenuItem className="menu-item">C-HR</MenuItem>
-                                        <MenuItem className="menu-item">Camry</MenuItem>
-                                        <MenuItem className="menu-item">Celica</MenuItem>
-                                        <MenuItem className="menu-item">Corolla</MenuItem>
-                                        <MenuItem className="menu-item">Corolla Cross</MenuItem>
-                                        <MenuItem className="menu-item">Corolla iM</MenuItem>
-                                        <MenuItem className="menu-item">Corona</MenuItem>
-                                        <MenuItem className="menu-item">Cressida</MenuItem>
-                                        <MenuItem className="menu-item">Echo</MenuItem>
-                                        <MenuItem className="menu-item">Fj Cruiser</MenuItem>
-                                        <MenuItem className="menu-item">GR Supra</MenuItem>
-                                        <MenuItem className="menu-item">GR86</MenuItem>
-                                        <MenuItem className="menu-item">Highlander</MenuItem>
-                                        <MenuItem className="menu-item">Land Cruiser</MenuItem>
-                                        <MenuItem className="menu-item">MR2</MenuItem>
-                                        <MenuItem className="menu-item">MR2 Spyder</MenuItem>
-                                        <MenuItem className="menu-item">Matrix</MenuItem>
+                                    <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
+                                        {models.length > 0 &&
+                                        models.map((model) => (
+                                            <MenuItem className="menu-item" key={model} onClick={() => handleModelSelection(model)}>
+                                            {model}
+                                            </MenuItem>
+                                        ))}
                                     </MenuList>
                                 </Menu>
+                                <Menu>
+                                    <MenuButton mt={10} className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
+                                        -- Select Year --
+                                    </MenuButton>
+                                    <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
+                                        {years.length > 0 &&
+                                        years.map((year) => (
+                                            <MenuItem className="menu-item" key={year} onClick={() => handleYearSelection(year)}>
+                                            {year}
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                </Menu>                   
+                        
 
                                 <Flex justify="end">
                                     <Button  mt={14} className="find-parts-btn" >Find My Parts</Button>

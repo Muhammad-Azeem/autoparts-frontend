@@ -162,3 +162,19 @@ export const getAllProductsByCategory = async () => {
         throw error;
     }
 };
+
+export const getAllCategories = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/allCategories`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
