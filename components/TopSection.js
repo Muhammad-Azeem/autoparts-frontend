@@ -51,18 +51,23 @@ const TopSection = () => {
         fetchCompany();
       }, []);
 
+      const [selectedYear, setSelectedYear] = useState(null);
+
       const handleYearSelection = (selectedYear) => {
-        // Do something with the selected year
-        console.log(selectedYear);
+          setSelectedYear(selectedYear);
       };
-      const handleModelSelection = (selectedModel) => {
-        // Do something with the selected year
-        console.log(selectedModel);
+      const [selectedModal, setSelectedModal] = useState(null);
+
+      const handleModelSelection = (selectedModal) => {
+        setSelectedModal(selectedModal);
       };
-    const handleCompanySelection = (selectedCompany) => {
-        // Do something with the selected year
-        console.log(selectedCompany);
-      };
+
+      const [selectedCompany, setSelectedCompany] = useState(null);
+
+      const handleCompanySelection = (selectedCompany) => {
+          setSelectedCompany(selectedCompany);
+        };      
+      
 
 
     const images = [
@@ -113,14 +118,14 @@ const TopSection = () => {
                         </Heading>
 
                         <Menu>
-                            <MenuButton className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
-                                -- Select Year --
+                            <MenuButton className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
+                                {selectedCompany || '-- Select Company --'}
                             </MenuButton>
-                            <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
-                                {years.length > 0 &&
-                                years.map((year) => (
-                                    <MenuItem className="menu-item" key={year} onClick={() => handleYearSelection(year)}>
-                                    {year}
+                            <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
+                                {company.length > 0 &&
+                                company.map((company) => (
+                                    <MenuItem className="menu-item" key={company} onClick={() => handleCompanySelection(company)}>
+                                    {company}
                                     </MenuItem>
                                 ))}
                             </MenuList>
@@ -128,7 +133,7 @@ const TopSection = () => {
 
                         <Menu>
                             <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                -- Select Model --
+                                {selectedModal || '-- Select Modal --'}
                             </MenuButton>
                             <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
                                 {models.length > 0 &&
@@ -141,14 +146,14 @@ const TopSection = () => {
                         </Menu>
                         
                         <Menu>
-                            <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                -- Select Company --
+                            <MenuButton mt={10}  className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
+                                {selectedYear || '-- Select Modal --'}
                             </MenuButton>
-                            <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
-                                {company.length > 0 &&
-                                company.map((company) => (
-                                    <MenuItem className="menu-item" key={company} onClick={() => handleModelSelection(company)}>
-                                    {company}
+                            <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
+                                {years.length > 0 &&
+                                years.map((year) => (
+                                    <MenuItem className="menu-item" key={year} onClick={() => handleYearSelection(year)}>
+                                    {year}
                                     </MenuItem>
                                 ))}
                             </MenuList>
