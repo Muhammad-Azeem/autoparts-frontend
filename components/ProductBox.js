@@ -33,9 +33,9 @@ import {getAllProductsByCategory } from './API/api';
 const ProductBox = () => {
     const router = useRouter();
 
-    const handleViewMoreClick = () => {
+    const handleViewMoreClick = (id) => {
         // Use router.push to navigate to the product list page
-        router.push('/ViewMore'); // Replace '/productlist' with the actual URL of your product list page
+        router.push('/ViewMore/'+id); // Replace '/productlist' with the actual URL of your product list page
     };
 
     const [products, setProducts] = useState([]);
@@ -45,7 +45,7 @@ const ProductBox = () => {
             try {
                 const data = await getAllProductsByCategory();
                 setProducts(data);
-            
+
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -71,10 +71,10 @@ const ProductBox = () => {
                             >
                             </Product>
                             ))}
-                        
+
                         </Grid>
                         <Center>
-                            <Button onClick={handleViewMoreClick} className="product-red-btn" mt={15} >
+                            <Button onClick={() => handleViewMoreClick(product.id)} className="product-red-btn" mt={15} >
                                 VIEW MORE
                             </Button>
                         </Center>
