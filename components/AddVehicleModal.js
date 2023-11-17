@@ -20,7 +20,6 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
     const [garage, setGarage] = useState(getGarageFromCookie());
     
     const handleAddGarage = () => {
-        console.log('papi chullo');
         const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
         addGarageToCookie(newGarage);
         setGarage(getGarageFromCookie());

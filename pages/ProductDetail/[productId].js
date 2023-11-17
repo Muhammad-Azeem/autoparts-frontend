@@ -29,11 +29,7 @@ import AddVehicleModal from "./AddVehicleModal";
 import {getCartFromCookie , setCartCookie , addCartToCookie ,removeCartFromCookie} from "./utility/cookies"
 
 const ProductDetail = () => {
-    const router = useRouter();
-    
-    const{productId} = router.query ;
-    console.log(productId);
-    
+
       //cookies
       const [cart, setCart] = useState(getCartFromCookie());
     
@@ -63,7 +59,7 @@ const ProductDetail = () => {
         setShowTopSection1(false);
         setShowTopSection2(true);
     };
-
+    const router = useRouter();
 
     const handleGoToCartClick = () => {
         router.push('/AddToCart');
@@ -74,7 +70,6 @@ const ProductDetail = () => {
     const handleProductClick = () => {
         router.push('/Product');
     };
-
 
     const initialVisibleItems = 2; // Initial number of visible items
     const [visibleItems, setVisibleItems] = useState(initialVisibleItems);
