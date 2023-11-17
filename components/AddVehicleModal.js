@@ -12,16 +12,20 @@ import {
 import React, {useEffect, useState } from "react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import {vehicleCompany, vehicleModels , vehicleYears } from './API/api';
-
+import {getGarageFromCookie , setGarageCookie , addGarageToCookie ,removeGarageFromCookie} from "./utility/cookies"
+import { useRouter } from 'next/router';
 const AddVehicleModal = ({ isOpen, onClose }) => {
+    const router = useRouter();
     //cookies
-    // const [garage, setGarage] = useState(getGarageFromCookie());
+    const [garage, setGarage] = useState(getGarageFromCookie());
     
-    // const handleAddGarage = () => {
-    //     const newGarage = { year: 2022, model: 'Example', car: 'CarType' };
-    //     addGarageToCookie(newGarage);
-    //     setGarage(getGarageFromCookie());
-    //   };
+    const handleAddGarage = () => {
+        console.log('papi chullo');
+        const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
+        addGarageToCookie(newGarage);
+        setGarage(getGarageFromCookie());
+        router.push('/ProductList');
+      };
 
       const [years, setYears] = useState([]);
       const [models, setModels] = useState([]);
@@ -67,18 +71,21 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
           fetchCompany();
         }, []);
   
+        const [selectedYear, setSelectedYear] = useState(null);
+
         const handleYearSelection = (selectedYear) => {
-          // Do something with the selected year
-          console.log(selectedYear);
+            setSelectedYear(selectedYear);
         };
-        const handleModelSelection = (selectedModel) => {
-          // Do something with the selected year
-          console.log(selectedModel);
+        const [selectedModal, setSelectedModal] = useState(null);
+
+        const handleModelSelection = (selectedModal) => {
+          setSelectedModal(selectedModal);
         };
+
         const [selectedCompany, setSelectedCompany] = useState(null);
+
         const handleCompanySelection = (selectedCompany) => {
             setSelectedCompany(selectedCompany);
-            // Add any other logic you need when a company is selected
           };      
         
 
@@ -109,7 +116,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                 </Box>
 
                                 <Flex justify="end">
-                                    <Button  mt={4} className="find-parts-btn" >Find My Parts</Button>
+                                    <Button  mt={4}className="find-parts-btn" >Find My Parts</Button>
                                 </Flex>
                                 <Text className="box-one-text" >
                                     For the most accurate results, search by your VIN (vehicle identification number).
@@ -132,7 +139,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                     <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
                                         {company.length > 0 &&
                                         company.map((company) => (
-                                            <MenuItem className="menu-item" key={company} onClick={() => handleModelSelection(company)} >
+                                            <MenuItem className="menu-item" key={company} onClick={() => handleCompanySelection(company)} >
                                             {company}
                                             </MenuItem>
                                         ))}
@@ -140,7 +147,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                 </Menu>
                                 <Menu>
                                     <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                        -- Select Model --
+                                        {selectedModal || '-- Select Modal --'}
                                     </MenuButton>
                                     <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
                                         {models.length > 0 &&
@@ -153,7 +160,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                 </Menu>
                                 <Menu>
                                     <MenuButton mt={10} className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
-                                        -- Select Year --
+                                    {selectedYear || '-- Select Modal --'}
                                     </MenuButton>
                                     <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
                                         {years.length > 0 &&
@@ -167,7 +174,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                         
 
                                 <Flex justify="end">
-                                    <Button  mt={14} className="find-parts-btn" >Find My Parts</Button>
+                                    <Button  onClick={handleAddGarage}   mt={14} className="find-parts-btn" >Find My Parts</Button>
                                 </Flex>
                             </Box>
                         </Container>
