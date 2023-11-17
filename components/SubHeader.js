@@ -38,6 +38,7 @@ import * as PropTypes from "prop-types";
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import AddVehicleModal from "./AddVehicleModal";
+import {getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
 
 function Backdrop(props) {
     return null;
@@ -127,6 +128,11 @@ const SubHeader = () => {
         removeGarageFromCookie(index);
         setGarage(getGarageFromCookie());
     };
+    const [garage, setGarage] = useState(getGarageFromCookie());
+
+    useEffect(() => {
+        setGarage(getGarageFromCookie());
+    }, []); // Run only once on component mount
     return (
         <Flex className="sub-header">
             <div className={`abc ${isAbcVisible ? 'visible' : 'hidden'}`}></div>
@@ -279,7 +285,23 @@ const SubHeader = () => {
                     >
                         {/* Content of the div */}
                         <p className="vehicle-list">Vehicle List</p>
-
+                        <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
+                            {garage.map((garageEntry) => (
+                                <li
+                                    key={garageEntry.id} // Assuming each garage entry has a unique identifier
+                                    className="no-vehicles"
+                                    style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                >
+                                    <div>
+                                        <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                        <label htmlFor={garageEntry.id}>{garageEntry.name}</label>
+                                    </div>
+                                    <div>
+                                        <DeleteIcon mr={15} w={20} h={20} color="grey" />
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
                         <ul style={{padding:'0px',overflowY: 'auto',maxHeight:'250px'}}>
                             <li className="no-vehicles"
                                  style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
