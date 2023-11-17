@@ -38,6 +38,7 @@ import * as PropTypes from "prop-types";
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import AddVehicleModal from "./AddVehicleModal";
+import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
 
 function Backdrop(props) {
     return null;
@@ -123,9 +124,20 @@ const SubHeader = () => {
     //cookies
 
 
-    const handleRemoveGarage = (index) => {
-        removeGarageFromCookie(index);
+    const handleDeleteGarage = (id) => {
+        removeGarageFromCookie(id);
         setGarage(getGarageFromCookie());
+    };
+
+    const [garage, setGarage] = useState(getGarageFromCookie());
+
+    useEffect(() => {
+        setGarage(getGarageFromCookie());
+        console.log(garage);
+    }, [isDivOpen]); // Run only once on component mount
+    const handleClearAllGarages = () => {
+        clearAllGaragesFromCookie();
+        setGarage([]); // Clear the garage state in your component
     };
     return (
         <Flex className="sub-header">
@@ -279,133 +291,52 @@ const SubHeader = () => {
                     >
                         {/* Content of the div */}
                         <p className="vehicle-list">Vehicle List</p>
-
-                        <ul style={{padding:'0px',overflowY: 'auto',maxHeight:'250px'}}>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">86</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Avalon</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">C-HR</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Camry</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Celixa</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Corolla</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Corolla Cross</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Corolla iM</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Corona</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Cressida</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">Echo</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
-                            <li className="no-vehicles"
-                                 style={{alignItems: 'center', display: 'flex', justifyContent: 'space-between'}}>
-                                <div>
-                                    <input type="radio" id="other" name="gender" value="other"/>
-                                    <label htmlFor="other">FJ Cruiser</label>
-                                </div>
-                                <div>
-                                    <DeleteIcon mr={15} w={20} h={20} color="grey"/>
-                                </div>
-                            </li>
+                        {/*<ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>*/}
+                        {/*    {garage.map((garageEntry) => (*/}
+                        {/*        <li*/}
+                        {/*            key={garageEntry.id} // Assuming each garage entry has a unique identifier*/}
+                        {/*            className="no-vehicles"*/}
+                        {/*            style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}*/}
+                        {/*        >*/}
+                        {/*            <div>*/}
+                        {/*                <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />*/}
+                        {/*                <label htmlFor={garageEntry.id}>{garageEntry.company} {garageEntry.model} {garageEntry.year}</label>*/}
+                        {/*            </div>*/}
+                        {/*            <div>*/}
+                        {/*                <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)} />*/}
+                        {/*            </div>*/}
+                        {/*        </li>*/}
+                        {/*    ))}*/}
+                        {/*</ul>*/}
+                        <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
+                            {garage.length > 0 ? (
+                                garage.map((garageEntry) => (
+                                    <li
+                                        key={garageEntry.id}
+                                        className="no-vehicles"
+                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                    >
+                                        <div>
+                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                            <label htmlFor={garageEntry.id}>
+                                                {garageEntry.company} {garageEntry.model} {garageEntry.year}
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)} />
+                                        </div>
+                                    </li>
+                                ))
+                            ) : (
+                                <li className="no-vehicles" style={{ textAlign: 'center' }}>
+                                    No vehicles in the garage
+                                </li>
+                            )}
                         </ul>
                         <div className="vehicle-list-box">
                             <p onClick={onModalOpen} className="add-new-vehicle">Add New Vehicle</p>
 
-                            <p className="clear-all">Clear All</p>
+                            <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
                         </div>
                     </div>
                 )}

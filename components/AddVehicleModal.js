@@ -18,18 +18,19 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
     const router = useRouter();
     //cookies
     const [garage, setGarage] = useState(getGarageFromCookie());
-    
+
     const handleAddGarage = () => {
         const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
         addGarageToCookie(newGarage);
         setGarage(getGarageFromCookie());
+        onClose();
         router.push('/ProductList');
       };
 
       const [years, setYears] = useState([]);
       const [models, setModels] = useState([]);
       const [company, setCompany] = useState([]);
-  
+
 
       useEffect(() => {
           const fetchYears = async () => {
@@ -40,10 +41,10 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
               console.error('Error fetching years:', error);
             }
           };
-      
+
           fetchYears();
         }, []);
-  
+
         useEffect(() => {
           const fetchModels = async () => {
             try {
@@ -53,10 +54,10 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
               console.error('Error fetching models:', error);
             }
           };
-      
+
           fetchModels();
         }, []);
-  
+
         useEffect(() => {
           const fetchCompany = async () => {
             try {
@@ -66,10 +67,10 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
               console.error('Error fetching companies:', error);
             }
           };
-      
+
           fetchCompany();
         }, []);
-  
+
         const [selectedYear, setSelectedYear] = useState(null);
 
         const handleYearSelection = (selectedYear) => {
@@ -85,8 +86,8 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
 
         const handleCompanySelection = (selectedCompany) => {
             setSelectedCompany(selectedCompany);
-          };      
-        
+          };
+
 
     return (
         <Modal className="modal" isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={true}>
@@ -130,7 +131,7 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                 <Heading as="h3" size="lg" mb={4}>
                                     Select Vehicle by Model
                                 </Heading>
-                                
+
                                 <Menu>
                                     <MenuButton mt={10} className="topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
                                         {selectedCompany || '-- Select Company --'}
@@ -169,8 +170,8 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
                                             </MenuItem>
                                         ))}
                                     </MenuList>
-                                </Menu>                   
-                        
+                                </Menu>
+
 
                                 <Flex justify="end">
                                     <Button  onClick={handleAddGarage}   mt={14} className="find-parts-btn" >Find My Parts</Button>
