@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState ,useEffect} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -28,24 +28,26 @@ import {getProductbyId} from './API/api';
 const ProductDetail = () => {
     const [products, setProducts] = useState([]);
 
+    const router = useRouter()    
+    const{productId} = router.query ;
+    console.log(productId);
+
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchProducts = async (id) => {
             try {
-                const data = await getProductbyId();
+                const data = await getProductbyId(id);
                 setProducts(data);
 
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
+        if(productId){
+            fetchProducts(productId);
+        }      
+    }, [productId]);
 
-        fetchProducts();
-    }, []);
-
-    const router = useRouter();
-    
-    const{productId} = router.query ;
-    console.log(productId);
+   
 
       //cookies
       const [cart, setCart] = useState(getCartFromCookie());

@@ -169,16 +169,9 @@ export const getAllCategories = async () => {
 };
 
 export const getProductbyId = async ($id) => {
-    const token = localStorage.getItem('token');
-    let temp= localStorage.getItem('cart-product');
-    temp = JSON.parse(temp);
-
-    if (!token) {
-        throw new Error('No token found');
-    }
 
     try {
-        const response = await axios.get(`${API_BASE_URL}/product/find/`+temp.id);
+        const response = await axios.get(`${API_BASE_URL}/product/find/`+id);
         return response.data;
     } catch (error) {
         throw error;
