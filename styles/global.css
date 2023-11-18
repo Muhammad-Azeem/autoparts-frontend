@@ -1752,7 +1752,15 @@ body{
 .shipping-price-box{
     padding: 10px;
     position: absolute;
-    top: 100px;
+    top: 60px;
+    right: 10px;
+    border: 1px solid #b0b0b0;
+    width: 250px;
+}
+.payment-price-box{
+    padding: 10px;
+    position: absolute;
+    top: 25px;
     right: 10px;
     border: 1px solid #b0b0b0;
     width: 250px;
