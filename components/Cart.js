@@ -168,7 +168,7 @@ const   Cart = () => {
                                     Subtotal: <span style={{color:'#bc0001'}}>$140.70</span>
                                 </Text>
                                 <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
-                                    <Button mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                    <Link href='/checkout' mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Link>
                                     <Text className="center-or-text"  size="lg">
                                         - OR -
                                     </Text>
