@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
 import {
     Table,
@@ -33,6 +33,7 @@ import '../styles//global.css';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
+import {getCartFromCookie} from "./utility/cookies";
 
 const   Cart = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -46,6 +47,22 @@ const   Cart = () => {
     const handleProductDetailClick = () => {
         router.push('/Product-Detail');
     };
+    const handleCheckout = () => {
+        router.push('/ShoppingCart');
+    };
+    const [cart, setCart] = useState([])
+    const [subTotal, setSubTotal] = useState(0);
+    const calculateSubtotal = (cart) => {
+        return cart.reduce((total, item) => {
+            const itemTotal = item.quantity * item.price; // Assuming each item has a 'price' property
+            return total + itemTotal;
+        }, 0);
+    };
+    useEffect(() => {
+        const data = getCartFromCookie();
+        setCart(data);
+        setSubTotal(calculateSubtotal(data))
+    }, [])
     return (
         <Box >
 
@@ -67,28 +84,34 @@ const   Cart = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Tr  style={{marginTop:'10px'}}>
-                                    <Td>
-                                        <Image className="cart-box-image" src="/images/cart-product.png" alt="Image 1"/>
-                                    </Td>
-                                    <Td width="250px" textAlign="left">
-                                        Part No.: 90341-12012
-                                        PLUG, W/HEAD STRAIGH <br/>
-                                        <span style={{cursor:"pointer",fontSize:"12px"}}>
-                                            Remove
-                                        </span>
-                                    </Td>
-                                    <Td width="150px" textAlign="center">
-                                        $4.69
-                                    </Td>
-                                    <Td width="150px" textAlign="center">
-                                        10
-                                    </Td>
-                                    <Td width="150px" textAlign="right">
-                                        $20.25
-                                    </Td>
-
-                                </Tr>
+                                {cart.map((cartItem) => (
+                                    <Tr key={cartItem.id} style={{ marginTop: '10px' }}>
+                                        <Td>
+                                            <Image className="cart-box-image" src={cartItem.images} alt={`Image ${cartItem.id}`} />
+                                        </Td>
+                                        <Td width="250px" textAlign="left">
+                                            Part No.: {cartItem.part_number}
+                                            <br/>
+                                            <b>{cartItem.description}</b>
+                                            <br/>
+                                            <br/>
+                                            Replaced By: {cartItem.replaces}
+                                            <br/>
+                                            <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
+            Remove
+          </span>
+                                        </Td>
+                                        <Td width="150px" textAlign="center">
+                                            ${cartItem.price}
+                                        </Td>
+                                        <Td width="150px" textAlign="center">
+                                            {cartItem.quantity}
+                                        </Td>
+                                        <Td width="150px" textAlign="right">
+                                            ${(cartItem.price * cartItem.quantity)}
+                                        </Td>
+                                    </Tr>
+                                ))}
                             </Tbody>
                         </Table>
                     </TableContainer>
@@ -101,25 +124,25 @@ const   Cart = () => {
 
                     <Box mt={20} className="detail-cartbox-show" background="#f4f4f4" border="1px solid #b0b0b0" alignItems="center">
                         <Text  className="detail-rightside-heading" size="lg">
-                            Subtotal: <span style={{color:'#bc0001'}}>$140.70</span>
+                            Subtotal: <span style={{color:'#bc0001'}}>${subTotal}</span>
                         </Text>
                         <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
                             <Button mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                            <Text className="center-or-text"  size="lg">
-                                - OR -
-                            </Text>
-                            <Button  className="paypal-btn" colorScheme="teal">
-                                <Image className="footer_images-bottom" src="/images/paypal-removebg.png" alt="Image 1"/>
-                            </Button>
-                            <Button mt={10} className="paypal-btn" colorScheme="teal">
-                                <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>
-                                Pay Later
-                            </Button>
-                            <Text  size="lg">
-                                <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>
-                                <span>Pay in 4 interest-free payments of $35.18. </span>
-                                <span className="bussiness-url">Learn More</span>
-                            </Text>
+                            {/*<Text className="center-or-text"  size="lg">*/}
+                            {/*    - OR -*/}
+                            {/*</Text>*/}
+                            {/*<Button  className="paypal-btn" colorScheme="teal">*/}
+                            {/*    <Image className="footer_images-bottom" src="/images/paypal-removebg.png" alt="Image 1"/>*/}
+                            {/*</Button>*/}
+                            {/*<Button mt={10} className="paypal-btn" colorScheme="teal">*/}
+                            {/*    <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>*/}
+                            {/*    Pay Later*/}
+                            {/*</Button>*/}
+                            {/*<Text  size="lg">*/}
+                            {/*    <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>*/}
+                            {/*    <span>Pay in 4 interest-free payments of $35.18. </span>*/}
+                            {/*    <span className="bussiness-url">Learn More</span>*/}
+                            {/*</Text>*/}
                         </Box>
                         <Box className="detail-rightside-lowerbox" fontSize="small" color="grey" onClick={toggleEstimateVisibility} >
                             <Button
@@ -165,25 +188,25 @@ const   Cart = () => {
                         <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                             <Box background="#f4f4f4" border="1px solid #b0b0b0" alignItems="center">
                                 <Text  className="detail-rightside-heading" size="lg">
-                                    Subtotal: <span style={{color:'#bc0001'}}>$140.70</span>
+                                    Subtotal: <span style={{color:'#bc0001'}}>${subTotal}</span>
                                 </Text>
                                 <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
-                                    <Button mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
-                                    <Text className="center-or-text"  size="lg">
-                                        - OR -
-                                    </Text>
-                                    <Button  className="paypal-btn" colorScheme="teal">
-                                        <Image className="footer_images-bottom" src="/images/paypal-removebg.png" alt="Image 1"/>
-                                    </Button>
-                                    <Button mt={10} className="paypal-btn" colorScheme="teal">
-                                        <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>
-                                        Pay Later
-                                    </Button>
-                                    <Text  size="lg">
-                                        <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>
-                                        <span>Pay in 4 interest-free payments of $35.18. </span>
-                                        <span className="bussiness-url">Learn More</span>
-                                    </Text>
+                                    <Button mt={10} className="add-to-cart-btn" colorScheme="teal" onClick={handleCheckout}>SECURE CHECKOUT </Button>
+                                    {/*<Text className="center-or-text"  size="lg">*/}
+                                    {/*    - OR -*/}
+                                    {/*</Text>*/}
+                                    {/*<Button  className="paypal-btn" colorScheme="teal">*/}
+                                    {/*    <Image className="footer_images-bottom" src="/images/paypal-removebg.png" alt="Image 1"/>*/}
+                                    {/*</Button>*/}
+                                    {/*<Button mt={10} className="paypal-btn" colorScheme="teal">*/}
+                                    {/*    <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>*/}
+                                    {/*    Pay Later*/}
+                                    {/*</Button>*/}
+                                    {/*<Text  size="lg">*/}
+                                    {/*    <Image className="pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>*/}
+                                    {/*    <span>Pay in 4 interest-free payments of $35.18. </span>*/}
+                                    {/*    <span className="bussiness-url">Learn More</span>*/}
+                                    {/*</Text>*/}
                                 </Box>
                                 <Box className="detail-rightside-lowerbox" fontSize="small" color="grey" onClick={toggleEstimateVisibility} >
                                     <Button

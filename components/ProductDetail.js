@@ -26,17 +26,16 @@ import {getCartFromCookie , setCartCookie , addCartToCookie ,removeCartFromCooki
 import {getProductbyId} from './API/api';
 
 const ProductDetail = () => {
-    const [products, setProducts] = useState([]);
+    const [product, setProduct] = useState({});
 
-    const router = useRouter()    
+    const router = useRouter()
     const{productId} = router.query ;
-    console.log(productId);
 
     useEffect(() => {
         const fetchProducts = async (id) => {
             try {
                 const data = await getProductbyId(id);
-                setProducts(data);
+                setProduct(data);
 
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -44,14 +43,14 @@ const ProductDetail = () => {
         };
         if(productId){
             fetchProducts(productId);
-        }      
+        }
     }, [productId]);
 
-   
+
 
       //cookies
       const [cart, setCart] = useState(getCartFromCookie());
-    
+
       const handleAddCart = () => {
         //   const newCart = { product_image : ,  part_number:  ,  product_name:  , product_price :  , product_quantity : ,subTotal :  };
           addCartToCookie(newCart);
@@ -389,12 +388,12 @@ const ProductDetail = () => {
                 <Flex className="productDetail-innerbox" >
                     <Box className="productDetail-box1" display="flex" flexDirection="column">
                         <Box mb={4}>
-                            <Image className="productDetail-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                            <Image className="productDetail-box1-img"  src={product.images} alt="Image 1" />
                         </Box>
                         <Box mb={4}>
                             {/*<Image height="100px" src="/images/toyota-plug.jpg" alt="Image 2" />*/}
                             <Text className="bussiness-url" margin="0" as="h5" mt={4}>
-                                View related parts
+                                {product.name}
                             </Text>
                         </Box>
                     </Box>
