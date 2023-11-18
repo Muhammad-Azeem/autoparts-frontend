@@ -11,29 +11,42 @@ import {
     Image,
     Text,
     Flex,
-    Link,
     Button,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
+    Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import ViewMoreList from "../components/ViewMoreList";
-import AddVehicleModal from "./AddVehicleModal";
 import {getCartFromCookie , setCartCookie , addCartToCookie ,removeCartFromCookie} from "./utility/cookies"
+import {getProductbyId} from './API/api';
 
 const ProductDetail = () => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const data = await getProductbyId();
+                setProducts(data);
+
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
     const router = useRouter();
     
     const{productId} = router.query ;
     console.log(productId);
-    
+
       //cookies
       const [cart, setCart] = useState(getCartFromCookie());
     
