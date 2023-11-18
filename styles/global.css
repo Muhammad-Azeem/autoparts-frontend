@@ -2161,6 +2161,10 @@ body{
     font-weight: 100;
     font-size: 15px;
  }
+ .sweet-loading{
+    display: flex;
+    justify-content: center;
+ }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {
