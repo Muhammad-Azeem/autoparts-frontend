@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React,{useState ,useEffect} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 import TopSection from "../components/TopSection";
@@ -13,7 +13,22 @@ import MobileTopSection from "../components/MobileTopSection";
 import MainModelSection from "../components/MainModelSection";
 import {Box, Collapse, Image} from "@chakra-ui/react";
 import Accessory from "../components/Accessory";
+import LoaderSpinner from "../components/LoaderSpinner"
+
 const HomePage = () => {
+    const [loading, setLoading] = useState(true);
+    // Simulating an asynchronous operation
+  useEffect(() => {
+    const fetchData = async () => {
+      // Simulate an API call or any asynchronous task
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // After the task is done, set loading to false
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
     return (
         <div>
             <div className="main-header">
@@ -25,7 +40,13 @@ const HomePage = () => {
             </div>
 
             <main>
+            {loading ? (
+                <LoaderSpinner />
+                ) : (
+                    <>
                 <Accessory />
+                </>
+                )}
             </main>
             <div className="main-footer">
                 <Footer/>

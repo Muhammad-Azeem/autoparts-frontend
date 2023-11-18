@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React,{useState ,useEffect} from 'react';
 import Header from '../../components/Header';
 import SubHeader from "../../components/SubHeader";
 
@@ -8,8 +8,21 @@ import HeaderMobile from "../../components/HeaderMobile";
 import MobileFooter from "../../components/MobileFooter";
 import SignUpForm from "../../components/SignUpForm";
 import VMDetailSection from "../../components/VMDetailSection";
-
+import LoaderSpinner from "../components/LoaderSpinner"
 const ViewMore = () => {
+    const [loading, setLoading] = useState(true);
+    // Simulating an asynchronous operation
+  useEffect(() => {
+    const fetchData = async () => {
+      // Simulate an API call or any asynchronous task
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // After the task is done, set loading to false
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
     return (
         <div>
             <div className="main-header">
@@ -21,7 +34,13 @@ const ViewMore = () => {
             </div>
 
             <main>
-                <VMDetailSection />
+                {loading ? (
+                    <LoaderSpinner />
+                    ) : (
+                <>
+                 <VMDetailSection />
+                </>
+                    )}
             </main>
 
             <div className="main-footer">
