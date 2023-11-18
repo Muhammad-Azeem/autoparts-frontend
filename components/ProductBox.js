@@ -56,8 +56,8 @@ const ProductBox = () => {
 
     const router = useRouter();
 
-    const handleProductDetailClick = () => {
-        router.push('/Product-Detail');
+    const handleProductDetailClick = (id) => {
+        router.push('/ProductPage/'+id);
     };
 
     return (
@@ -80,16 +80,16 @@ const ProductBox = () => {
                             <Box width="100%">
                                 <Grid className="productblock-grid" >
                                     {/* Your existing content */}
-                                    <GridItem onClick={handleProductDetailClick} className="product-box">
+                                    <GridItem onClick={() => handleProductDetailClick(product.id)} className="product-box">
                                         <Box  className="grid-product_box" >
                                             <Image src={product.images} className="images-product_box" alt="Image Alt Text"  />
                                             <Text className="title-product_block">{product.name}</Text>
                                         </Box>
                                     </GridItem>
-                
+
                                 </Grid>
                             </Box>
-                
+
                         </Flex>
                             ))}
 

@@ -185,3 +185,11 @@ export const getProductByCategoryId = async (categoryId) => {
         throw error;
     }
 };
+export const getProductsBySubCategoryId = async (subCategoryId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/getProductsBySubCategoryId/`+subCategoryId, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
