@@ -168,7 +168,7 @@ export const getAllCategories = async () => {
     }
 };
 
-export const getProductbyId = async ($id) => {
+export const getProductbyId = async (id) => {
 
     try {
         const response = await axios.get(`${API_BASE_URL}/product/find/`+id);
