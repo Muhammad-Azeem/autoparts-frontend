@@ -33,7 +33,7 @@ const ProductListing = () => {
             try {
                 const data = await getAllCategories();
                 setCategories(data);
-            
+
             } catch (error) {
                 console.error('Error fetching categories:', error);
             }
@@ -119,7 +119,7 @@ const ProductListing = () => {
     // const electricalChassisRef = useRef();
     // const bodyPartsChassisRef = useRef();
 
-   
+
     const router = useRouter();
 
     const handleHomeClick = () => {
@@ -214,7 +214,7 @@ const ProductListing = () => {
                                 <Heading className="list-heading" as="h3" >
                                     Parts and Categories
                                 </Heading>
-                                
+
                                     <Box className="list-category-box" >
                                         {categories.map((category, index) => (
                                             <>
@@ -224,9 +224,9 @@ const ProductListing = () => {
                                                 {(category.name) && (
                                                     <List className="category-list-ul"
                                                     spacing={3}
-                                                    >                                                        
+                                                    >
                                                         {category.sub_categories.map((subCategory, subIndex) => (
-                                                            <ListItem 
+                                                            <ListItem
                                                                 onMouseLeave={handleMouseLeave}
                                                                 onMouseEnter={() => setIsDivOpen(true)}
                                                                 position="relative"
@@ -235,8 +235,8 @@ const ProductListing = () => {
                                                                     {subCategory.name}
                                                                     <Image float="right" height="15px"src="/images/search-list-category.png" mr="2"
                                                             />
-                                                                <div>                                                                                      
-                                                                        {isDivOpen && (                                            
+                                                                <div>
+                                                                        {isDivOpen && (
                                                                             <div
                                                                                 ref={divRef}
                                                                                 style={{
@@ -254,23 +254,23 @@ const ProductListing = () => {
                                                                                 <div className='sub-mod-box' >
                                                                                     <Heading className='sub-mod-head'  margin="0" as="h2" mt={4}>
                                                                                         Parts in {subCategory.name}
-                                                                                    </Heading>    
+                                                                                    </Heading>
                                                                                     <Box mt={5} className='sub-mod-innerbox' display='flex'>
                                                                                         <Image className='sub-mod-innerbox-img' float="right" height="15px"src="/images/search-list-category.png" mr="2"/>
                                                                                         <Text ml={25} mr={15} className='sub-mod-innerbox-text'>Product Name</Text>
-                                                                                    </Box>                                                                                             
+                                                                                    </Box>
                                                                                 </div>
-                                                                            </div>                                            
+                                                                            </div>
                                                                         )}
-                                                                    
+
                                                                 </div>
                                                             </ListItem>
                                                         ))}
                                                     </List>
                                                     )}
                                             </>
-                                        ))}                                         
-                                    </Box>                                 
+                                        ))}
+                                    </Box>
                             </Grid>
                         </Box>
                     </Flex>
