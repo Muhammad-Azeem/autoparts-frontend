@@ -33,7 +33,7 @@ import '../styles//global.css';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
-import {getCartFromCookie} from "./utility/cookies";
+import {getCartFromCookie, removeCartFromCookie} from "./utility/cookies";
 
 const   Cart = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -57,6 +57,12 @@ const   Cart = () => {
             const itemTotal = item.quantity * item.price; // Assuming each item has a 'price' property
             return total + itemTotal;
         }, 0);
+    };
+    const handleRemoveFromCart = (index) => {
+        removeCartFromCookie(index)
+        const data = getCartFromCookie();
+        setCart(data);
+
     };
     useEffect(() => {
         const data = getCartFromCookie();
@@ -84,7 +90,7 @@ const   Cart = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                {cart.map((cartItem) => (
+                                {cart.map((cartItem, index) => (
                                     <Tr key={cartItem.id} style={{ marginTop: '10px' }}>
                                         <Td>
                                             <Image className="cart-box-image" src={cartItem.images} alt={`Image ${cartItem.id}`} />
@@ -97,7 +103,7 @@ const   Cart = () => {
                                             <br/>
                                             Replaced By: {cartItem.replaces}
                                             <br/>
-                                            <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
+                                            <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(index)}>
             Remove
           </span>
                                         </Td>
