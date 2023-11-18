@@ -2,14 +2,12 @@
 import React from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
-
 import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
-import SignUpForm from "../components/SignUpForm";
-import VMDetailSection from "../components/VMDetailSection";
+import ShoppingProductPage from '../components/ShoppingProductPage';
 
-const ViewMore = () => {
+const HomePage = () => {
     return (
         <div>
             <div className="main-header">
@@ -21,9 +19,9 @@ const ViewMore = () => {
             </div>
 
             <main>
-                <VMDetailSection />
+                <ShoppingProductPage/>
+                
             </main>
-
             <div className="main-footer">
                 <Footer/>
             </div>
@@ -34,4 +32,4 @@ const ViewMore = () => {
     );
 };
 
-export default ViewMore;
+export default HomePage;

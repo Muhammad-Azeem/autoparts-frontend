@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState ,useEffect} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -11,23 +11,53 @@ import {
     Image,
     Text,
     Flex,
-    Link,
     Button,
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
+    Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import ViewMoreList from "../components/ViewMoreList";
-import AddVehicleModal from "./AddVehicleModal";
+import {getCartFromCookie , setCartCookie , addCartToCookie ,removeCartFromCookie} from "./utility/cookies"
+import {getProductbyId} from './API/api';
 
 const ProductDetail = () => {
+    const [products, setProducts] = useState([]);
+
+    const router = useRouter()    
+    const{productId} = router.query ;
+    console.log(productId);
+
+    useEffect(() => {
+        const fetchProducts = async (id) => {
+            try {
+                const data = await getProductbyId(id);
+                setProducts(data);
+
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+        if(productId){
+            fetchProducts(productId);
+        }      
+    }, [productId]);
+
+   
+
+      //cookies
+      const [cart, setCart] = useState(getCartFromCookie());
+    
+      const handleAddCart = () => {
+        //   const newCart = { product_image : ,  part_number:  ,  product_name:  , product_price :  , product_quantity : ,subTotal :  };
+          addCartToCookie(newCart);
+          setCart(getCartFromCookie());
+          router.push('/ProductList');
+        };
 
     const [isGrid1Visible, setIsGrid1Visible] = useState(true);
     const [isGrid2Visible, setIsGrid2Visible] = useState(false);
@@ -48,7 +78,7 @@ const ProductDetail = () => {
         setShowTopSection1(false);
         setShowTopSection2(true);
     };
-    const router = useRouter();
+
 
     const handleGoToCartClick = () => {
         router.push('/AddToCart');
@@ -59,6 +89,7 @@ const ProductDetail = () => {
     const handleProductClick = () => {
         router.push('/Product');
     };
+
 
     const initialVisibleItems = 2; // Initial number of visible items
     const [visibleItems, setVisibleItems] = useState(initialVisibleItems);
@@ -405,7 +436,7 @@ const ProductDetail = () => {
                                 </Text>
                                 <Box display="grid">
                                     <Button className="check-fit-btn" colorScheme="teal">Check the fit</Button>
-                                    <Button onClick={handleProductClick} mt={10} className="add-to-cart-btn" colorScheme="teal">View Details</Button>
+                                    <Button onClick={handleAddCart}  mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
                                 </Box>
 
                             </Box>

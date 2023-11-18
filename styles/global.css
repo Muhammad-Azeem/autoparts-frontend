@@ -1094,6 +1094,11 @@ body{
     justify-content: center;
     padding: 25px 50px
 }
+.shipping-box{
+    display: flex;
+    justify-content: center;
+ 
+}
 .tracking-box{
      padding: 25px 50px
 }
@@ -1112,11 +1117,17 @@ body{
     padding: 25px 25px;
     width: 800px;
 }
+.shipping-form{
+    border: 1px solid #dededb;
+    padding: 25px 25px;
+    width: 620px;
+}
 .track-form{
     border: 1px solid #dededb;
     padding: 25px 25px;
     width: 650px;
 }
+
 .forms-box{
     display: inline-flex;
     justify-content: space-between;
@@ -1563,6 +1574,26 @@ body{
     color: #fff;
     transition: all 0.5s ease; /* Add the transition property */
 }
+.continue-btn{
+
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1;
+    outline: none;
+    padding: 7px 15px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    background: linear-gradient(180deg,#c00000,#c00000 0,#a00000 100%,#a00000 0);
+    border: 1px solid #bc0000;
+    color: #fff;
+    transition: all 0.5s ease; /* Add the transition property */
+}
 .pp-cart-btn{
     width: 100%;
     align-items: center;
@@ -1590,6 +1621,12 @@ body{
     border: 1px solid #bc0000;
 }
 .pp-cart-btn:hover{
+    color: #bc0000;
+    background: white;
+    /*font-weight: 600;*/
+    border: 1px solid #bc0000;
+}
+.continue-btn:hover{
     color: #bc0000;
     background: white;
     /*font-weight: 600;*/
@@ -1709,6 +1746,14 @@ body{
     position: absolute;
     top: 0px;
     right: 0px;
+    border: 1px solid #b0b0b0;
+    width: 250px;
+}
+.shipping-price-box{
+    padding: 10px;
+    position: absolute;
+    top: 100px;
+    right: 10px;
     border: 1px solid #b0b0b0;
     width: 250px;
 }
@@ -2029,6 +2074,77 @@ body{
     text-align: center;
     cursor: pointer;
 }
+.product-list-div {
+    position: absolute;
+   background: black;
+   height: 200px;
+   width: 200px;
+ }
+ .sub-mod-innerbox{
+    display: flex;
+    /* justify-content: space-between; */
+    padding: 5px 15px;
+    align-items: center;
+ }
+ .sub-mod-box{
+    overflow: auto;
+    padding: 5px 15px;
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+   
+ }
+ .sub-mod-head{
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+ }
+ .sub-mod-innerbox-img{
+    padding: 10px;
+    border: 1px solid #505050;
+ }
+ .sub-mod-innerbox-text{
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+ }
+ .shipping-top-list{
+    display: flex;
+ }
+ .shipping-top-list-li{
+  
+    background: #f8f8f8;
+    padding: 10px 70px;
+    cursor: pointer;
+ }
+ .shipping-top-list-li:hover{
+    background: gray;
+    color: white;
+ }
+ .shipping-top-list-text{
+    margin: 0;
+ }
+ .shipping-pp-box2{
+    padding: 0px 5px;
+   
+ }
+ .box{
+    width: 50%;
+  
+ }
+ .boxOne{
+    width: 50%;
+  
+ }
+ .boxTwo{
+    width: 50%;
+  
+ }
+ .optional{
+    color: black;
+    font-weight: 100;
+    font-size: 15px;
+ }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {

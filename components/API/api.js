@@ -157,3 +157,31 @@ export const getMyGarage = async () => {
         throw error;
     }
 };
+
+export const getAllCategories = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/allCategories`, {
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getProductbyId = async ($id) => {
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/find/`+id);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+export const getProductByCategoryId = async (categoryId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/getProductsByCategoryId/`+categoryId, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};

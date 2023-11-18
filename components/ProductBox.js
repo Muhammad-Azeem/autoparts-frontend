@@ -31,11 +31,11 @@ import SeventhProductBlock from "./SeventhProductBlock";
 import Product from './Product';
 import {getAllProductsByCategory } from './API/api';
 const ProductBox = () => {
-    const router = useRouter();
 
-    const handleViewMoreClick = () => {
+
+    const handleViewMoreClick = (id) => {
         // Use router.push to navigate to the product list page
-        router.push('/ViewMore'); // Replace '/productlist' with the actual URL of your product list page
+        router.push('/ViewMore/'+id); // Replace '/productlist' with the actual URL of your product list page
     };
 
     const [products, setProducts] = useState([]);
@@ -45,7 +45,7 @@ const ProductBox = () => {
             try {
                 const data = await getAllProductsByCategory();
                 setProducts(data);
-            
+
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -53,6 +53,12 @@ const ProductBox = () => {
 
         fetchProducts();
     }, []);
+
+    const router = useRouter();
+
+    const handleProductDetailClick = () => {
+        router.push('/Product-Detail');
+    };
 
     return (
         <Flex>
@@ -65,16 +71,31 @@ const ProductBox = () => {
                         </Heading>
                         <Grid className="item productblock-grid"   gap={6}>
                         {product.products.map((product, productIndex) => (
-                            <Product
-                                image={product.images}
-                                description={product.name}
-                            >
-                            </Product>
+                            // <Product
+                            //     image={product.images}
+                            //     description={product.name}
+                            // >
+                            // </Product>
+                            <Flex>
+                            <Box width="100%">
+                                <Grid className="productblock-grid" >
+                                    {/* Your existing content */}
+                                    <GridItem onClick={handleProductDetailClick} className="product-box">
+                                        <Box  className="grid-product_box" >
+                                            <Image src={product.images} className="images-product_box" alt="Image Alt Text"  />
+                                            <Text className="title-product_block">{product.name}</Text>
+                                        </Box>
+                                    </GridItem>
+                
+                                </Grid>
+                            </Box>
+                
+                        </Flex>
                             ))}
-                        
+
                         </Grid>
                         <Center>
-                            <Button onClick={handleViewMoreClick} className="product-red-btn" mt={15} >
+                            <Button onClick={() => handleViewMoreClick(product.id)} className="product-red-btn" mt={15} >
                                 VIEW MORE
                             </Button>
                         </Center>
