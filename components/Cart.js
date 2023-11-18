@@ -207,6 +207,7 @@ const   Cart = () => {
                                     {/*    <span>Pay in 4 interest-free payments of $35.18. </span>*/}
                                     {/*    <span className="bussiness-url">Learn More</span>*/}
                                     {/*</Text>*/}
+
                                 </Box>
                                 <Box className="detail-rightside-lowerbox" fontSize="small" color="grey" onClick={toggleEstimateVisibility} >
                                     <Button
