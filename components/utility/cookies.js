@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 
+//these function are for garage
 const GARAGE_COOKIE_NAME = 'garage';
 
 export const getGarageFromCookie = () => {
@@ -30,8 +31,35 @@ export const removeGarageFromCookie = (index) => {
   garage.splice(index, 1);
   setGarageCookie(garage);
 };
+
+//these function are for add to cart
+
+const AddToCart_COOKIE_NAME = 'cart';
+
+export const getCartFromCookie = () => {
+  const cart = Cookies.get(AddToCart_COOKIE_NAME);
+  return cart ? JSON.parse(cart) : [];
+};
+
+export const setCartCookie = (cart) => {
+  Cookies.set(AddToCart_COOKIE_NAME, JSON.stringify(cart), { expires: 7 }); // Set expiration as needed
+};
+
+export const addCartToCookie = (newCart) => {
+  const cart = getCartFromCookie();
+  cart.push(newCart);
+  setCartCookie(cart);
+};
+
+export const removeCartFromCookie = (index) => {
+  const cart = getCartFromCookie();
+  cart.splice(index, 1);
+  setCartCookie(cart);
+};
+
 export const clearAllGaragesFromCookie = () => {
   // Clear the garage data in cookies
   // (Note: Replace the removeCookie function with your actual implementation)
   Cookies.remove('garage'); // Assuming 'garage' is the cookie key
 };
+

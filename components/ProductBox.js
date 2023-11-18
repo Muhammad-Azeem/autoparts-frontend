@@ -31,7 +31,7 @@ import SeventhProductBlock from "./SeventhProductBlock";
 import Product from './Product';
 import {getAllProductsByCategory } from './API/api';
 const ProductBox = () => {
-    const router = useRouter();
+
 
     const handleViewMoreClick = (id) => {
         // Use router.push to navigate to the product list page
@@ -54,6 +54,12 @@ const ProductBox = () => {
         fetchProducts();
     }, []);
 
+    const router = useRouter();
+
+    const handleProductDetailClick = () => {
+        router.push('/Product-Detail');
+    };
+
     return (
         <Flex>
             <Box colSpan={4} bg='#F4F4F4'>
@@ -65,11 +71,26 @@ const ProductBox = () => {
                         </Heading>
                         <Grid className="item productblock-grid"   gap={6}>
                         {product.products.map((product, productIndex) => (
-                            <Product
-                                image={product.images}
-                                description={product.name}
-                            >
-                            </Product>
+                            // <Product
+                            //     image={product.images}
+                            //     description={product.name}
+                            // >
+                            // </Product>
+                            <Flex>
+                            <Box width="100%">
+                                <Grid className="productblock-grid" >
+                                    {/* Your existing content */}
+                                    <GridItem onClick={handleProductDetailClick} className="product-box">
+                                        <Box  className="grid-product_box" >
+                                            <Image src={product.images} className="images-product_box" alt="Image Alt Text"  />
+                                            <Text className="title-product_block">{product.name}</Text>
+                                        </Box>
+                                    </GridItem>
+                
+                                </Grid>
+                            </Box>
+                
+                        </Flex>
                             ))}
 
                         </Grid>
