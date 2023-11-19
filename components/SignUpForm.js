@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import { useRouter } from 'next/router';
 import {
     Heading,
@@ -66,7 +66,7 @@ const SignUpForm = () => {
         try {
             const credentials = { email: loginEmail, password: loginPassword };
             await login(credentials);
-            await router.push('/AccountDashboard'); // Redirect to a protected route after successful login
+            await router.push('/Register-Success'); // Redirect to a protected route after successful login
         } catch (error) {
             console.error('Login failed:', error);
         }

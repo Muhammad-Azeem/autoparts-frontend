@@ -1,6 +1,7 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState,useEffect} from 'react';
 import { useRouter } from 'next/router';
+import {checkAuth, register} from '../components/API/api'
 import {
     Heading,
     Input,
@@ -108,4 +109,24 @@ const RegisterSuccess = () => {
     );
 };
 
-export default RegisterSuccess;
+const withAuth = (WrappedComponent) => {
+    return (props) => {
+        const router = useRouter();
+
+        useEffect(() => {
+            const checkAuthentication = async () => {
+                try {
+                    await checkAuth();
+                } catch (error) {
+                    router.push('/signUp'); // Redirect to the login page if not authenticated
+                }
+            };
+
+            checkAuthentication();
+        }, []);
+
+        return <WrappedComponent {...props} />;
+    };
+};
+
+export default withAuth(RegisterSuccess);

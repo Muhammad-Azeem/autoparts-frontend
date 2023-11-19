@@ -118,6 +118,18 @@ const AcctDash = () => {
         setOrangeBarStyle({ width: '123px', left: '85px' });
     };
 
+    const scrollToForm = () => {
+        const formElement = document.getElementById('yourFormId'); // Replace 'yourFormId' with the actual ID of your form
+        if (formElement) {
+          formElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+      const [isBoxVisible, setBoxVisibility] = useState(false);
+
+      const handleButtonClick = () => {
+        setBoxVisibility(true); 
+      };
+    
     return (
         <Box >
             <Grid
@@ -183,8 +195,7 @@ const AcctDash = () => {
                         <MenuItem onClick={() => setActiveGridItem(3)}  className="menu-item">Address Book</MenuItem>
                     </MenuList>
                 </Menu>
-
-
+                
                 {activeGridItem === 1 &&
                 <GridItem  colSpan={1} bg='#fff'>
                     <Flex>
@@ -386,15 +397,47 @@ const AcctDash = () => {
                             <Box width="100%">
                                 <Grid className="list-grid" >
                                     <Heading className="account-setting-heading" as="h3" >
-                                        Account Settings
+                                       Address Book
                                     </Heading>
                                     <Box>
                                         <Text  className="account-subhead" >
                                             Manage your shipping addresses.
-                                            <span className="bussiness-url">
-                                                Add a Shipping New Address
+                                            <span  onClick={scrollToForm} className="bussiness-url">
+                                                Add a New Shipping Address
                                             </span>
                                         </Text>
+                                        {isBoxVisible && (
+                                        <Box className="editBox3 account-sectionbox">
+                                                <Heading mt={10} className="account-login" as="h3" >
+                                                    Shipping Address
+                                                </Heading>
+                                                <Box mt={10} borderBottom="1px solid #d0d0d0">
+                                                </Box>
+                                                <Box className="form-box-width"  mt={10}>
+                                                   <Text className="account-label">
+                                                        Country
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        First Name
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        Last Name
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        Company
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        City
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        State/Province
+                                                   </Text>
+                                                   <Text className="account-label">
+                                                        Other values from form
+                                                   </Text>
+                                                </Box>
+                                            </Box>
+                                        )}
 
                                             <Box className="editBox2 account-sectionbox">
                                                 <Heading mt={10} className="account-login" as="h3" >
@@ -406,7 +449,7 @@ const AcctDash = () => {
                                                 <Box mt={10} borderBottom="1px solid #d0d0d0">
                                                 </Box>
                                                 <Box className="form-box-width"  mt={10}>
-                                                    <form>
+                                                    <form id="yourFormId">
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1}
                                                                        pr={4}>Country/Territory:</FormLabel>
@@ -483,8 +526,9 @@ const AcctDash = () => {
                                                         <Box className="acctSet-butbox">
                                                             <Button onClick={toggleEditBoxVisibility} mr={10}
                                                                     className="discard-btn">Discard Changes</Button>
-                                                            <Button className="account-save-btn" type="submit">Save
-                                                                Changes</Button>
+                                                            <Button onClick={handleButtonClick} className="account-save-btn" >
+                                                                Save Changes
+                                                            </Button>
                                                         </Box>
                                                     </form>
                                                 </Box>

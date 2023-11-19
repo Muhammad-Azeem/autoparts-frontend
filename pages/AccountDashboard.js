@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 import TopSection from "../components/TopSection";

@@ -1935,6 +1935,9 @@ body{
     font-weight: 600;
     font-size: 16px;
 }
+.horizontal-listmenu{
+    cursor: pointer;
+}
 .body-opacity-06 {
     opacity: 0.6;
 }
