@@ -112,16 +112,16 @@ const ProductPage = () => {
                 </BreadcrumbItem>
             </Breadcrumb>
 
-            <Box className="pp-innerbox">
-                <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>
-                <Text mr={15} className="pp-innerbox-text">
-                    Make sure this part fits your vehicle
-                </Text>
-                <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">
-                    Check Fit {'>'}
-                </Text>
-                <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
-            </Box>
+            {/*<Box className="pp-innerbox">*/}
+            {/*    <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>*/}
+            {/*    <Text mr={15} className="pp-innerbox-text">*/}
+            {/*        Make sure this part fits your vehicle*/}
+            {/*    </Text>*/}
+            {/*    <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">*/}
+            {/*        Check Fit {'>'}*/}
+            {/*    </Text>*/}
+            {/*    <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
+            {/*</Box>*/}
         </Box>
 
         <Box className="pp-productDetail-main-box">
@@ -458,46 +458,47 @@ const ProductPage = () => {
             </Grid>
         </Box>
 
-        <Box mt={25} className="pp-table-box2">
-            <Heading className="detail-heading" as="h3">
-                Customer Questions & Answers
-            </Heading>
-            <div style={{marginBottom:'15px'}}  className="grey-line"></div>
-            <Text className="pp-question">
-                Q: I would like to know availability and if it is direct fit replacement
-            </Text>
-            <Text pl={22} className="pp-answer">
-                Posted by ToyotaPartsDeal Specialist
-            </Text>
-            <Text pt={10} pl={35} className="pp-question2">
-                A: You can Select Your Vehicle to check if 90341-18057 fits your vehicle.
-            </Text>
-            <Text pl={35} className="pp-answer">
-                Posted by ToyotaPartsDeal Specialist
-            </Text>
-            <div style={{marginTop:'15px'}} className="grey-line"></div>
+        {/*<Box mt={25} className="pp-table-box2">*/}
+        {/*    <Heading className="detail-heading" as="h3">*/}
+        {/*        Customer Questions & Answers*/}
+        {/*    </Heading>*/}
+        {/*    <div style={{marginBottom:'15px'}}  className="grey-line"></div>*/}
+        {/*    <Text className="pp-question">*/}
+        {/*        Q: I would like to know availability and if it is direct fit replacement*/}
+        {/*    </Text>*/}
+        {/*    <Text pl={22} className="pp-answer">*/}
+        {/*        Posted by ToyotaPartsDeal Specialist*/}
+        {/*    </Text>*/}
+        {/*    <Text pt={10} pl={35} className="pp-question2">*/}
+        {/*        A: You can Select Your Vehicle to check if 90341-18057 fits your vehicle.*/}
+        {/*    </Text>*/}
+        {/*    <Text pl={35} className="pp-answer">*/}
+        {/*        Posted by ToyotaPartsDeal Specialist*/}
+        {/*    </Text>*/}
+        {/*    <div style={{marginTop:'15px'}} className="grey-line"></div>*/}
 
-            <Text className="some-text" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                If you have any questions about this product, please don't hesitate to ask us. We will be happy to help you!
-            </Text>
-            <Text className="ask-btn">
-                Ask a Question
-            </Text>
+        {/*    <Text className="some-text" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        If you have any questions about this product, please don't hesitate to ask us. We will be happy to help you!*/}
+        {/*    </Text>*/}
+        {/*    <Text className="ask-btn">*/}
+        {/*        Ask a Question*/}
+        {/*    </Text>*/}
 
-            <Text className="some-text"  mt={10}>
-                Genuine Toyota Part 90341-18057, the Right Choice
-            </Text>
-            <Text  className="some-text pp-lower-para" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
-            </Text>
+        {/*    <Text className="some-text"  mt={10}>*/}
+        {/*        Genuine Toyota Part 90341-18057, the Right Choice*/}
+        {/*    </Text>*/}
+        {/*    <Text  className="some-text pp-lower-para" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.*/}
+        {/*    </Text>*/}
 
-            <Text mb={25} className="some-text pp-lower-para" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
-            </Text>
-        </Box>
+        {/*    <Text mb={25} className="some-text pp-lower-para" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.*/}
+        {/*    </Text>*/}
+        {/*</Box>*/}
+        <br/>
     </Box>
     );
 };

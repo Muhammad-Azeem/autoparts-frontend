@@ -45,7 +45,7 @@ const   Cart = () => {
     const router = useRouter();
 
     const handleProductDetailClick = () => {
-        router.push('/Product-Detail');
+        router.push('/ProductList');
     };
     const handleCheckout = () => {
         router.push('/ShoppingCart');
