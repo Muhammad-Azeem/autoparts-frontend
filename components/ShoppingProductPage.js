@@ -36,16 +36,22 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
-import {register, updateShipping} from "./API/api";
+import {login, register, updateShipping} from "./API/api";
+import {getCartFromCookie} from "./utility/cookies";
 
 const ShoppingProductPage = () => {
 
     const [user, setUser] = useState('');
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
+        const data = getCartFromCookie();
+        setCart(data);
+
         let temp= localStorage.getItem('user');
         temp = JSON.parse(temp);
         setUser(temp);
+        setSubTotal(localStorage.getItem('subTotal'));
         setFirstName(localStorage.getItem('firstName'));
         setLastName(localStorage.getItem('lastName'));
         setCompany(localStorage.getItem('company'));
@@ -73,6 +79,7 @@ const ShoppingProductPage = () => {
         router.push('/');
     };
 
+    const [subTotal, setSubTotal] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
@@ -101,29 +108,63 @@ const ShoppingProductPage = () => {
         }, 10000);
     };
 
+
+    const handleOrder = async () => {
+        try {
+            const data = { email: loginEmail, password: loginPassword };
+            await orderPlace(data);
+            await router.push('/Register-Success'); // Redirect to a protected route after successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
     const handleShippingForm = async () => {
-
-        if (email !== cEmail) {
-            setError("Emails don't match");
+        if (firstName == '') {
+            setError("First Name is required");
             displayErrorAndHide();
             return;
         }
-
-        if (password !== cPassword) {
-            setError("Passwords don't match");
+        if (lastName == '') {
+            setError("Last Name is required");
             displayErrorAndHide();
             return;
         }
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters');
+        if (company == '') {
+            setError("Company is required");
             displayErrorAndHide();
             return;
+        }
+        if (streetAddress == '') {
+            setError("Street Address is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (appartment == '') {
+            setError("Appartment is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (zipCode == '') {
+            setError("Zip Code is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (phone == '') {
+            setError("Phone is required");
+            displayErrorAndHide();
+            return;
+        }
+        if(!user) {
+            if (email !== cEmail) {
+                setError("Emails don't match");
+                displayErrorAndHide();
+                return;
+            }
         }
         try {
             if(user){
                 const userData = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,addressAs };
                 let response = await updateShipping(userData);
-                console.log('rest', response)
             }
             else{
                 localStorage.setItem('firstName', firstName);
@@ -136,6 +177,8 @@ const ShoppingProductPage = () => {
                 localStorage.setItem('email', email);
                 localStorage.setItem('cEmail', cEmail);
             }
+            setShowShippingDiv(false);
+            setShowPaymentDiv(true);
 
         } catch (error) {
             console.error('Registration failed:', error);
@@ -158,6 +201,33 @@ const ShoppingProductPage = () => {
 
     const onModalOpen = () => setIsModalOpen(true);
     const onModalClose = () => setIsModalOpen(false);
+
+    const [showShippingDiv, setShowShippingDiv] = useState(true);
+    const [showPaymentDiv, setShowPaymentDiv] = useState(false);
+    const [showReviewDiv, setShowReviewDiv] = useState(false);
+
+    //shipping
+    // if (showShippingDiv) {
+    //     // Move from Shipping to Payment
+    //     setShowPaymentDiv(true);
+    //     setShowReviewDiv(true);
+    //   } else if (showReviewDiv) {
+    //     // Move from Payment to Review
+    //     setShowShippingDiv(true);
+    //     setShowPaymentDiv(true);
+    //   }
+
+      const handleContinueToOrderReviewClick = () => {
+        // Move from Payment to Review directly
+        setShowPaymentDiv(false);
+        setShowReviewDiv(true);
+      };
+
+      const handleContinueClick = () => {
+        setShowShippingDiv(false);
+        setShowPaymentDiv(true);
+      };
+
     return (
 
     <Box >
@@ -165,10 +235,7 @@ const ShoppingProductPage = () => {
             <Flex className="pp-productDetail-innerbox" >
 
                 <Box className="shipping-pp-box2" flex="1">
-                    <Flex className="productDetail-box2-flex" >
-                        {/* Left Sub-Column */}
-                        <Box>
-                            <Box className='shipping-top-list'>
+                <Box className='shipping-top-list'>
                                 <Box className='shipping-top-list-li'>
                                     <Text className='shipping-top-list-text'>
                                         Shipping
@@ -185,6 +252,7 @@ const ShoppingProductPage = () => {
                                     </Text>
                                 </Box>
                             </Box>
+                            {showShippingDiv && (
                             <Box className='shipping-div'>
                                 {!user && (
                                 <Heading as="h5" fontWeight="200">
@@ -321,60 +389,319 @@ const ShoppingProductPage = () => {
                                                 </Box>
                                                 </Box>
                                             </Box>)}
-                                            {/* <Flex className="bussiness-checkbox"  mt={30} >
-                                                <Button className="bussiness-acct-button" colorScheme="teal" type="submit">
-                                                    Create a Bussiness Account
-                                                </Button>
-                                            </Flex> */}
 
-                                        </form>
+                                                    </form>
+                                                </Box>
+                                            </Flex>
+                                    <Box className="shipping-price-box">
+                                        <Text fontWeight='bold' fontSize="xl">
+                                            Order Summary
+                                        </Text>
+                                        <Box display='flex' justifyContent='space-between'>
+                                            <Text margin='0px' fontSize='small' >
+                                                Subtotal
+                                            </Text>
+                                            <Text margin='0px' fontSize='small' >
+                                                ${subTotal}
+                                            </Text>
+                                        </Box>
+                                        <Box mt={5} display='flex' justifyContent='space-between'>
+                                            <Text margin='0px' fontSize='small' >
+                                                Estimated Shipping & Handling
+                                            </Text>
+                                            <Text margin='0px' fontSize='small' >
+                                                $0
+                                            </Text>
+                                        </Box>
+                                        <Box mt={5}  display='flex' justifyContent='space-between'>
+                                            <Text margin='0px' fontSize='small' >
+                                            Estimated Tax
+                                            </Text>
+                                            <Text margin='0px' fontSize='small' >
+                                                $0
+                                            </Text>
+                                        </Box>
+                                        <Text borderTop="1px solid #b0b0b0" size="lg">
+                                            <Box mt={5}  display='flex' justifyContent='space-between'>
+                                                <Text margin='0px' fontSize='medium' fontWeight='600' >
+                                                    Estimated Order Total
+                                                </Text>
+                                                <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
+                                                    ${subTotal}
+                                                </Text>
+                                            </Box>
+                                        </Text>
+                                        <Text  onClick={handleShippingForm} className='continue-btn'>
+                                            Continue
+                                        </Text>
+                                    </Box>
+                            </Box>
+                             )}
+
+                             {showPaymentDiv && (
+                                <Box className='payment-div'>
+                                    <Flex className="productDetail-box2-flex" >
+                                        <Box>
+                                            <Box mt={25} className='shipping-div'>
+
+                                                <Flex className="shipping-box" >
+                                                    <Box className=""  >
+                                                        <form className="shipping-form">
+                                                            <Heading className="returning-heading" as="h3">Shipping Address</Heading>
+                                                            <Box display='flex'>
+                                                                <Box className='boxOne'>
+                                                                    <Text>
+                                                                        {firstName}
+                                                                    </Text>
+                                                                    <Text>
+                                                                        {lastName}
+                                                                    </Text>
+                                                                    <Text>
+                                                                        {company}
+                                                                    </Text>
+                                                                    <Text>
+                                                                        {streetAddress} {appartment} {zipCode}
+                                                                    </Text>
+                                                                    <Text>
+                                                                        {phone}
+                                                                    </Text>
+
+                                                                </Box>
+                                                                <Box className='boxTwo'>
+                                                                    <Text>
+                                                                        Pakistan
+                                                                    </Text>
+                                                                </Box>
+                                                            </Box>
+                                                        </form>
+                                                        <form className="shipping-form">
+                                                            <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
+                                                            <Box display='flex'>
+                                                                <Box>
+                                                                        <Box display="flex" alignItems="center">
+                                                                            <Text fontSize='14px' ml={2}>
+                                                                            <Input mr={5}  type="radio" />
+                                                                            <Image mr={10} height='15px' src="/images/paypal.png" alt="Image 1"/>
+                                                                            Speed through checkout. PayPal is the safer, easier way to pay.</Text>
+                                                                        </Box>
+
+                                                                        <Box  alignItems="center">
+                                                                            <Text fontWeight='600' fontSize='14px' ml={2}>
+                                                                            <Input mr={5}  type="radio" />
+                                                                                Wire Transfer
+                                                                            </Text>
+                                                                            <Text fontSize='14px' ml={2}>
+                                                                                Your payment will be processed through Wire Transfer.
+                                                                            </Text>
+                                                                            <Text fontSize='14px' ml={2}>
+                                                                                Once you submit the order, we will confirm the availability and price of the part(s) with the manufacture, typically within 1-2 business days.
+                                                                            </Text>
+                                                                            <Text fontSize='14px' ml={2}>
+                                                                                You will receive a confirmation email with instructions for the wire transfer.
+                                                                            </Text>
+                                                                            <Text fontSize='14px' ml={2}>
+                                                                                If you have any questions or concerns, please contact us.
+                                                                            </Text>
+                                                                        </Box>
+
+                                                                </Box>
+                                                            </Box>
+
+                                                        </form>
+                                                    </Box>
+                                                </Flex>
+                                            </Box>
+                                        </Box>
+                                        <Box className="payment-price-box">
+                                            <Text fontWeight='bold' fontSize="xl">
+                                                Order Summary
+                                            </Text>
+                                            <Box display='flex' justifyContent='space-between'>
+                                                <Text margin='0px' fontSize='small' >
+                                                    Subtotal
+                                                </Text>
+                                                <Text margin='0px' fontSize='small' >
+                                                    ${subTotal}
+                                                </Text>
+                                            </Box>
+                                            <Box mt={5} display='flex' justifyContent='space-between'>
+                                                <Text margin='0px' fontSize='small' >
+                                                    Estimated Shipping & Handling
+                                                </Text>
+                                                <Text margin='0px' fontSize='small' >
+                                                    $0
+                                                </Text>
+                                            </Box>
+
+                                            <Text borderTop="1px solid #b0b0b0" size="lg">
+                                                <Box mt={5}  display='flex' justifyContent='space-between'>
+                                                    <Text margin='0px' fontSize='medium' fontWeight='600' >
+                                                        Estimated Order Total
+                                                    </Text>
+                                                    <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
+                                                        ${subTotal}
+                                                    </Text>
+                                                </Box>
+                                            </Text>
+                                            <Text onClick={handleContinueToOrderReviewClick} className='continue-btn'>
+                                                Continue to Order Review
+                                            </Text>
+                                        </Box>
+                                    </Flex>
+                                </Box>
+                             )}
+
+                             {showReviewDiv && (
+                            <Box className='payment-div'>
+                                <Flex className="productDetail-box2-flex" >
+                                    <Box>
+                                        <Box mt={25} className='shipping-div'>
+
+                                            <Flex className="shipping-box" >
+                                                <Box className=""  >
+                                                    <form className="shipping-form">
+                                                        <Box display='flex'>
+                                                            <Box className='boxOne'>
+                                                                <Text fontWeight='600'>
+                                                                    Shipping Addres
+                                                                </Text>
+                                                                <Text>
+                                                                    {firstName}
+                                                                </Text>
+                                                                <Text>
+                                                                    {lastName}
+                                                                </Text>
+                                                                <Text>
+                                                                    {company}
+                                                                </Text>
+                                                                <Text>
+                                                                    {streetAddress} {appartment} {zipCode}
+                                                                </Text>
+                                                                <Text>
+                                                                    {phone}
+                                                                </Text>
+
+                                                            </Box>
+                                                            <Box className='boxTwo'>
+                                                                 <Text fontWeight='600'>
+                                                                    Payment Method
+                                                                </Text>
+                                                                <Text>
+                                                                    Wire Transfer
+                                                                </Text>
+                                                            </Box>
+                                                        </Box>
+                                                    </form>
+                                                    <form className="shipping-form">
+                                                            <Text fontWeight='600'>
+                                                                    Shipping Details
+                                                                </Text>
+                                                      <Box >
+                                                      <TableContainer>
+                        <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                            <Thead background="#dfdfdf" >
+                                <Tr>
+                                    <Th width="150px"></Th>
+                                    <Th width="250px" textAlign="left">Part Description</Th>
+                                    <Th width="150px" textAlign="center">Price</Th>
+                                    <Th width="150px" textAlign="center">Qty.</Th>
+                                    <Th width="150px" textAlign="right">Subtotal</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                                {cart.map((cartItem, index) => (
+                                    <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
+                                        <Td>
+                                            <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
+                                        </Td>
+                                        <Td width="250px" textAlign="left">
+                                            Part No.: {cartItem.part_number}
+                                            <br/>
+                                            <b>{cartItem.description}</b>
+                                            <br/>
+                                            <br/>
+                                            Replaced By: {cartItem.replaces}
+                                            <br/>
+
+                                        </Td>
+                                        <Td width="150px" textAlign="center">
+                                            ${cartItem.price}
+                                        </Td>
+                                        <Td width="150px" textAlign="center">
+                                            {cartItem.quantity}
+                                        </Td>
+                                        <Td width="150px" textAlign="right">
+                                            ${(cartItem.price * cartItem.quantity)}
+                                        </Td>
+                                    </Tr>
+                                ))}
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
+                                                        </Box>
+
+                                                    </form>
+                                                </Box>
+                                            </Flex>
+                                        </Box>
+                                    </Box>
+                                    <Box>
+                                    <Box className="payment-price-box">
+                                        <Text fontWeight='bold' fontSize="xl">
+                                            Order Summary
+                                        </Text>
+                                        <Box display='flex' justifyContent='space-between'>
+                                            <Text margin='0px' fontSize='small' >
+                                                Subtotal
+                                            </Text>
+                                            <Text margin='0px' fontSize='small' >
+                                                ${subTotal}
+                                            </Text>
+                                        </Box>
+                                        <Box mt={5} display='flex' justifyContent='space-between'>
+                                            <Text margin='0px' fontSize='small' >
+                                                Shipping & Handling
+                                            </Text>
+                                            <Text margin='0px' fontSize='small' >
+                                                $0
+                                            </Text>
+                                        </Box>
+
+                                        <Text borderTop="1px solid #b0b0b0" fontSize='12px'>
+                                            <Box mt={5} mb={5}  display='flex' justifyContent='space-between'>
+                                                <Text margin='0px' fontSize='medium' fontWeight='600' >
+                                                    Order Total
+                                                </Text>
+                                                <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
+                                                    ${subTotal}
+                                                </Text>
+                                            </Box>
+                                            By placing an order, you agree with our Terms and Conditions
+                                        </Text>
+                                        <Text className='continue-btn' onClick={handleOrder}>
+                                            Place To Order
+                                        </Text>
+                                    </Box>
+                                    <Box className="payment-price-box2">
+                                        <Text fontWeight='bold' fontSize='12px' color='#606060'>
+                                            We ship most orders in 1-3 business days.
+                                        </Text>
+                                        <Text fontSize='12px' color='#606060'>
+                                             Some parts may need to be ordered from one of Toyota Distribution Centers across the country if our local Toyota Distribution Center is out of stock. It will require additional time to obtain. If for any reason it takes longer than 3 business days, we will send a follow-up email to keep you updated on the status of your order.
+
+                                        </Text>
+                                        <Text fontWeight='bold' fontSize='12px' color='#606060'>
+                                            For International Orders:
+                                        </Text>
+                                        <Text fontSize='12px' color='#606060'>
+                                        Customers are responsible for any customs charges, duties, or taxes that may incur in destination country. This payment will be collected by FedEx upon delivery.
+
+                                        </Text>
+                                    </Box>
                                     </Box>
                                 </Flex>
                             </Box>
-                            </Box>
-                        <Box className="shipping-price-box">
-                            <Text fontWeight='bold' fontSize="xl">
-                                Order Summary
-                            </Text>
-                            <Box display='flex' justifyContent='space-between'>
-                                <Text margin='0px' fontSize='small' >
-                                    Subtotal
-                                </Text>
-                                <Text margin='0px' fontSize='small' >
-                                    $193.2
-                                </Text>
-                            </Box>
-                            <Box mt={5} display='flex' justifyContent='space-between'>
-                                <Text margin='0px' fontSize='small' >
-                                    Estimated Shipping & Handling
-                                </Text>
-                                <Text margin='0px' fontSize='small' >
-                                    $193.2
-                                </Text>
-                            </Box>
-                            <Box mt={5}  display='flex' justifyContent='space-between'>
-                                <Text margin='0px' fontSize='small' >
-                                 Estimated Tax
-                                </Text>
-                                <Text margin='0px' fontSize='small' >
-                                    $193.2
-                                </Text>
-                            </Box>
-                            <Text borderTop="1px solid #b0b0b0" size="lg">
-                                <Box mt={5}  display='flex' justifyContent='space-between'>
-                                    <Text margin='0px' fontSize='medium' fontWeight='600' >
-                                        Estimated Tax
-                                    </Text>
-                                    <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                        $193.2
-                                    </Text>
-                                </Box>
-                            </Text>
-                            <Text className='continue-btn' onClick={handleShippingForm}>
-                                Continue
-                            </Text>
-                        </Box>
-                    </Flex>
+                             )}
                 </Box>
             </Flex>
         </Box>

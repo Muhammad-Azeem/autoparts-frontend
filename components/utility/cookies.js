@@ -9,7 +9,7 @@ export const getGarageFromCookie = () => {
 };
 
 export const setGarageCookie = (garage) => {
-  Cookies.set(GARAGE_COOKIE_NAME, JSON.stringify(garage), { expires: 7 }); // Set expiration as needed
+  Cookies.set(GARAGE_COOKIE_NAME, JSON.stringify(garage), { expires: 100 }); // Set expiration as needed
 };
 
 export const addGarageToCookie = (newGarage) => {
@@ -40,9 +40,34 @@ export const getCartFromCookie = () => {
   const cart = Cookies.get(AddToCart_COOKIE_NAME);
   return cart ? JSON.parse(cart) : [];
 };
+export const addToCartToCockie = (newCart, quantity = 1) => {
+  const existingCart = getCartFromCookie();
+  newCart.quantity = quantity;
+  // Check if the cart already exists based on company and model
+  const existingItemIndex = existingCart.findIndex((item) => item.id === newCart.id);
+  // const isCartUnique = !existingCart.some(
+  //     (cart) => cart.name === newCart.name
+  // );
+  if (existingItemIndex !== -1) {
+    // const updatedCart = [...newCart];
+    existingCart[existingItemIndex].quantity = parseInt(existingCart[existingItemIndex].quantity) + parseInt(newCart.quantity);
+    setCartCookie(existingCart);
+  }else {
+    const cart = getCartFromCookie();
+    cart.push(newCart);
+    setCartCookie(cart);
 
+  }
+  // if(isCartUnique){
+  //   const cart = getCartFromCookie();
+  //   cart.push(newCart);
+  //   setCartCookie(cart);
+  // }else {
+  //   console.log('idar aya?')
+  // }
+};
 export const setCartCookie = (cart) => {
-  Cookies.set(AddToCart_COOKIE_NAME, JSON.stringify(cart), { expires: 7 }); // Set expiration as needed
+  Cookies.set(AddToCart_COOKIE_NAME, JSON.stringify(cart), { expires: 100 }); // Set expiration as needed
 };
 
 export const addCartToCookie = (newCart) => {

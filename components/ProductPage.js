@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
 import {
     Table,
@@ -35,6 +35,8 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
+import {getProductbyId} from "./API/api";
+import {addToCartToCockie} from "./utility/cookies";
 
 const ProductPage = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -42,12 +44,26 @@ const ProductPage = () => {
     const toggleEstimateVisibility = () => {
         setIsEstimateVisible(!isEstimateVisible);
     };
+    const [product, setProduct] = useState({});
 
     const router = useRouter();
+    const{productid} = router.query ;
 
-    const handleProductDetailClick = () => {
-        router.push('/Product-Detail');
-    };
+    useEffect(() => {
+        const fetchProducts = async (id) => {
+            try {
+                const data = await getProductbyId(id);
+                setProduct(data);
+
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+        if(productid){
+            fetchProducts(productid);
+        }
+    }, [productid]);
+
     const handleHomeClick = () => {
         router.push('/');
     };
@@ -75,6 +91,13 @@ const ProductPage = () => {
 
     const onModalOpen = () => setIsModalOpen(true);
     const onModalClose = () => setIsModalOpen(false);
+    const [quantity, setQuantity] = useState()
+    const handleAddToCart = () => {
+        addToCartToCockie(product, quantity)
+        router.push('/AddToCart/');
+
+    };
+
     return (
 
     <Box >
@@ -89,23 +112,23 @@ const ProductPage = () => {
                 </BreadcrumbItem>
             </Breadcrumb>
 
-            <Box className="pp-innerbox">
-                <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>
-                <Text mr={15} className="pp-innerbox-text">
-                    Make sure this part fits your vehicle
-                </Text>
-                <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">
-                    Check Fit {'>'}
-                </Text>
-                <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
-            </Box>
+            {/*<Box className="pp-innerbox">*/}
+            {/*    <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>*/}
+            {/*    <Text mr={15} className="pp-innerbox-text">*/}
+            {/*        Make sure this part fits your vehicle*/}
+            {/*    </Text>*/}
+            {/*    <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">*/}
+            {/*        Check Fit {'>'}*/}
+            {/*    </Text>*/}
+            {/*    <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
+            {/*</Box>*/}
         </Box>
 
         <Box className="pp-productDetail-main-box">
             <Flex className="pp-productDetail-innerbox" >
                 <Box className="pp-box1" display="flex" flexDirection="column">
                     <Box mb={4}>
-                        <Image className="pp-box1-img"  src="/images/toyota-plug.jpg" alt="Image 1" />
+                        <Image className="pp-box1-img"  src={product.images} alt="Image 1" />
                     </Box>
                     <Box display="flex" mb={4}>
                         <Image className="pp-box1-simg" src="/images/toyota-plug.jpg" alt="Image 2" />
@@ -118,54 +141,54 @@ const ProductPage = () => {
                     <Flex className="productDetail-box2-flex" >
                         {/* Left Sub-Column */}
                         <Box className="productDetail-box2-heads">
-                            <Text className="pp-box2-title" fontSize="xl">Toyota 90341-12012 Plug, W/HEAD STRAIGH</Text>
+                            <Text className="pp-box2-title" fontSize="xl">{product.manufacturer} {product.part_number} {product.name}</Text>
                             <Text  className="pp-box2-heading1" fontSize="md">Part Number:
-                                <span className="detail-box2-partno">90341-12012</span>
+                                <span className="detail-box2-partno">{product.part_number}</span>
                             </Text>
                             <Box mt={10}  display="flex">
                                 <Text width="125px" className="pp-box2-heading2" margin={0}  fontSize="xl">
                                     Part Description</Text>
                                 <Text  className="pp-box2-heading2" margin={0} fontSize="xl">
-                                    Plug(For Oil Pan Drain)</Text>
+                                    {product.description}</Text>
                             </Box>
                             <Box mt={10} display="flex">
                                 <Text width="125px" className="pp-box2-heading2" margin={0} fontSize="xl">
                                     Replaces</Text>
                                 <Text  className="pp-box2-heading2" margin={0} fontSize="xl">
-                                    90341-12026</Text>
+                                    {product.replaces}</Text>
                             </Box>
                             <Box mt={10} display="flex">
                                 <Text width="125px" className="pp-box2-heading2" margin={0} fontSize="xl">
                                     Manufacturer</Text>
                                 <Text className="pp-box2-heading2" margin={0} fontSize="xl">
-                                    Toyota</Text>
+                                    {product.manufacturer}</Text>
                             </Box>
-                            <Box mt={30} display="flex">
-                                <Text width="200px" cursor="pointer" className="pp-box2-heading2" margin={0} fontSize="xl">
-                                    Customer Questions & Answers</Text>
-                            </Box>
+                            {/*<Box mt={30} display="flex">*/}
+                            {/*    <Text width="200px" cursor="pointer" className="pp-box2-heading2" margin={0} fontSize="xl">*/}
+                            {/*        Customer Questions & Answers</Text>*/}
+                            {/*</Box>*/}
                         </Box>
 
                         <Box className="pp-price-box">
-                            <Text className="pp-price" fontSize="xl">$9.5
+                            <Text className="pp-price" fontSize="xl">{product.price}
                                 <span className="product-price-span" >
                                     MSRP:
                                     <span style={{textDecoration:'line-through'}}>
-                                        $6.55
+                                        {product.discounted_price}
                                     </span>
                                 </span>
                             </Text>
-                            <Text className="pp-save-price" >
-                                You Save: $1.86 (29%)
-                            </Text>
+                            {/*<Text className="pp-save-price" >*/}
+                            {/*    You Save: $1.86 (29%)*/}
+                            {/*</Text>*/}
                             <Box display="flex">
-                                <input className="pp-input-num" type="number" placeholder="1" />
-                                <Button ml={15} mt={10} className="pp-cart-btn" colorScheme="teal">Add to Cart</Button>
+                                <input value={quantity} className="pp-input-num" type="number" placeholder="1"  onChange={(e) => setQuantity(e.target.value)} />
+                                <Button ml={15} mt={10} className="pp-cart-btn" colorScheme="teal" type={'button'} onClick={handleAddToCart}>Add to Cart</Button>
                             </Box>
                             <Text  size="lg">
-                                <Image className="pp-pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>
-                                <span style={{fontSize:'12px'}}>Pay in 4 interest-free payments of $35.18. </span>
-                                <span style={{fontSize:'12px'}} className="bussiness-url">Learn More</span>
+                                {/*<Image className="pp-pay-later-image" src="/images/pay-later.svg" alt="Image 1"/>*/}
+                                {/*<span style={{fontSize:'12px'}}>Pay in 4 interest-free payments of $35.18. </span>*/}
+                                {/*<span style={{fontSize:'12px'}} className="bussiness-url">Learn More</span>*/}
                             </Text>
                             <Text borderTop="1px solid #b0b0b0" size="lg">
                                 <span  style={{fontSize:'12px'}} >Ships in 1-3 Business Days</span>
@@ -310,31 +333,31 @@ const ProductPage = () => {
                             <Tbody>
                                 <Tr className="pp-row">
                                     <Td className="pp-td1">Brand</Td>
-                                    <Td className="pp-td2">Genuine Toyota</Td>
+                                    <Td className="pp-td2">{product.brand}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Part Name Code</Td>
-                                    <Td className="pp-td2">11415</Td>
+                                    <Td className="pp-td2">{product.part_name_code}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Manufacturer Part Number</Td>
-                                    <Td className="pp-td2">90910-09095</Td>
+                                    <Td className="pp-td2">{product.manufacturer_part_number}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Part Description</Td>
-                                    <Td className="pp-td2">0.50 Pounds</Td>
+                                    <Td className="pp-td2">{product.part_description}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Condition</Td>
-                                    <Td className="pp-td2">New</Td>
+                                    <Td className="pp-td2">{product.condition}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Fitment Type	</Td>
-                                    <Td className="pp-td2">Direct Replacement</Td>
+                                    <Td className="pp-td2">{product.fitment_type}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Replaces</Td>
-                                    <Td className="pp-td2">90910-09100</Td>
+                                    <Td className="pp-td2">{product.replaces}</Td>
                                 </Tr>
                                 <Tr>
                                     <Td className="pp-td1">Manufacturer</Td>
@@ -435,46 +458,47 @@ const ProductPage = () => {
             </Grid>
         </Box>
 
-        <Box mt={25} className="pp-table-box2">
-            <Heading className="detail-heading" as="h3">
-                Customer Questions & Answers
-            </Heading>
-            <div style={{marginBottom:'15px'}}  className="grey-line"></div>
-            <Text className="pp-question">
-                Q: I would like to know availability and if it is direct fit replacement
-            </Text>
-            <Text pl={22} className="pp-answer">
-                Posted by ToyotaPartsDeal Specialist
-            </Text>
-            <Text pt={10} pl={35} className="pp-question2">
-                A: You can Select Your Vehicle to check if 90341-18057 fits your vehicle.
-            </Text>
-            <Text pl={35} className="pp-answer">
-                Posted by ToyotaPartsDeal Specialist
-            </Text>
-            <div style={{marginTop:'15px'}} className="grey-line"></div>
+        {/*<Box mt={25} className="pp-table-box2">*/}
+        {/*    <Heading className="detail-heading" as="h3">*/}
+        {/*        Customer Questions & Answers*/}
+        {/*    </Heading>*/}
+        {/*    <div style={{marginBottom:'15px'}}  className="grey-line"></div>*/}
+        {/*    <Text className="pp-question">*/}
+        {/*        Q: I would like to know availability and if it is direct fit replacement*/}
+        {/*    </Text>*/}
+        {/*    <Text pl={22} className="pp-answer">*/}
+        {/*        Posted by ToyotaPartsDeal Specialist*/}
+        {/*    </Text>*/}
+        {/*    <Text pt={10} pl={35} className="pp-question2">*/}
+        {/*        A: You can Select Your Vehicle to check if 90341-18057 fits your vehicle.*/}
+        {/*    </Text>*/}
+        {/*    <Text pl={35} className="pp-answer">*/}
+        {/*        Posted by ToyotaPartsDeal Specialist*/}
+        {/*    </Text>*/}
+        {/*    <div style={{marginTop:'15px'}} className="grey-line"></div>*/}
 
-            <Text className="some-text" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                If you have any questions about this product, please don't hesitate to ask us. We will be happy to help you!
-            </Text>
-            <Text className="ask-btn">
-                Ask a Question
-            </Text>
+        {/*    <Text className="some-text" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        If you have any questions about this product, please don't hesitate to ask us. We will be happy to help you!*/}
+        {/*    </Text>*/}
+        {/*    <Text className="ask-btn">*/}
+        {/*        Ask a Question*/}
+        {/*    </Text>*/}
 
-            <Text className="some-text"  mt={10}>
-                Genuine Toyota Part 90341-18057, the Right Choice
-            </Text>
-            <Text  className="some-text pp-lower-para" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
-            </Text>
+        {/*    <Text className="some-text"  mt={10}>*/}
+        {/*        Genuine Toyota Part 90341-18057, the Right Choice*/}
+        {/*    </Text>*/}
+        {/*    <Text  className="some-text pp-lower-para" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.*/}
+        {/*    </Text>*/}
 
-            <Text mb={25} className="some-text pp-lower-para" mt={10}>
-                {/*eslint-disable-next-line react/no-unescaped-entities*/}
-                Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.
-            </Text>
-        </Box>
+        {/*    <Text mb={25} className="some-text pp-lower-para" mt={10}>*/}
+        {/*        /!*eslint-disable-next-line react/no-unescaped-entities*!/*/}
+        {/*        Your vehicle deserves only genuine OEM Toyota parts and accessories. To ensure reliability, purchase Toyota part # 90341-18057 Plug Sub-Assembly, W/HEA. It is sometimes referred to as Toyota Drain Plug. Our Toyota parts and accessories are expedited directly from authorized Toyota dealers strategically located all across the U.S. and are backed by the manufacturer's 12 month, 12,000 mile warranty. OEM Toyota parts are the best for restoring your vehicle to factory condition performance. This part fits 1984-2022 Toyota 4Runner, 1983-1990 Toyota Camry, 2001-2019 Toyota Highlander, 1995-2022 Toyota Tacoma.*/}
+        {/*    </Text>*/}
+        {/*</Box>*/}
+        <br/>
     </Box>
     );
 };

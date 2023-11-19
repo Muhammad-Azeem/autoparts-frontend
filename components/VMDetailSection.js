@@ -375,6 +375,7 @@ const DetailSection = ({title}) => {
                                                 <Product
                                                     description={product.name}
                                                     image={product.images}
+                                                    id={product.id}
                                                 />
                                             ))}
                                         </Grid>

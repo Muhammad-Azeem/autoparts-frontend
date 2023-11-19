@@ -1,13 +1,13 @@
 // pages/index.js
 import React from 'react';
-import Header from '../components/Header';
-import SubHeader from "../components/SubHeader";
-import Footer from "../components/Footer";
-import HeaderMobile from "../components/HeaderMobile";
-import MobileFooter from "../components/MobileFooter";
-import Cart from "../components/Cart";
-import ProductPage from "../components/ProductPage";
-const Product = () => {
+import Header from '../../components/Header';
+import SubHeader from "../../components/SubHeader";
+import Footer from "../../components/Footer";
+import HeaderMobile from "../../components/HeaderMobile";
+import MobileFooter from "../../components/MobileFooter";
+import Cart from "../../components/Cart";
+import ProductPage from "../../components/ProductPage";
+const Productid = () => {
     return (
         <div>
             <div className="main-header">
@@ -31,4 +31,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default Productid;

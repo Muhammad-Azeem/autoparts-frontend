@@ -66,7 +66,7 @@ const Header = () => {
     };
 
     const handleDashClick = () => {
-        router.push('/');
+        router.push('/AccountDashboard');
     };
 
     const handleAcctSettingClick = () => {

@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 
@@ -7,8 +7,22 @@ import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
 import BussinessAccountForm from "../components/BussinessAccountForm";
+import LoaderSpinner from "../components/LoaderSpinner";
 
 const BussinessAccount = () => {
+    const [loading, setLoading] = useState(true);
+    // Simulating an asynchronous operation
+  useEffect(() => {
+    const fetchData = async () => {
+      // Simulate an API call or any asynchronous task
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // After the task is done, set loading to false
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
     return (
         <div>
             <div className="main-header">
@@ -20,7 +34,13 @@ const BussinessAccount = () => {
             </div>
 
             <main>
+            {loading ? (
+                <LoaderSpinner />
+                ) : (
+            <>
                 <BussinessAccountForm />
+                </>
+                )}
             </main>
 
             <div className="main-footer">

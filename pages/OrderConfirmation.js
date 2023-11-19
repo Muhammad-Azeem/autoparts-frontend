@@ -2,18 +2,14 @@
 import React, {useState, useEffect} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
-import TopSection from "../components/TopSection";
-import DetailSection from "../components/DetailSection";
-import GeniunePartsSection from "../components/GeniunePartsSection";
-import ModelSection from "../components/ModelSection";
-import WholeSaleSection from "../components/WholeSaleSection";
 import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
-import SalesPolicyPage from "../components/SalesPolicyPage";
+import ShoppingProductPage from '../components/ShoppingProductPage';
+import OrderConfirmation from '../components/OrderConfirmation'
 import LoaderSpinner from "../components/LoaderSpinner";
 
-const SalesPolicy = () => {
+const HomePage = () => {
     const [loading, setLoading] = useState(true);
     // Simulating an asynchronous operation
   useEffect(() => {
@@ -42,11 +38,11 @@ const SalesPolicy = () => {
                 <LoaderSpinner />
                 ) : (
             <>
-                <SalesPolicyPage />
+                <OrderConfirmation/>
                 </>
                 )}
+                
             </main>
-
             <div className="main-footer">
                 <Footer/>
             </div>
@@ -57,4 +53,4 @@ const SalesPolicy = () => {
     );
 };
 
-export default SalesPolicy;
+export default HomePage;

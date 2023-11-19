@@ -20,7 +20,7 @@ import {
     Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import {getAllCategories } from './API/api';
+import {getAllCategories, getProductsBySubCategoryId} from './API/api';
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
@@ -125,6 +125,9 @@ const ProductListing = () => {
     const handleHomeClick = () => {
         router.push('/');
     };
+    const handleProductClick = (id) => {
+        router.push('/ProductPage/'+id);
+    };
     const [isDivOpen, setIsDivOpen] = useState(false);
     const divRef = useRef();
 
@@ -138,6 +141,15 @@ const ProductListing = () => {
     // Close the div when the cursor hovers out
     const handleMouseLeave = () => {
         setIsDivOpen(false);
+        setProductsByCategory([]);
+
+    };
+    const [productsByCategory, setProductsByCategory] = useState([])
+    const handleMouseEnter = async (subCategoryId, subCategoryName) => {
+        setIsDivOpen(subCategoryName);
+        const response = await getProductsBySubCategoryId(subCategoryId)
+        setProductsByCategory(response.products);
+        console.log(response.products, 'tp')
     };
 
     // Add click outside event listener when the div is open
@@ -152,7 +164,11 @@ const ProductListing = () => {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [isDivOpen]);
+    const [hoveredCategory, setHoveredCategory] = useState(null);
 
+    const handleCategoryHover = (categoryName) => {
+        setHoveredCategory(categoryName);
+    };
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
@@ -228,18 +244,17 @@ const ProductListing = () => {
                                                         {category.sub_categories.map((subCategory, subIndex) => (
                                                             <ListItem
                                                                 onMouseLeave={handleMouseLeave}
-                                                                onMouseEnter={() => setIsDivOpen(true)}
+                                                                onMouseEnter={() => handleMouseEnter(subCategory.id, subCategory.name)}
                                                                 position="relative"
                                                                 key={subIndex} className="category-list-item">
-                                                                    {console.log(subCategory, 'start')}
                                                                     {subCategory.name}
                                                                     <Image float="right" height="15px"src="/images/search-list-category.png" mr="2"
                                                             />
                                                                 <div>
-                                                                        {isDivOpen && (
-                                                                            <div
-                                                                                ref={divRef}
-                                                                                style={{
+                                                                        {isDivOpen === subCategory.name && (
+                                                                                <div
+                                                                                    ref={divRef}
+                                                                                    style={{
                                                                                         position: 'absolute',
                                                                                         top: '8px', // Adjust the positioning as needed
                                                                                         right: '35px',
@@ -248,19 +263,22 @@ const ProductListing = () => {
                                                                                         background: 'white',
                                                                                         boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
                                                                                         zIndex: '9',
-                                                                                }}
-                                                                                onMouseLeave={handleMouseLeave}
-                                                                            >
-                                                                                <div className='sub-mod-box' >
-                                                                                    <Heading className='sub-mod-head'  margin="0" as="h2" mt={4}>
-                                                                                        Parts in {subCategory.name}
-                                                                                    </Heading>
-                                                                                    <Box mt={5} className='sub-mod-innerbox' display='flex'>
-                                                                                        <Image className='sub-mod-innerbox-img' float="right" height="15px"src="/images/search-list-category.png" mr="2"/>
-                                                                                        <Text ml={25} mr={15} className='sub-mod-innerbox-text'>Product Name</Text>
-                                                                                    </Box>
+                                                                                    }}
+                                                                                    onMouseLeave={handleMouseLeave}
+                                                                                >
+                                                                                    <div className='sub-mod-box' >
+                                                                                        <Heading className='sub-mod-head'  margin="0" as="h2" mt={4}>
+                                                                                            Parts in {subCategory.name}
+                                                                                        </Heading>
+                                                                                        {productsByCategory.map((product, index) => (
+
+                                                                                            <Box mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
+                                                                                                <Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>
+                                                                                                <Text ml={25} mr={15} className='sub-mod-innerbox-text'>{product.name}</Text>
+                                                                                            </Box>
+                                                                                            ))}
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
                                                                         )}
 
                                                                 </div>

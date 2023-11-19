@@ -213,7 +213,7 @@ export const getAllCategories = async () => {
     }
 };
 
-export const getProductbyId = async ($id) => {
+export const getProductbyId = async (id) => {
 
     try {
         const response = await axios.get(`${API_BASE_URL}/product/find/`+id);
@@ -225,6 +225,14 @@ export const getProductbyId = async ($id) => {
 export const getProductByCategoryId = async (categoryId) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/product/getProductsByCategoryId/`+categoryId, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+export const getProductsBySubCategoryId = async (subCategoryId) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/getProductsBySubCategoryId/`+subCategoryId, {});
         return response.data;
     } catch (error) {
         throw error;
