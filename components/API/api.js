@@ -29,6 +29,50 @@ export const register = async (userData) => {
     }
 };
 
+
+export const updateShipping = async (userData) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+
+        let data = new FormData();
+        data.append('first_name', userData.firstName);
+        data.append('last_name', userData.lastName);
+        data.append('company', userData.company);
+        data.append('address', userData.streetAddress);
+        data.append('appartment', userData.appartment);
+        data.append('zip_code', userData.zipCode);
+        data.append('business_phone_number', userData.phone);
+        data.append('save_as', userData.addressAs);
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/updateShipping`,
+            data : data,
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error );
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
 export const changeEmail = async (userData) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -82,6 +126,7 @@ export const login = async (credentials) => {
 
 export const logout = () => {
     localStorage.removeItem('token'); // Remove the token from local storage
+    localStorage.removeItem('user'); // Remove the user from local storage
 };
 
 export const checkAuth = async () => {

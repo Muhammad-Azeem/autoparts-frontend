@@ -1,5 +1,5 @@
 // pages/index.js
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 import Footer from "../components/Footer";
@@ -20,7 +20,7 @@ const HomePage = () => {
 
             <main>
                 <ShoppingProductPage/>
-                
+
             </main>
             <div className="main-footer">
                 <Footer/>
