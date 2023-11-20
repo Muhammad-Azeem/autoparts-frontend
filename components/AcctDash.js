@@ -281,39 +281,91 @@ const AcctDash = () => {
                                 </Box>
                                 <Box>
                                     {showTable1 && (
-                                        // <Table>
-                                        //     <Thead>
-                                        //         <Tr>
-                                        //             <Th>Table 1 Header</Th>
-                                        //         </Tr>
-                                        //     </Thead>
-                                        //     <Tbody>
-                                        //         <Tr>
-                                        //             <Td>Table 1 Data</Td>
-                                        //         </Tr>
-                                        //     </Tbody>
-                                        // </Table>
-                                        <Text padding="0px 30px">
-                                            Your order list is empty
-                                        </Text>
+                                       <>
+                                       <TableContainer>
+                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                                <Thead background="#dfdfdf" >
+                                                                    <Tr>
+                                                                        <Th width="150px">Sr.</Th>
+                                                                        <Th width="250px" textAlign="left">Part Description</Th>
+                                                                        <Th width="150px" textAlign="center">Price</Th>
+                                                                        <Th width="150px" textAlign="center">Qty.</Th>
+                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                    </Tr>
+                                                                </Thead>
+                                                                <Tbody> 
+                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                            <Td textAlign="center">
+                                                                                1
+                                                                            </Td>
+                                                                            <Td width="250px" textAlign="left">
+                                                                                Part No.: 
+                                                                                <br/>
+                                                                                <b>abc</b>
+                                                                                <br/>
+                                                                              
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                                123
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                            1
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="right">
+                                                                                568
+                                                                            </Td>
+                                                                        </Tr>
+                                                                </Tbody>
+                                                            </Table>
+                                                        </TableContainer>  
+                                            <Text padding="0px 30px">
+                                                Your order list is empty
+                                            </Text>
+                                       </>
                                     )}
 
                                     {showTable2 && (
-                                        // <Table>
-                                        //     <Thead>
-                                        //         <Tr>
-                                        //             <Th>Table 2 Header</Th>
-                                        //         </Tr>
-                                        //     </Thead>
-                                        //     <Tbody>
-                                        //         <Tr>
-                                        //             <Td>Table 2 Data</Td>
-                                        //         </Tr>
-                                        //     </Tbody>
-                                        // </Table>
+                                     <>
+                                     <TableContainer>
+                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                                <Thead background="#dfdfdf" >
+                                                                    <Tr>
+                                                                        <Th width="150px">Sr.</Th>
+                                                                        <Th width="250px" textAlign="left">Part Description</Th>
+                                                                        <Th width="150px" textAlign="center">Price</Th>
+                                                                        <Th width="150px" textAlign="center">Qty.</Th>
+                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                    </Tr>
+                                                                </Thead>
+                                                                <Tbody> 
+                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                            <Td textAlign="center">
+                                                                                1
+                                                                            </Td>
+                                                                            <Td width="250px" textAlign="left">
+                                                                                Part No.: 
+                                                                                <br/>
+                                                                                <b>abc</b>
+                                                                                <br/>
+                                                                              
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                                123
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                            1
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="right">
+                                                                                568
+                                                                            </Td>
+                                                                        </Tr>
+                                                                </Tbody>
+                                                            </Table>
+                                                        </TableContainer>  
                                         <Text padding="0px 30px">
                                             Your canceled orders list is empty
                                         </Text>
+                                     </>
                                     )}
                                 </Box>
                             </Grid>
