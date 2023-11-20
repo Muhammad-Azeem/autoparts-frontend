@@ -254,3 +254,108 @@ export const getAddressesByUserId = async (userId) => {
         throw error;
     }
 };
+export const getOrdersByUserId = async (userId) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/order/getByUserId/`+userId, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+export const storeAddressBook = async (addressData) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+
+
+        let config = {
+            headers: { Authorization: `Bearer ${token}` },
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/address/create`,
+            data : addressData
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};
+export const deleteAddressBook = async (addressId) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+
+
+        let config = {
+            headers: { Authorization: `Bearer ${token}` },
+            method: 'delete',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/address/delete/`+addressId,
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};
+export const updateAddressBook = async (addressId, addressData) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+
+
+        let config = {
+            headers: { Authorization: `Bearer ${token}` },
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/address/update/`+addressId,
+            data: addressData
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};

@@ -30,7 +30,14 @@ import {
     Table, TableCaption, Thead, Th, Tr, Tbody, Td
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import {checkAuth, getAddressesByUserId, register} from '../components/API/api'
+import {
+    checkAuth,
+    deleteAddressBook,
+    getAddressesByUserId, getOrdersByUserId,
+    register,
+    storeAddressBook,
+    updateAddressBook
+} from '../components/API/api'
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {changeEmail} from './API/api';
 
@@ -48,17 +55,24 @@ const AcctDash = () => {
         }, 10000);
     };
     const [addresses, setAddresses]  = useState([]);
+    const getAddress = async (id) => {
+        const data = await getAddressesByUserId(id)
+        setAddresses(data);
+    }
+    const getOrders = async (id) => {
+        const data = await getOrdersByUserId(id)
+        setOrders(data);
+    }
+    const [orders, setOrders] = useState([]);
+
     useEffect(  () => {
         let temp= localStorage.getItem('user');
 
         temp = JSON.parse(temp);
         setUser(temp);
         setCurrentEmail(temp.email)
-        const getAddress = async () => {
-            const data = await getAddressesByUserId(temp.id)
-            setAddresses(data);
-        }
-        getAddress();
+        getAddress(temp.id);
+        getOrders(temp.id)
         // console.log(JSON.parse(temp));
     }, []);
 
@@ -133,10 +147,62 @@ const AcctDash = () => {
       };
       const [isBoxVisible, setBoxVisibility] = useState(false);
 
-      const handleButtonClick = () => {
-        setBoxVisibility(true);
-      };
+    const [formData, setFormData] = useState({
+        country: '',
+        first_name: '',
+        last_name: '',
+        company: '',
+        city: '',
+        address_1: '',
+        address_2: '',
+        is_default: false,
+        user_id: null,
+    });
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        console.log(value,formData);
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: type === 'checkbox' ? checked : value,
+        }));
+    };
+    const [activeAddressBookId, setActiveAddressBookId] = useState(0)
 
+    const handleButtonClick = async (event) => {
+        event.preventDefault();
+        try {
+            formData.user_id = user.id;
+            if(activeAddressBookId){
+                const data = await updateAddressBook(activeAddressBookId, formData);
+                setActiveAddressBookId(0)
+                setFormData({
+                    country: '',
+                    first_name: '',
+                    last_name: '',
+                    company: '',
+                    city: '',
+                    address_1: '',
+                    address_2: '',
+                    is_default: false,
+                    user_id: null,
+                })
+            }
+            else {
+                const response = await storeAddressBook(formData);
+            }
+            getAddress(user.id);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+    const handleAddressDelete = async (id) => {
+        const response = await deleteAddressBook(id);
+        getAddress(user.id);
+    }
+    const handleAddressEdit = async (selectedAddress) => {
+        setActiveAddressBookId(selectedAddress.id)
+        setFormData(selectedAddress)
+    }
     return (
         <Box >
             <Grid
@@ -218,48 +284,67 @@ const AcctDash = () => {
                                     <Text fontWeight='bold' ml={25}>
                                         Shipping Address
                                         <span style={{fontWeight:'normal', marginLeft:'15px'}}>
-                                             abc@gmail.com
+                                             {user.bussiness_address1},
+                                             {user.bussiness_address2}
                                         </span>
                                     </Text>
                                     <Box className="horizontal-listbox" style={{borderTop: '1px solid #d0d0d0',borderBottom:'none'}}>
                                         <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Recent Orders</Text>
                                     </Box>
                                     <TableContainer>
-                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
-                                                                <Thead background="#dfdfdf" >
-                                                                    <Tr>
-                                                                        <Th width="150px">Sr.</Th>
-                                                                        <Th width="250px" textAlign="left">Part Description</Th>
-                                                                        <Th width="150px" textAlign="center">Price</Th>
-                                                                        <Th width="150px" textAlign="center">Qty.</Th>
-                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
-                                                                    </Tr>
-                                                                </Thead>
-                                                                <Tbody>
-                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
-                                                                            <Td textAlign="center">
-                                                                                1
-                                                                            </Td>
-                                                                            <Td width="250px" textAlign="left">
-                                                                                Part No.:
-                                                                                <br/>
-                                                                                <b>abc</b>
-                                                                                <br/>
+                                        { orders.length ? (
+                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                <Thead background="#dfdfdf" >
+                                                    <Tr>
+                                                        <Th width="150px">Sr.</Th>
+                                                        <Th width="250px" textAlign="left">User</Th>
+                                                        <Th width="150px" textAlign="center">Status</Th>
+                                                        <Th width="150px" textAlign="center">Shipment Cost</Th>
+                                                        <Th width="150px" textAlign="right">Subtotal</Th>
+                                                        <Th width="150px" textAlign="right">Total</Th>
+                                                    </Tr>
+                                                </Thead>
+                                                <Tbody>
+                                                    { orders.map((order, index) => (
+                                                        <Tr  key={index} mt={15} style={{ marginTop: '10px' }}>
+                                                            <Td textAlign="center">
+                                                                {index+1}
+                                                            </Td>
+                                                            <Td width="250px" textAlign="left">
+                                                                {order.user.first_name}
+                                                                <br/>
+                                                                <b>{order.user.email}</b>
+                                                                <br/>
 
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                                123
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                            1
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="right">
-                                                                                568
-                                                                            </Td>
-                                                                        </Tr>
-                                                                </Tbody>
-                                                            </Table>
-                                                        </TableContainer>
+                                                            </Td>
+                                                            <Td width="150px" textAlign="center">
+                                                                {order.status}
+                                                            </Td>
+                                                            <Td width="150px" textAlign="center">
+                                                                {order.shipment_cost}
+                                                            </Td>
+                                                            <Td width="150px" textAlign="right">
+                                                                {order.sub_total}
+                                                            </Td>
+                                                            <Td width="150px" textAlign="right">
+                                                                {order.total}
+                                                            </Td>
+                                                        </Tr>
+
+                                                    ))
+                                                    }
+                                                </Tbody>
+                                            </Table>
+                                        ) :
+                                            (
+                                                <div>
+                                                    <Text padding="0px 30px">
+                                                        No available sales order!
+                                                    </Text>
+                                                </div>
+                                            )
+                                        }
+                                    </TableContainer>
                             </Grid>
                         </Box>
                     </Flex>
@@ -287,89 +372,118 @@ const AcctDash = () => {
                                 <Box>
                                     {showTable1 && (
                                        <>
-                                       <TableContainer>
-                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
-                                                                <Thead background="#dfdfdf" >
-                                                                    <Tr>
-                                                                        <Th width="150px">Sr.</Th>
-                                                                        <Th width="250px" textAlign="left">Part Description</Th>
-                                                                        <Th width="150px" textAlign="center">Price</Th>
-                                                                        <Th width="150px" textAlign="center">Qty.</Th>
-                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
-                                                                    </Tr>
-                                                                </Thead>
-                                                                <Tbody>
-                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
-                                                                            <Td textAlign="center">
-                                                                                1
-                                                                            </Td>
-                                                                            <Td width="250px" textAlign="left">
-                                                                                Part No.:
-                                                                                <br/>
-                                                                                <b>abc</b>
-                                                                                <br/>
+                                           <TableContainer>
+                                               { orders.length ? (
+                                                       <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                           <Thead background="#dfdfdf" >
+                                                               <Tr>
+                                                                   <Th width="150px">Sr.</Th>
+                                                                   <Th width="250px" textAlign="left">User</Th>
+                                                                   <Th width="150px" textAlign="center">Status</Th>
+                                                                   <Th width="150px" textAlign="center">Shipment Cost</Th>
+                                                                   <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                   <Th width="150px" textAlign="right">Total</Th>
+                                                               </Tr>
+                                                           </Thead>
+                                                           <Tbody>
+                                                               { orders.map((order, index) => (
+                                                                   <Tr  key={index} mt={15} style={{ marginTop: '10px' }}>
+                                                                       <Td textAlign="center">
+                                                                           {index+1}
+                                                                       </Td>
+                                                                       <Td width="250px" textAlign="left">
+                                                                           {order.user.first_name}
+                                                                           <br/>
+                                                                           <b>{order.user.email}</b>
+                                                                           <br/>
 
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                                123
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                            1
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="right">
-                                                                                568
-                                                                            </Td>
-                                                                        </Tr>
-                                                                </Tbody>
-                                                            </Table>
-                                                        </TableContainer>
-                                            <Text padding="0px 30px">
-                                                Your order list is empty
-                                            </Text>
+                                                                       </Td>
+                                                                       <Td width="150px" textAlign="center">
+                                                                           {order.status}
+                                                                       </Td>
+                                                                       <Td width="150px" textAlign="center">
+                                                                           {order.shipment_cost}
+                                                                       </Td>
+                                                                       <Td width="150px" textAlign="right">
+                                                                           {order.sub_total}
+                                                                       </Td>
+                                                                       <Td width="150px" textAlign="right">
+                                                                           {order.total}
+                                                                       </Td>
+                                                                   </Tr>
+
+                                                               ))
+                                                               }
+                                                           </Tbody>
+                                                       </Table>
+                                                   ) :
+                                                   (
+                                                       <div>
+                                                       <Text padding="0px 30px">
+                                                           Your order list is empty
+                                                       </Text>
+                                                   </div>
+                                                   )
+                                               }
+                                           </TableContainer>
+
                                        </>
                                     )}
 
                                     {showTable2 && (
                                      <>
-                                     <TableContainer>
-                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
-                                                                <Thead background="#dfdfdf" >
-                                                                    <Tr>
-                                                                        <Th width="150px">Sr.</Th>
-                                                                        <Th width="250px" textAlign="left">Part Description</Th>
-                                                                        <Th width="150px" textAlign="center">Price</Th>
-                                                                        <Th width="150px" textAlign="center">Qty.</Th>
-                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
-                                                                    </Tr>
-                                                                </Thead>
-                                                                <Tbody>
-                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
-                                                                            <Td textAlign="center">
-                                                                                1
-                                                                            </Td>
-                                                                            <Td width="250px" textAlign="left">
-                                                                                Part No.:
-                                                                                <br/>
-                                                                                <b>abc</b>
-                                                                                <br/>
+                                         <TableContainer>
+                                             { orders.length ? (
+                                                     <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                         <Thead background="#dfdfdf" >
+                                                             <Tr>
+                                                                 <Th width="150px">Sr.</Th>
+                                                                 <Th width="250px" textAlign="left">User</Th>
+                                                                 <Th width="150px" textAlign="center">Status</Th>
+                                                                 <Th width="150px" textAlign="center">Shipment Cost</Th>
+                                                                 <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                 <Th width="150px" textAlign="right">Total</Th>
+                                                             </Tr>
+                                                         </Thead>
+                                                         <Tbody>
+                                                             { orders.map((order, index) => (
+                                                                 <Tr  key={index} mt={15} style={{ marginTop: '10px' }}>
+                                                                     <Td textAlign="center">
+                                                                         {index + 1}
+                                                                     </Td>
+                                                                     <Td width="250px" textAlign="left">
+                                                                         {order.user.first_name}
+                                                                         <br/>
+                                                                         <b>{order.user.email}</b>
+                                                                         <br/>
 
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                                123
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                            1
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="right">
-                                                                                568
-                                                                            </Td>
-                                                                        </Tr>
-                                                                </Tbody>
-                                                            </Table>
-                                                        </TableContainer>
-                                        <Text padding="0px 30px">
-                                            Your canceled orders list is empty
-                                        </Text>
+                                                                     </Td>
+                                                                     <Td width="150px" textAlign="center">
+                                                                         {order.status}
+                                                                     </Td>
+                                                                     <Td width="150px" textAlign="center">
+                                                                         {order.shipment_cost}
+                                                                     </Td>
+                                                                     <Td width="150px" textAlign="right">
+                                                                         {order.sub_total}
+                                                                     </Td>
+                                                                     <Td width="150px" textAlign="right">
+                                                                         {order.total}
+                                                                     </Td>
+                                                                 </Tr>
+
+                                                             ))
+                                                             }
+                                                         </Tbody>
+                                                     </Table>
+                                                 ) :
+                                                 (<div>
+                                                     <Text padding="0px 30px">
+                                                         Your canceled order list is empty
+                                                     </Text>
+                                                 </div>)
+                                             }
+                                         </TableContainer>
                                      </>
                                     )}
                                 </Box>
@@ -534,41 +648,65 @@ const AcctDash = () => {
                                                 </Heading>
                                                 <Box mt={10} borderBottom="1px solid #d0d0d0">
                                                 </Box>
-                                                <Box className="form-box-width" > 
-                                                    <Box className='inner-shipAdrs-box'   mt={10}>
-                                                        <Text className="account-label">
-                                                                Country
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                First Name
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                Last Name
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                Company
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                City
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                State/Province
-                                                        </Text>
-                                                        <Text className="account-label">
-                                                                Other values from form
-                                                        </Text>
-                                                        <Box display='flex'>
-                                                            <Link className="account-link">
-                                                                    Edit
-                                                            </Link>
-                                                            <Link ml={10} className="account-link">
-                                                                    Delete
-                                                            </Link>
-                                                            <Link ml={10} className="account-link">
-                                                                    Make as default
-                                                            </Link>
-                                                        </Box>
-                                                    </Box>                                                                      
+                                                <Box className="form-box-width" >
+                                                    {
+                                                        addresses.map((address, index) => (
+                                                            <Box key={index} className='inner-shipAdrs-box'   mt={10}>
+                                                                {address.country &&
+                                                                    <Text className="account-label">
+                                                                        {address.country}
+                                                                    </Text>
+                                                                }
+                                                                {address.first_name &&
+                                                                    <Text className="account-label">
+                                                                        {address.first_name}
+                                                                </Text>
+                                                                }
+                                                                {address.last_name &&
+                                                                    <Text className="account-label">
+                                                                        {address.last_name}
+                                                                </Text>
+                                                                }
+                                                                {address.company &&
+                                                                    <Text className="account-label">
+                                                                        {address.company}
+                                                                    </Text>
+                                                                }
+                                                                {address.city &&
+                                                                    <Text className="account-label">
+                                                                        {address.city}
+                                                                    </Text>
+                                                                }
+                                                                {address.address_1 &&
+                                                                    <Text className="account-label">
+                                                                        {address.address_1}
+                                                                    </Text>
+                                                                }
+                                                                {address.address_2 &&
+                                                                    <Text className="account-label">
+                                                                        {address.address_2}
+                                                                    </Text>
+                                                                }
+
+
+                                                                <Box display='flex'>
+                                                                    <Link className="account-link" onClick={() => handleAddressEdit(address)}>
+                                                                        Edit
+                                                                    </Link>
+                                                                    <Link ml={10} className="account-link" onClick={() => handleAddressDelete(address.id)}>
+                                                                        Delete
+                                                                    </Link>
+                                                                    { !address.is_default && (
+                                                                        <Link ml={10} className="account-link">
+                                                                            Make as default
+                                                                        </Link>
+                                                                    )
+                                                                    }
+                                                                </Box>
+                                                            </Box>
+
+                                                        ))
+                                                    }
                                                 </Box>
                                             </Box>
                                         )}
@@ -587,70 +725,50 @@ const AcctDash = () => {
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1}
                                                                        pr={4}>Country/Territory:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'country'} className="account-input" flex={2} type="text" value={formData.country} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1} pr={4}>First
                                                                 Name:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'first_name'} className="account-input" flex={2} type="text" value={formData.first_name} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1} pr={4}>Last
                                                                 Name:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'last_name'} className="account-input" flex={2} type="text" value={formData.last_name} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1}
                                                                        pr={4}>Company:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'company'} className="account-input" flex={2} type="text" value={formData.company} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1}
                                                                        pr={4}>City:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'city'} className="account-input" flex={2} type="text"  value={formData.city} onChange={handleChange} />
                                                         </FormControl>
 
-                                                        <FormControl className="acctSet-inputbox">
-                                                            <FormLabel className="account-label" flex={1}
-                                                                       pr={4}>State/Province:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
-                                                        </FormControl>
 
-                                                        <FormControl className="acctSet-inputbox">
-                                                            <FormLabel className="account-label" flex={1}
-                                                                       pr={4}>Zipcode/Postalcode:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
-                                                        </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1} pr={4}>Address
                                                                 line 1:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'address_1'} className="account-input" flex={2} type="text" value={formData.address_1} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
                                                             <FormLabel className="account-label" flex={1} pr={4}>Address
                                                                 line 2:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
+                                                            <Input name={'address_2'} className="account-input" flex={2} type="text" value={formData.address_2} onChange={handleChange} />
                                                         </FormControl>
 
                                                         <FormControl className="acctSet-inputbox">
-                                                            <FormLabel className="account-label" flex={1}
-                                                                       pr={4}>Phone:</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
-                                                        </FormControl>
-                                                        <FormControl className="acctSet-inputbox">
-                                                            <FormLabel className="account-label" flex={1} pr={4}>Save
-                                                                Address As (Optional):</FormLabel>
-                                                            <Input className="account-input" flex={2} type="text"/>
-                                                        </FormControl>
-                                                        <FormControl className="acctSet-inputbox">
                                                             <FormLabel mt={10} mb={10} textAlign="center" className="shippingCheckbox-label" flex={1} pr={4}>
-                                                                <Input className="shippingCheckbox-input" flex={2} type="checkbox"/>
+                                                                <Input name={'is_default'} className="shippingCheckbox-input" flex={2} type="checkbox" checked={formData.is_default} onChange={handleChange} />
                                                                 <span>Set as my default address</span>
                                                             </FormLabel>
 
