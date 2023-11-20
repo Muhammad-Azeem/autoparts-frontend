@@ -53,13 +53,14 @@ const SignUpForm = () => {
         }
         try {
             const userData = { email, password };
+            console.log('register call started')
             let response = await register(userData);
-             console.log('rest', response)
-            // const token  = response.token;
-            // const user = JSON.stringify(response.user);
-            // localStorage.setItem('token', token);
-            // localStorage.setItem('user', user); 
-            // router.push('/Register-Success'); 
+            console.log(response)
+            const token  = response.data.token;
+            const user = JSON.stringify(response.data.user);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', user);
+            router.push('/Register-Success');
         } catch (error) {
             console.error('Registration failed:', error);
             setError('Registration failed. Please try again.');
