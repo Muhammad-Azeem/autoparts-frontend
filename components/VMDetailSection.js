@@ -25,8 +25,70 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import ProductListing from "./ProductListing";
-import {getAllCategories, getProductByCategoryId} from "./API/api";
+import {vehicleCompany, vehicleModels , vehicleYears,getAllCategories, getProductByCategoryId} from "./API/api";
+
 const DetailSection = ({title}) => {
+
+    const [years, setYears] = useState([]);
+    const [models, setModels] = useState([]);
+    const [company, setCompany] = useState([]);
+
+    useEffect(() => {
+        const fetchYears = async () => {
+          try {
+            const response = await vehicleYears();
+             setYears(response);
+          } catch (error) {
+            console.error('Error fetching years:', error);
+          }
+        };
+    
+        fetchYears();
+      }, []);
+
+      useEffect(() => {
+        const fetchModels = async () => {
+          try {
+            const response = await vehicleModels();
+            setModels(response);
+          } catch (error) {
+            console.error('Error fetching models:', error);
+          }
+        };
+    
+        fetchModels();
+      }, []);
+
+      useEffect(() => {
+        const fetchCompany = async () => {
+          try {
+            const response = await vehicleCompany();
+            setCompany(response);
+          } catch (error) {
+            console.error('Error fetching companies:', error);
+          }
+        };
+    
+        fetchCompany();
+      }, []);
+
+      const [selectedYear, setSelectedYear] = useState(null);
+
+      const handleYearSelection = (selectedYear) => {
+          setSelectedYear(selectedYear);
+      };
+      const [selectedModal, setSelectedModal] = useState(null);
+
+      const handleModelSelection = (selectedModal) => {
+        setSelectedModal(selectedModal);
+      };
+
+      const [selectedCompany, setSelectedCompany] = useState(null);
+
+      const handleCompanySelection = (selectedCompany) => {
+          setSelectedCompany(selectedCompany);
+        };    
+
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -154,81 +216,58 @@ const DetailSection = ({title}) => {
                             <Heading as="h4" size="lg" mr="2">
                                 Select by Model
                             </Heading>
-                            <Menu >
-                                <MenuButton className="endbar-topsection-input" as={Button} rightIcon={<ChevronDownIcon />}>
-                                    -- Select Make --
-                                </MenuButton>
-                                <MenuList zIndex={3} >
-                                    <MenuItem className="menu-item">Toyota</MenuItem>
-                                    <MenuItem className="menu-item">Scion</MenuItem>
+                            <Menu>
+                            <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
+                                {selectedCompany || '-- Select Company --'}
+                            </MenuButton>
+                            <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
+                                {company.length > 0 &&
+                                company.map((company) => (
+                                    <MenuItem className="menu-item" key={company} onClick={() => handleCompanySelection(company)}>
+                                    {company}
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
+                        </Menu>
 
-                                </MenuList>
-                            </Menu>
-                            <Menu >
-                                <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
-                                    -- Select Model --
-                                </MenuButton>
-                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}}>
-                                    <MenuItem className="menu-item">4Runner</MenuItem>
-                                    <MenuItem className="menu-item">86</MenuItem>
-                                    <MenuItem className="menu-item">Avalon</MenuItem>
-                                    <MenuItem className="menu-item">C-HR</MenuItem>
-                                    <MenuItem className="menu-item">Camry</MenuItem>
-                                    <MenuItem className="menu-item">Celica</MenuItem>
-                                    <MenuItem className="menu-item">Corolla</MenuItem>
-                                    <MenuItem className="menu-item">Corolla Cross</MenuItem>
-                                    <MenuItem className="menu-item">Corolla iM</MenuItem>
-                                    <MenuItem className="menu-item">Corona</MenuItem>
-                                    <MenuItem className="menu-item">Cressida</MenuItem>
-                                    <MenuItem className="menu-item">Echo</MenuItem>
-                                    <MenuItem className="menu-item">Fj Cruiser</MenuItem>
-                                    <MenuItem className="menu-item">GR Supra</MenuItem>
-                                    <MenuItem className="menu-item">GR86</MenuItem>
-                                    <MenuItem className="menu-item">Highlander</MenuItem>
-                                    <MenuItem className="menu-item">Land Cruiser</MenuItem>
-                                    <MenuItem className="menu-item">MR2</MenuItem>
-                                    <MenuItem className="menu-item">MR2 Spyder</MenuItem>
-                                    <MenuItem className="menu-item">Matrix</MenuItem>
-                                </MenuList>
-                            </Menu>
-                            <Menu >
-                                <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
-                                    -- Select Year --
-                                </MenuButton>
-                                <MenuList style={{zIndex:'2',overflowY: 'auto',maxHeight:'250px'}} zIndex={3} >
-                                    <MenuItem className="menu-item">2023</MenuItem>
-                                    <MenuItem className="menu-item">2022</MenuItem>
-                                    <MenuItem className="menu-item">2021</MenuItem>
-                                    <MenuItem className="menu-item">2020</MenuItem>
-                                    <MenuItem className="menu-item">2019</MenuItem>
-                                    <MenuItem className="menu-item">2018</MenuItem>
-                                    <MenuItem className="menu-item">2017</MenuItem>
-                                    <MenuItem className="menu-item">2016</MenuItem>
-                                    <MenuItem className="menu-item">2015</MenuItem>
-                                    <MenuItem className="menu-item">2014</MenuItem>
-                                    <MenuItem className="menu-item">2013</MenuItem>
-                                    <MenuItem className="menu-item">2012</MenuItem>
-                                    <MenuItem className="menu-item">2011</MenuItem>
-                                    <MenuItem className="menu-item">2010</MenuItem>
-                                    <MenuItem className="menu-item">2009</MenuItem>
-                                    <MenuItem className="menu-item">2008</MenuItem>
-                                    <MenuItem className="menu-item">2007</MenuItem>
-                                    <MenuItem className="menu-item">2006</MenuItem>
-                                    <MenuItem className="menu-item">2005</MenuItem>
-                                    <MenuItem className="menu-item">2004</MenuItem>
-                                    <MenuItem className="menu-item">2003</MenuItem>
-                                </MenuList>
-                            </Menu>
-                            <Menu >
+                        <Menu>
+                            <MenuButton  className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
+                                {selectedModal || '-- Select Modal --'}
+                            </MenuButton>
+                            <MenuList zIndex={1}  maxHeight="200px" overflowY="auto">
+                                {models.length > 0 &&
+                                models.map((model) => (
+                                    <MenuItem className="menu-item" key={model} onClick={() => handleModelSelection(model)}>
+                                    {model}
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
+                        </Menu>
+                        
+                        <Menu>
+                            <MenuButton   className="endbar-topsection-input2"  as={Button} rightIcon={<ChevronDownIcon />}>
+                                {selectedYear || '-- Select Modal --'}
+                            </MenuButton>
+                            <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
+                                {years.length > 0 &&
+                                years.map((year) => (
+                                    <MenuItem className="menu-item" key={year} onClick={() => handleYearSelection(year)}>
+                                    {year}
+                                    </MenuItem>
+                                ))}
+                            </MenuList>
+                        </Menu>
+
+                            {/* <Menu >
                                 <MenuButton className="endbar-topsection-input2" as={Button} rightIcon={<ChevronDownIcon />}>
                                     -- Select Submodel --
                                 </MenuButton>
-                                <MenuList zIndex={3} >
+                                <MenuList maxHeight="200px" overflowY="auto" zIndex={3} >
                                     <MenuItem className="menu-item">NAP</MenuItem>
                                     <MenuItem className="menu-item">NAP - Hybrid</MenuItem>
 
                                 </MenuList>
-                            </Menu>
+                            </Menu> */}
                             <Button   onClick={toggleGridVisibility} className="middlebar_red-btn" colorScheme="teal">Find My Parts</Button>
                         </Flex>
                     </Box>
