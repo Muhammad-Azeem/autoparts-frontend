@@ -8,7 +8,7 @@ import HeaderMobile from "../../components/HeaderMobile";
 import MobileFooter from "../../components/MobileFooter";
 import SignUpForm from "../../components/SignUpForm";
 import VMDetailSection from "../../components/VMDetailSection";
-import LoaderSpinner from "../components/LoaderSpinner"
+import LoaderSpinner from "../../components/LoaderSpinner"
 const ViewMore = () => {
     const [loading, setLoading] = useState(true);
     // Simulating an asynchronous operation
