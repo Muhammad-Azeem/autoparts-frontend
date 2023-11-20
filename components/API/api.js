@@ -71,6 +71,40 @@ export const updateShipping = async (userData) => {
     }
 };
 
+export const orderPlace = async (userData) => {
+    try {
+
+        let data = new FormData();
+        data.append('first_name', userData.firstName);
+        data.append('last_name', userData.lastName);
+        data.append('company', userData.company);
+        data.append('street', userData.streetAddress);
+        data.append('appartment', userData.appartment);
+        data.append('zip_code', userData.zipCode);
+        data.append('phone', userData.phone);
+        data.append('sub_total', userData.subTotal);
+        data.append('user', JSON.stringify(userData.user));
+        data.append('cart', JSON.stringify(userData.cart));
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/order/create`,
+            data : data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error );
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};
 
 
 export const changeEmail = async (userData) => {
