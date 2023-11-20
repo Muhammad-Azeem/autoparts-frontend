@@ -54,8 +54,12 @@ const SignUpForm = () => {
         try {
             const userData = { email, password };
             let response = await register(userData);
-            console.log('rest', response)
-            // await router.push('/login'); // Redirect to the login page after successful registration
+             console.log('rest', response)
+            // const token  = response.token;
+            // const user = JSON.stringify(response.user);
+            // localStorage.setItem('token', token);
+            // localStorage.setItem('user', user); 
+            // router.push('/Register-Success'); 
         } catch (error) {
             console.error('Registration failed:', error);
             setError('Registration failed. Please try again.');
@@ -66,7 +70,7 @@ const SignUpForm = () => {
         try {
             const credentials = { email: loginEmail, password: loginPassword };
             await login(credentials);
-            await router.push('/Register-Success'); // Redirect to a protected route after successful login
+            await router.push('/AccountDashboard'); // Redirect to a protected route after successful login
         } catch (error) {
             console.error('Login failed:', error);
         }

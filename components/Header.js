@@ -132,8 +132,8 @@ const Header = () => {
                         </Box>
                         <div>
                             <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
-                            <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
-                                <span className="blue-text">My Account </span>
+                                <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
+                                    <span className="blue-text">My Account </span>
                                 </Text>
                             {isDivOpen && (
                             User ? (
