@@ -36,31 +36,54 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
-import {login, register, updateShipping} from "./API/api";
+import {getAddressesByUserId, orderPlace, updateShipping} from "./API/api";
 import {getCartFromCookie} from "./utility/cookies";
+import Cookies from "js-cookie";
 
 const ShoppingProductPage = () => {
 
     const [user, setUser] = useState('');
     const [cart, setCart] = useState([]);
+    const [addresses, setAddresses]  = useState([]);
 
     useEffect(() => {
         const data = getCartFromCookie();
         setCart(data);
+        setSubTotal(localStorage.getItem('subTotal'));
+
+
 
         let temp= localStorage.getItem('user');
         temp = JSON.parse(temp);
         setUser(temp);
-        setSubTotal(localStorage.getItem('subTotal'));
-        setFirstName(localStorage.getItem('firstName'));
-        setLastName(localStorage.getItem('lastName'));
-        setCompany(localStorage.getItem('company'));
-        setStreetAddress(localStorage.getItem('streetAddress'));
-        setAppartment(localStorage.getItem('appartment'));
-        setZipCode(localStorage.getItem('zipCode'));
-        setPhone(localStorage.getItem('phone'));
-        setEmail(localStorage.getItem('email'));
-        setCEmail(localStorage.getItem('cEmail'));
+
+        const getAddress = async () => {
+            const data = await getAddressesByUserId(temp.id)
+            setAddresses(data);
+        }
+
+        if(user){
+            getAddress();
+
+            setFirstName(addresses[0] ? addresses[0]['first_name'] : '' );
+            setLastName(addresses[0] ? addresses[0]['last_name'] : '' );
+            setCompany(addresses[0] ? addresses[0]['company'] : '' );
+            setStreetAddress(addresses[0] ? addresses[0]['address_1'] : '' );
+            setAppartment(addresses[0] ? addresses[0]['address_2'] : '' );
+            setZipCode(user.zip_code);
+            setPhone(user.phone);
+        }
+        else {
+            setFirstName(localStorage.getItem('firstName') !== null ? localStorage.getItem('firstName') : '');
+            setLastName(localStorage.getItem('lastName') !== null ? localStorage.getItem('lastName') : '');
+            setCompany(localStorage.getItem('company') !== null ? localStorage.getItem('company') : '');
+            setStreetAddress(localStorage.getItem('streetAddress') !== null ? localStorage.getItem('streetAddress') : '');
+            setAppartment(localStorage.getItem('appartment') !== null ? localStorage.getItem('appartment') : '');
+            setZipCode(localStorage.getItem('zipCode') !== null ? localStorage.getItem('zipCode') : '');
+            setPhone(localStorage.getItem('phone') !== null ? localStorage.getItem('phone') : '');
+            setEmail(localStorage.getItem('email') !== null ? localStorage.getItem('email') : '');
+            setCEmail(localStorage.getItem('cEmail') !== null ? localStorage.getItem('cEmail') : '');
+        }
     }, []);
 
 
@@ -93,6 +116,13 @@ const ShoppingProductPage = () => {
     const [password, setPassword] = useState('');
     const [cPassword, setCPassword] = useState('');
     const [error, setError] = useState('');
+    const [error1, setError1] = useState('');
+    const [error2, setError2] = useState('');
+    const [error3, setError3] = useState('');
+    const [error4, setError4] = useState('');
+    const [error5, setError5] = useState('');
+    const [error6, setError6] = useState('');
+    const [error7, setError7] = useState('');
 
 
     const [showTable1, setShowTable1] = useState(true);
@@ -105,52 +135,76 @@ const ShoppingProductPage = () => {
     const displayErrorAndHide = () => {
         setTimeout(() => {
             setError('');
+            setError1('');
+            setError2('');
+            setError3('');
+            setError4('');
+            setError5('');
+            setError6('');
+            setError7('');
         }, 10000);
     };
 
 
     const handleOrder = async () => {
         try {
-            const data = { email: loginEmail, password: loginPassword };
+            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart };
             await orderPlace(data);
-            await router.push('/Register-Success'); // Redirect to a protected route after successful login
+
+            localStorage.removeItem('firstName');
+            localStorage.removeItem('lastName');
+            localStorage.removeItem('company');
+            localStorage.removeItem('streetAddress');
+            localStorage.removeItem('appartment');
+            localStorage.removeItem('zipCode');
+            localStorage.removeItem('phone');
+            localStorage.removeItem('email');
+            localStorage.removeItem('cEmail');
+            localStorage.removeItem('subTotal');
+            Cookies.remove('cart');
+
+            if(user){
+                await router.push('/AccountDashboard');
+            }else{
+                await router.push('/');
+            }
         } catch (error) {
-            console.error('Login failed:', error);
+            console.error('checkout failed:', error);
         }
     };
     const handleShippingForm = async () => {
         if (firstName == '') {
-            setError("First Name is required");
+            setError1("First Name is required");
             displayErrorAndHide();
             return;
         }
         if (lastName == '') {
-            setError("Last Name is required");
+            setError2("Last Name is required");
             displayErrorAndHide();
             return;
         }
         if (company == '') {
-            setError("Company is required");
+            setError3("Company is required");
             displayErrorAndHide();
             return;
         }
         if (streetAddress == '') {
-            setError("Street Address is required");
+            setError4("Street Address is required");
             displayErrorAndHide();
             return;
         }
         if (appartment == '') {
-            setError("Appartment is required");
+            setError5("Appartment is required");
             displayErrorAndHide();
             return;
         }
         if (zipCode == '') {
-            setError("Zip Code is required");
+            setError6("Zip Code is required");
             displayErrorAndHide();
             return;
         }
         if (phone == '') {
-            setError("Phone is required");
+            setError7("Phone is required");
             displayErrorAndHide();
             return;
         }
@@ -268,16 +322,16 @@ const ShoppingProductPage = () => {
                                                     <Box >
                                                         <FormControl mt={20}>
                                                             <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error1 && (
+                                                                <p style={{ color: 'red' }}>{error1}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
                                                     <Box >
                                                         <FormControl mt={5}>
                                                             <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error2 && (
+                                                                <p style={{ color: 'red' }}>{error2}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
@@ -285,40 +339,40 @@ const ShoppingProductPage = () => {
                                                     <Box  >
                                                         <FormControl mt={5}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error3 && (
+                                                                <p style={{ color: 'red' }}>{error3}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={5}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error4 && (
+                                                                <p style={{ color: 'red' }}>{error4}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={5}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" value={appartment} onChange={(e) => setAppartment(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error5 && (
+                                                                <p style={{ color: 'red' }}>{error5}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={2}>
                                                             <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/>Enter Zip Code for City and State
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error6 && (
+                                                                <p style={{ color: 'red' }}>{error6}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={5}>
                                                             <Input mr={5} className="bussiness-input"  type="number" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            {error7 && (
+                                                                <p style={{ color: 'red' }}>{error7}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
