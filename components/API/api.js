@@ -238,3 +238,19 @@ export const getProductsBySubCategoryId = async (subCategoryId) => {
         throw error;
     }
 };
+export const getAddressesByUserId = async (userId) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error('No token found');
+    }
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/address/getByUserId/`+userId, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
