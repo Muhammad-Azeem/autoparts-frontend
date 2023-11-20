@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
 import {
     Table,
@@ -36,8 +36,34 @@ import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
+import {login, register, updateShipping} from "./API/api";
+import {getCartFromCookie} from "./utility/cookies";
 
 const ShoppingProductPage = () => {
+
+    const [user, setUser] = useState('');
+    const [cart, setCart] = useState([]);
+
+    useEffect(() => {
+        const data = getCartFromCookie();
+        setCart(data);
+
+        let temp= localStorage.getItem('user');
+        temp = JSON.parse(temp);
+        setUser(temp);
+        setSubTotal(localStorage.getItem('subTotal'));
+        setFirstName(localStorage.getItem('firstName'));
+        setLastName(localStorage.getItem('lastName'));
+        setCompany(localStorage.getItem('company'));
+        setStreetAddress(localStorage.getItem('streetAddress'));
+        setAppartment(localStorage.getItem('appartment'));
+        setZipCode(localStorage.getItem('zipCode'));
+        setPhone(localStorage.getItem('phone'));
+        setEmail(localStorage.getItem('email'));
+        setCEmail(localStorage.getItem('cEmail'));
+    }, []);
+
+
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
 
     const toggleEstimateVisibility = () => {
@@ -53,6 +79,21 @@ const ShoppingProductPage = () => {
         router.push('/');
     };
 
+    const [subTotal, setSubTotal] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [company, setCompany] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [appartment, setAppartment] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [cEmail, setCEmail] = useState('');
+    const [addressAs, setAddressAs] = useState('');
+    const [password, setPassword] = useState('');
+    const [cPassword, setCPassword] = useState('');
+    const [error, setError] = useState('');
+
 
     const [showTable1, setShowTable1] = useState(true);
     const [showTable2, setShowTable2] = useState(false);
@@ -60,6 +101,90 @@ const ShoppingProductPage = () => {
         width: '185px',
         left: '25px',
     });
+
+    const displayErrorAndHide = () => {
+        setTimeout(() => {
+            setError('');
+        }, 10000);
+    };
+
+
+    const handleOrder = async () => {
+        try {
+            const data = { email: loginEmail, password: loginPassword };
+            await orderPlace(data);
+            await router.push('/Register-Success'); // Redirect to a protected route after successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
+    const handleShippingForm = async () => {
+        if (firstName == '') {
+            setError("First Name is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (lastName == '') {
+            setError("Last Name is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (company == '') {
+            setError("Company is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (streetAddress == '') {
+            setError("Street Address is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (appartment == '') {
+            setError("Appartment is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (zipCode == '') {
+            setError("Zip Code is required");
+            displayErrorAndHide();
+            return;
+        }
+        if (phone == '') {
+            setError("Phone is required");
+            displayErrorAndHide();
+            return;
+        }
+        if(!user) {
+            if (email !== cEmail) {
+                setError("Emails don't match");
+                displayErrorAndHide();
+                return;
+            }
+        }
+        try {
+            if(user){
+                const userData = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,addressAs };
+                let response = await updateShipping(userData);
+            }
+            else{
+                localStorage.setItem('firstName', firstName);
+                localStorage.setItem('lastName', lastName);
+                localStorage.setItem('company', company);
+                localStorage.setItem('streetAddress', streetAddress);
+                localStorage.setItem('appartment', appartment);
+                localStorage.setItem('zipCode', zipCode);
+                localStorage.setItem('phone', phone);
+                localStorage.setItem('email', email);
+                localStorage.setItem('cEmail', cEmail);
+            }
+            setShowShippingDiv(false);
+            setShowPaymentDiv(true);
+
+        } catch (error) {
+            console.error('Registration failed:', error);
+        }
+    };
+
 
     const showTableOne = () => {
         setShowTable1(true);
@@ -108,7 +233,7 @@ const ShoppingProductPage = () => {
     <Box >
         <Box className="pp-productDetail-main-box">
             <Flex className="pp-productDetail-innerbox" >
-                
+
                 <Box className="shipping-pp-box2" flex="1">
                 <Box className='shipping-top-list'>
                                 <Box className='shipping-top-list-li'>
@@ -129,102 +254,155 @@ const ShoppingProductPage = () => {
                             </Box>
                             {showShippingDiv && (
                             <Box className='shipping-div'>
-                                <Flex className="productDetail-box2-flex" >
-                                    <Box>                           
-                                        <Box className='shipping-div'>
-                                            <Heading as="h5" fontWeight="200">
-                                                If you already have an account, please LOGIN.
-                                            </Heading>
-                                            <Flex className="shipping-box" >
-                                                <Box className=""  >                                
-                                                    <form className="shipping-form">
-                                                        <Heading className="returning-heading" as="h3">Shipping Address<span className='optional'>(English Only)</span></Heading>
-                                                        <Box display='flex'>
-                                                            <Box className='boxOne'>
-                                                                <Box >
-                                                                    <FormControl mt={20}>                                                   
-                                                                        <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" />
-                                                                    </FormControl>                                    
-                                                                </Box>
+                                {!user && (
+                                <Heading as="h5" fontWeight="200">
+                                    If you already have an account, please <Link href='/signUp'> LOGIN </Link>.
+                                </Heading>
+                                    )}
+                                <Flex className="shipping-box" >
+                                    <Box className=""  >
+                                        <form className="shipping-form">
+                                            <Heading className="returning-heading" as="h3">User Information</Heading>
+                                            <Box display='flex'>
+                                                <Box className='boxOne'>
+                                                    <Box >
+                                                        <FormControl mt={20}>
+                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
 
-                                                                <Box  >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box  >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box  >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box  >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="E-mail Address" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box  >
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="Confirm E-mail Address" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                            </Box>
-                                                            <Box className='boxTwo'>
-                                                            <Heading as="h5" fontWeight="200">
-                                                                We ship to all 50 states including P.O. Box, APO, FPO, and U.S. Territories.
-                                                            </Heading>
-                                                            </Box>
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" value={appartment} onChange={(e) => setAppartment(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box  >
+                                                        <FormControl mt={2}>
+                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/>Enter Zip Code for City and State
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    {!user && (
+                                                        <Box  >
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="E-mail Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
+                                                    <Box  >
+                                                        <FormControl mt={5}>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Confirm E-mail Address" value={cEmail} onChange={(e) => setCEmail(e.target.value)}/>
+                                                            {error && (
+                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            )}
+                                                        </FormControl>
+                                                    </Box>
                                                         </Box>
-                                                        <Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                        <Box display='flex'>
-                                                            <Box className='boxOne'>
-                                                                <Box>
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="password" placeholder="Password" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                                <Box>
-                                                                    <FormControl mt={5}>
-                                                                        <Input mr={5} className="bussiness-input"  type="password" placeholder="Confirm Password" />
-                                                                    </FormControl>
-                                                                </Box>
-                                                            </Box>
-                                                            <Box className='boxTwo'>
-                                                                <Heading as="h5" fontWeight="200">
-                                                                You have the option of creating an account for future orders and faster checkouts.
-                                                                </Heading>
-                                                            </Box>
-                                                        </Box>
-                                                        {/* <Flex className="bussiness-checkbox"  mt={30} >
-                                                            <Button className="bussiness-acct-button" colorScheme="teal" type="submit">
-                                                                Create a Bussiness Account
-                                                            </Button>
-                                                        </Flex> */}
+                                                        )}
+                                                </Box>
+                                                <Box className='boxTwo'>
+                                                <Heading as="h5" fontWeight="200">
+                                                    We ship to all 50 states including P.O. Box, APO, FPO, and U.S. Territories.
+                                                </Heading>
+                                                </Box>
+                                            </Box>
+                                            {user ? ( <Box> <Heading  fontWeight="200">
+
+                                                Save Address As(Optional)
+                                                </Heading>
+                                                <Box>
+                                                    <FormControl mt={5}>
+                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="" value={addressAs} onChange={(e) => setAddressAs(e.target.value)}/>
+                                                    </FormControl>
+                                                </Box>
+                                                <Box  >
+                                                <FormControl mt={5}>
+                                                <Input mr={5} className="bussiness-input"  type="checkbox" />Save this address for future orders
+
+                                                </FormControl>
+                                                </Box>
+                                                    <Text className='continue-btn' onClick={handleShippingForm}>
+                                                        Ship to this address
+                                                    </Text>
+                                                </Box>
+                                                ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
+                                                <Box display='flex'>
+                                                <Box className='boxOne'>
+                                                <Box>
+                                                <FormControl mt={5}>
+                                                <Input mr={5} className="bussiness-input"  type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                                </FormControl>
+                                                </Box>
+                                                <Box>
+                                                <FormControl mt={5}>
+                                                <Input mr={5} className="bussiness-input"  type="password" placeholder="Confirm Password" value={cPassword} onChange={(e) => setCPassword(e.target.value)} />
+                                                </FormControl>
+                                                </Box>
+                                                </Box>
+                                                <Box className='boxTwo'>
+                                                <Heading as="h5" fontWeight="200">
+                                                You have the option of creating an account for future orders and faster checkouts.
+                                                </Heading>
+                                                </Box>
+                                                </Box>
+                                            </Box>)}
 
                                                     </form>
                                                 </Box>
                                             </Flex>
-                                        </Box>                    
-                                    </Box>
                                     <Box className="shipping-price-box">
                                         <Text fontWeight='bold' fontSize="xl">
                                             Order Summary
                                         </Text>
                                         <Box display='flex' justifyContent='space-between'>
                                             <Text margin='0px' fontSize='small' >
-                                                Subtotal 
+                                                Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $193.2 
+                                                ${subTotal}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -232,7 +410,7 @@ const ShoppingProductPage = () => {
                                                 Estimated Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $193.2 
+                                                $0
                                             </Text>
                                         </Box>
                                         <Box mt={5}  display='flex' justifyContent='space-between'>
@@ -240,53 +418,52 @@ const ShoppingProductPage = () => {
                                             Estimated Tax
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $193.2 
+                                                $0
                                             </Text>
                                         </Box>
                                         <Text borderTop="1px solid #b0b0b0" size="lg">
                                             <Box mt={5}  display='flex' justifyContent='space-between'>
                                                 <Text margin='0px' fontSize='medium' fontWeight='600' >
-                                                    Estimated Tax
+                                                    Estimated Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    $193.2 
+                                                    ${subTotal}
                                                 </Text>
                                             </Box>
                                         </Text>
-                                        <Text  onClick={handleContinueClick} className='continue-btn'>
+                                        <Text  onClick={handleShippingForm} className='continue-btn'>
                                             Continue
                                         </Text>
-                                    </Box>                
-                                </Flex>
+                                    </Box>
                             </Box>
                              )}
 
                              {showPaymentDiv && (
                                 <Box className='payment-div'>
                                     <Flex className="productDetail-box2-flex" >
-                                        <Box>                           
+                                        <Box>
                                             <Box mt={25} className='shipping-div'>
-                                                
+
                                                 <Flex className="shipping-box" >
-                                                    <Box className=""  >                                
+                                                    <Box className=""  >
                                                         <form className="shipping-form">
                                                             <Heading className="returning-heading" as="h3">Shipping Address</Heading>
                                                             <Box display='flex'>
                                                                 <Box className='boxOne'>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {firstName}
                                                                     </Text>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {lastName}
                                                                     </Text>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {company}
                                                                     </Text>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {streetAddress} {appartment} {zipCode}
                                                                     </Text>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {phone}
                                                                     </Text>
 
                                                                 </Box>
@@ -294,11 +471,8 @@ const ShoppingProductPage = () => {
                                                                     <Text>
                                                                         Pakistan
                                                                     </Text>
-                                                                    <Text>
-                                                                        Pakistan
-                                                                    </Text>
                                                                 </Box>
-                                                            </Box>                                            
+                                                            </Box>
                                                         </form>
                                                         <form className="shipping-form">
                                                             <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
@@ -329,14 +503,14 @@ const ShoppingProductPage = () => {
                                                                                 If you have any questions or concerns, please contact us.
                                                                             </Text>
                                                                         </Box>
-                                                                    
+
                                                                 </Box>
-                                                            </Box>                                              
+                                                            </Box>
 
                                                         </form>
                                                     </Box>
                                                 </Flex>
-                                            </Box>                    
+                                            </Box>
                                         </Box>
                                         <Box className="payment-price-box">
                                             <Text fontWeight='bold' fontSize="xl">
@@ -344,10 +518,10 @@ const ShoppingProductPage = () => {
                                             </Text>
                                             <Box display='flex' justifyContent='space-between'>
                                                 <Text margin='0px' fontSize='small' >
-                                                    Subtotal 
+                                                    Subtotal
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    $193.2 
+                                                    ${subTotal}
                                                 </Text>
                                             </Box>
                                             <Box mt={5} display='flex' justifyContent='space-between'>
@@ -355,24 +529,24 @@ const ShoppingProductPage = () => {
                                                     Estimated Shipping & Handling
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    $193.2 
+                                                    $0
                                                 </Text>
                                             </Box>
-                                        
+
                                             <Text borderTop="1px solid #b0b0b0" size="lg">
                                                 <Box mt={5}  display='flex' justifyContent='space-between'>
                                                     <Text margin='0px' fontSize='medium' fontWeight='600' >
                                                         Estimated Order Total
                                                     </Text>
                                                     <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                        $193.2 
+                                                        ${subTotal}
                                                     </Text>
                                                 </Box>
                                             </Text>
                                             <Text onClick={handleContinueToOrderReviewClick} className='continue-btn'>
                                                 Continue to Order Review
                                             </Text>
-                                        </Box>                
+                                        </Box>
                                     </Flex>
                                 </Box>
                              )}
@@ -380,11 +554,11 @@ const ShoppingProductPage = () => {
                              {showReviewDiv && (
                             <Box className='payment-div'>
                                 <Flex className="productDetail-box2-flex" >
-                                    <Box>                           
+                                    <Box>
                                         <Box mt={25} className='shipping-div'>
-                                            
+
                                             <Flex className="shipping-box" >
-                                                <Box className=""  >                                
+                                                <Box className=""  >
                                                     <form className="shipping-form">
                                                         <Box display='flex'>
                                                             <Box className='boxOne'>
@@ -392,16 +566,19 @@ const ShoppingProductPage = () => {
                                                                     Shipping Addres
                                                                 </Text>
                                                                 <Text>
-                                                                    Pakistan
+                                                                    {firstName}
                                                                 </Text>
                                                                 <Text>
-                                                                    Pakistan
+                                                                    {lastName}
                                                                 </Text>
                                                                 <Text>
-                                                                    Pakistan
+                                                                    {company}
                                                                 </Text>
                                                                 <Text>
-                                                                    Pakistan
+                                                                    {streetAddress} {appartment} {zipCode}
+                                                                </Text>
+                                                                <Text>
+                                                                    {phone}
                                                                 </Text>
 
                                                             </Box>
@@ -413,14 +590,15 @@ const ShoppingProductPage = () => {
                                                                     Wire Transfer
                                                                 </Text>
                                                             </Box>
-                                                        </Box>                                            
+                                                        </Box>
                                                     </form>
                                                     <form className="shipping-form">
                                                             <Text fontWeight='600'>
                                                                     Shipping Details
-                                                                </Text>  
+                                                                </Text>
                                                       <Box >
                                                       <TableContainer>
+
                                                             <Table variant='simple'  borderBottom="2px solid #dfdfdf">
                                                                 <Thead background="#dfdfdf" >
                                                                     <Tr>
@@ -432,68 +610,42 @@ const ShoppingProductPage = () => {
                                                                     </Tr>
                                                                 </Thead>
                                                                 <Tbody>
-                                                                
-                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                    {cart.map((cartItem, index) => (
+                                                                        <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                <Image className="cart-box-image" src=''  />
+                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
-                                                                                Part No.: 
+                                                                                Part No.: {cartItem.part_number}
                                                                                 <br/>
-                                                                                <b>abc</b>
+                                                                                <b>{cartItem.description}</b>
                                                                                 <br/>
                                                                                 <br/>
-                                                                                Replaced By: 123
+                                                                                Replaced By: {cartItem.replaces}
                                                                                 <br/>
-                                                                                <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
-                                                                                    Remove
-                                                                                </span>
+
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                                123
+                                                                                ${cartItem.price}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                            1
+                                                                                {cartItem.quantity}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="right">
-                                                                                568
+                                                                                ${(cartItem.price * cartItem.quantity)}
                                                                             </Td>
                                                                         </Tr>
-                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
-                                                                            <Td>
-                                                                                <Image className="cart-box-image" src=''  />
-                                                                            </Td>
-                                                                            <Td width="250px" textAlign="left">
-                                                                                Part No.: 
-                                                                                <br/>
-                                                                                <b>abc</b>
-                                                                                <br/>
-                                                                                <br/>
-                                                                                Replaced By: 123
-                                                                                <br/>
-                                                                                <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
-                                                                                    Remove
-                                                                                </span>
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                                123
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="center">
-                                                                            1
-                                                                            </Td>
-                                                                            <Td width="150px" textAlign="right">
-                                                                                568
-                                                                            </Td>
-                                                                        </Tr>
+                                                                    ))}
                                                                 </Tbody>
                                                             </Table>
                                                         </TableContainer>
-                                                        </Box>                                              
+                                                        </Box>
+
 
                                                     </form>
                                                 </Box>
                                             </Flex>
-                                        </Box>                    
+                                        </Box>
                                     </Box>
                                     <Box>
                                     <Box className="payment-price-box">
@@ -502,10 +654,10 @@ const ShoppingProductPage = () => {
                                         </Text>
                                         <Box display='flex' justifyContent='space-between'>
                                             <Text margin='0px' fontSize='small' >
-                                                Subtotal 
+                                                Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $193.2 
+                                                ${subTotal}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -513,42 +665,42 @@ const ShoppingProductPage = () => {
                                                 Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $193.2 
+                                                $0
                                             </Text>
                                         </Box>
-                                    
+
                                         <Text borderTop="1px solid #b0b0b0" fontSize='12px'>
                                             <Box mt={5} mb={5}  display='flex' justifyContent='space-between'>
                                                 <Text margin='0px' fontSize='medium' fontWeight='600' >
                                                     Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    $193.2 
+                                                    ${subTotal}
                                                 </Text>
                                             </Box>
                                             By placing an order, you agree with our Terms and Conditions
                                         </Text>
-                                        <Text className='continue-btn'>
+                                        <Text className='continue-btn' onClick={handleOrder}>
                                             Place To Order
                                         </Text>
-                                    </Box> 
+                                    </Box>
                                     <Box className="payment-price-box2">
                                         <Text fontWeight='bold' fontSize='12px' color='#606060'>
                                             We ship most orders in 1-3 business days.
-                                        </Text> 
+                                        </Text>
                                         <Text fontSize='12px' color='#606060'>
                                              Some parts may need to be ordered from one of Toyota Distribution Centers across the country if our local Toyota Distribution Center is out of stock. It will require additional time to obtain. If for any reason it takes longer than 3 business days, we will send a follow-up email to keep you updated on the status of your order.
-                                    
-                                        </Text>     
+
+                                        </Text>
                                         <Text fontWeight='bold' fontSize='12px' color='#606060'>
                                             For International Orders:
-                                        </Text> 
+                                        </Text>
                                         <Text fontSize='12px' color='#606060'>
                                         Customers are responsible for any customs charges, duties, or taxes that may incur in destination country. This payment will be collected by FedEx upon delivery.
-                                                                        
-                                        </Text>                                                                     
-                                    </Box>       
-                                    </Box>           
+
+                                        </Text>
+                                    </Box>
+                                    </Box>
                                 </Flex>
                             </Box>
                              )}

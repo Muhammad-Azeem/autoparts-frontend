@@ -170,11 +170,11 @@ const ProductPage = () => {
                         </Box>
 
                         <Box className="pp-price-box">
-                            <Text className="pp-price" fontSize="xl">$9.5
+                            <Text className="pp-price" fontSize="xl">{product.price}
                                 <span className="product-price-span" >
                                     MSRP:
                                     <span style={{textDecoration:'line-through'}}>
-                                        $6.55
+                                        {product.discounted_price}
                                     </span>
                                 </span>
                             </Text>

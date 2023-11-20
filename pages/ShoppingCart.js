@@ -1,5 +1,5 @@
 // pages/index.js
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import SubHeader from "../components/SubHeader";
 import Footer from "../components/Footer";
@@ -39,7 +39,7 @@ const HomePage = () => {
             <>
                 <ShoppingProductPage/>
                 </>
-                )}                
+                )}
             </main>
             <div className="main-footer">
                 <Footer/>

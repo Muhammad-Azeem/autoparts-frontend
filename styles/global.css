@@ -1096,8 +1096,7 @@ body{
 }
 .shipping-box{
     display: flex;
-    justify-content: center;
- 
+
 }
 .tracking-box{
      padding: 25px 50px
@@ -1752,7 +1751,7 @@ body{
 .shipping-price-box{
     padding: 10px;
     position: absolute;
-    top: 60px;
+    top: 232px;
     right: 10px;
     border: 1px solid #b0b0b0;
     width: 250px;
@@ -1762,7 +1761,7 @@ body{
     position: absolute;
     top: 275px;
     right: 10px;
-   
+
     width: 250px;
 }
 .payment-price-box{
@@ -2112,7 +2111,7 @@ body{
     position: relative;
     width: 100%;
     cursor: pointer;
-   
+
  }
  .sub-mod-head{
     color: #333;
@@ -2132,7 +2131,7 @@ body{
     display: flex;
  }
  .shipping-top-list-li{
-  
+
     background: #f8f8f8;
     padding: 10px 70px;
     cursor: pointer;
@@ -2146,19 +2145,19 @@ body{
  }
  .shipping-pp-box2{
     padding: 0px 5px;
-   
+
  }
  .box{
     width: 50%;
-  
+
  }
  .boxOne{
     width: 50%;
-  
+
  }
  .boxTwo{
     width: 50%;
-  
+
  }
  .optional{
     color: black;

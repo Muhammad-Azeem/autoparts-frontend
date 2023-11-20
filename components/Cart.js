@@ -49,6 +49,7 @@ const   Cart = () => {
     };
     const handleCheckout = () => {
         router.push('/ShoppingCart');
+        localStorage.setItem('subTotal', subTotal);
     };
     const [cart, setCart] = useState([])
     const [subTotal, setSubTotal] = useState(0);
@@ -62,6 +63,7 @@ const   Cart = () => {
         removeCartFromCookie(index)
         const data = getCartFromCookie();
         setCart(data);
+        setSubTotal(calculateSubtotal(data))
 
     };
     useEffect(() => {
@@ -133,7 +135,7 @@ const   Cart = () => {
                             Subtotal: <span style={{color:'#bc0001'}}>${subTotal}</span>
                         </Text>
                         <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
-                            <Button mt={10} className="add-to-cart-btn" colorScheme="teal">Add to Cart</Button>
+                            <Button mt={10} className="add-to-cart-btn" colorScheme="teal" onClick={handleCheckout}>SECURE CHECKOUT </Button>
                             {/*<Text className="center-or-text"  size="lg">*/}
                             {/*    - OR -*/}
                             {/*</Text>*/}
