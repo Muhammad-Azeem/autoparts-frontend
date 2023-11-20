@@ -534,28 +534,41 @@ const AcctDash = () => {
                                                 </Heading>
                                                 <Box mt={10} borderBottom="1px solid #d0d0d0">
                                                 </Box>
-                                                <Box className="form-box-width"  mt={10}>
-                                                   <Text className="account-label">
-                                                        Country
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        First Name
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        Last Name
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        Company
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        City
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        State/Province
-                                                   </Text>
-                                                   <Text className="account-label">
-                                                        Other values from form
-                                                   </Text>
+                                                <Box className="form-box-width" > 
+                                                    <Box className='inner-shipAdrs-box'   mt={10}>
+                                                        <Text className="account-label">
+                                                                Country
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                First Name
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                Last Name
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                Company
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                City
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                State/Province
+                                                        </Text>
+                                                        <Text className="account-label">
+                                                                Other values from form
+                                                        </Text>
+                                                        <Box display='flex'>
+                                                            <Link className="account-link">
+                                                                    Edit
+                                                            </Link>
+                                                            <Link ml={10} className="account-link">
+                                                                    Delete
+                                                            </Link>
+                                                            <Link ml={10} className="account-link">
+                                                                    Make as default
+                                                            </Link>
+                                                        </Box>
+                                                    </Box>                                                                      
                                                 </Box>
                                             </Box>
                                         )}

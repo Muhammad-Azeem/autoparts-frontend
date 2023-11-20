@@ -1887,7 +1887,10 @@ body{
     cursor: pointer;
 }
 .form-box-width{
-    width: 600px;
+    /* width: 600px; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 .acctSet-inputbox{
     margin-top: 10px;
@@ -2170,6 +2173,9 @@ body{
     display: flex;
     justify-content: center;
  }
+ .inner-shipAdrs-box{
+
+ }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {
@@ -2287,6 +2293,11 @@ li {
 .account-label{
     color: #333;
     font-size: 14px;
+}
+.account-link{
+    cursor: pointer;
+    color: #406cc8;
+    font-size: 12px;
 }
 .shippingCheckbox-label{
     color: #333;
