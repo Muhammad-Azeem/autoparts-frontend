@@ -20,11 +20,14 @@ import {
     Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon
 } from '@chakra-ui/react';
 import '../styles//global.css';
+import { DeleteIcon } from '@chakra-ui/icons';
 import {getAllCategories, getProductsBySubCategoryId} from './API/api';
-import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
+import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import AddVehicleModal from "./AddVehicleModal";
+
 const ProductListing = () => {
+
 
     const [categories, setCategories] = useState([]);
 
@@ -169,6 +172,59 @@ const ProductListing = () => {
     const handleCategoryHover = (categoryName) => {
         setHoveredCategory(categoryName);
     };
+
+    const [garages, setGarages] = useState(getGarageFromCookie());
+
+    const handleDeleteGarage = (id) => {
+        removeGarageFromCookie(id);
+        setGarages(getGarageFromCookie());
+    };
+
+    useEffect(() => {
+        setGarages(getGarageFromCookie());
+        console.log(garages);
+    }, [isDivOpen]); // Run only once on component mount
+
+
+    const handleClearAllGarages = () => {
+        clearAllGaragesFromCookie();
+        setGarages([]); // Clear the garage state in your component
+        router.push('/');
+    };
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const onModalOpen = () => setIsModalOpen(true);
+    const onModalClose = () => setIsModalOpen(false);
+
+    const [isGarageOpen, setIsGarageOpen] = useState(false);
+    const divGarageRef = useRef();
+
+    // Close the div when clicking outside
+    const handleClickOutsideGarage = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setIsGarageOpen(false);
+        }
+    };
+
+    // Close the div when the cursor hovers out
+    const handleMouseLeaveGarage = () => {
+        setIsGarageOpen(false);
+    };
+
+    // Add click outside event listener when the div is open
+    useEffect(() => {
+        if (isGarageOpen) {
+            document.addEventListener('click', handleClickOutsideGarage);
+        } else {
+            document.removeEventListener('click', handleClickOutsideGarage);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutsideGarage);
+        };
+    }, [isGarageOpen]);
+
     return (
         <Box >
             <Breadcrumb className="Product-listing-breadcrum"  separator=">">
@@ -192,12 +248,62 @@ const ProductListing = () => {
                 <Grid colSpan={1} className="product-listing-left-row" mt={15} gap={6}>
                     <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                         <Box border="1px solid #b0b0b0" alignItems="center">
-                            <Text className="vm-leftside-heading" size="lg">
+                            <Text position='relative' className="vm-leftside-heading" size="lg">
                                 My Vehicle
-                                <a className="change-vehicle">
+                                <a  onMouseEnter={() => setIsGarageOpen(true)}  className="change-vehicle">
                                     Change Vehicle
                                 </a>
+                                {isGarageOpen && (
+                                    <div
+                                        ref={divGarageRef}
+                                        style={{
+                                            position: 'absolute',
+                                            // top: '300px', // Adjust the positioning as needed
+                                            // left: '200px',
+                                            width: '400px', // Set the desired width
+                                            background: 'white',
+                                            boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                                            zIndex: '1',
+                                            // Add other styles as needed
+                                        }}
+                                        onMouseLeave={handleMouseLeaveGarage}
+                                    >
+                                        {/* Content of the div */}
+                                        <p className="vehicle-list">Vehicle List</p>                                      
+                                        <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
+                                            {garages.length > 0 ? (
+                                                garages.map((garageEntry) => (
+                                                    <li
+                                                        key={garageEntry.id}
+                                                        className="no-vehicles"
+                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                                    >
+                                                        <div>
+                                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                                            <label htmlFor={garageEntry.id}>
+                                                                {garageEntry.company} {garageEntry.model} {garageEntry.year}
+                                                            </label>
+                                                        </div>
+                                                        <div>
+                                                            <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)}  />
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="no-vehicles" style={{ textAlign: 'center' }}>
+                                                    No vehicles in the garage
+                                                </li>
+                                            )}
+                                        </ul>
+                                        <div className="vehicle-list-box">
+                                            <p onClick={onModalOpen} className="add-new-vehicle">Add New Vehicle</p>
+
+                                            <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
+                                        </div>
+                                    </div>
+                                )} 
                             </Text>
+                            <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
                                 2022 Toyota 4Runner
                             </Box>

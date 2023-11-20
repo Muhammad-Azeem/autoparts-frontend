@@ -1,5 +1,6 @@
 // components/Header.js
 import React, { useState , useRef, useEffect  } from 'react';
+import { useRouter } from 'next/router';
 import {
     Modal,
     ModalOverlay,
@@ -50,6 +51,7 @@ Backdrop.propTypes = {
     zIndex: PropTypes.string
 };
 const SubHeader = () => {
+    const router = useRouter();
     const [isAbcVisible, setIsAbcVisible] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -135,9 +137,11 @@ const SubHeader = () => {
         setGarage(getGarageFromCookie());
         console.log(garage);
     }, [isDivOpen]); // Run only once on component mount
+
     const handleClearAllGarages = () => {
         clearAllGaragesFromCookie();
         setGarage([]); // Clear the garage state in your component
+        router.push('/');
     };
     return (
         <Flex className="sub-header">
@@ -290,24 +294,7 @@ const SubHeader = () => {
                         onMouseLeave={handleMouseLeave}
                     >
                         {/* Content of the div */}
-                        <p className="vehicle-list">Vehicle List</p>
-                        {/*<ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>*/}
-                        {/*    {garage.map((garageEntry) => (*/}
-                        {/*        <li*/}
-                        {/*            key={garageEntry.id} // Assuming each garage entry has a unique identifier*/}
-                        {/*            className="no-vehicles"*/}
-                        {/*            style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}*/}
-                        {/*        >*/}
-                        {/*            <div>*/}
-                        {/*                <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />*/}
-                        {/*                <label htmlFor={garageEntry.id}>{garageEntry.company} {garageEntry.model} {garageEntry.year}</label>*/}
-                        {/*            </div>*/}
-                        {/*            <div>*/}
-                        {/*                <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)} />*/}
-                        {/*            </div>*/}
-                        {/*        </li>*/}
-                        {/*    ))}*/}
-                        {/*</ul>*/}
+                        <p className="vehicle-list">Vehicle List</p>                    
                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                             {garage.length > 0 ? (
                                 garage.map((garageEntry) => (

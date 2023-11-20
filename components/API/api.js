@@ -19,6 +19,7 @@ export const register = async (userData) => {
         axios.request(config)
             .then((response) => {
                 return response;
+                console.log(response );
             })
             .catch((error) => {
                 console.log(error);
