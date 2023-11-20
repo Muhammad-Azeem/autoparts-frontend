@@ -421,73 +421,73 @@ const ShoppingProductPage = () => {
                                                                 </Text>  
                                                       <Box >
                                                       <TableContainer>
-                        <Table variant='simple'  borderBottom="2px solid #dfdfdf">
-                            <Thead background="#dfdfdf" >
-                                <Tr>
-                                    <Th width="150px"></Th>
-                                    <Th width="250px" textAlign="left">Part Description</Th>
-                                    <Th width="150px" textAlign="center">Price</Th>
-                                    <Th width="150px" textAlign="center">Qty.</Th>
-                                    <Th width="150px" textAlign="right">Subtotal</Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                               
-                                    <Tr mt={15} style={{ marginTop: '10px' }}>
-                                        <Td>
-                                            <Image className="cart-box-image" src=''  />
-                                        </Td>
-                                        <Td width="250px" textAlign="left">
-                                            Part No.: 
-                                            <br/>
-                                            <b>abc</b>
-                                            <br/>
-                                            <br/>
-                                            Replaced By: 123
-                                            <br/>
-                                            <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
-                                                Remove
-                                            </span>
-                                        </Td>
-                                        <Td width="150px" textAlign="center">
-                                            123
-                                        </Td>
-                                        <Td width="150px" textAlign="center">
-                                           1
-                                        </Td>
-                                        <Td width="150px" textAlign="right">
-                                            568
-                                        </Td>
-                                    </Tr>
-                                    <Tr mt={15} style={{ marginTop: '10px' }}>
-                                        <Td>
-                                            <Image className="cart-box-image" src=''  />
-                                        </Td>
-                                        <Td width="250px" textAlign="left">
-                                            Part No.: 
-                                            <br/>
-                                            <b>abc</b>
-                                            <br/>
-                                            <br/>
-                                            Replaced By: 123
-                                            <br/>
-                                            <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
-                                                Remove
-                                            </span>
-                                        </Td>
-                                        <Td width="150px" textAlign="center">
-                                            123
-                                        </Td>
-                                        <Td width="150px" textAlign="center">
-                                           1
-                                        </Td>
-                                        <Td width="150px" textAlign="right">
-                                            568
-                                        </Td>
-                                    </Tr>
-                            </Tbody>
-                        </Table>
-                    </TableContainer>
+                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                                <Thead background="#dfdfdf" >
+                                                                    <Tr>
+                                                                        <Th width="150px"></Th>
+                                                                        <Th width="250px" textAlign="left">Part Description</Th>
+                                                                        <Th width="150px" textAlign="center">Price</Th>
+                                                                        <Th width="150px" textAlign="center">Qty.</Th>
+                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                    </Tr>
+                                                                </Thead>
+                                                                <Tbody>
+                                                                
+                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                            <Td>
+                                                                                <Image className="cart-box-image" src=''  />
+                                                                            </Td>
+                                                                            <Td width="250px" textAlign="left">
+                                                                                Part No.: 
+                                                                                <br/>
+                                                                                <b>abc</b>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                Replaced By: 123
+                                                                                <br/>
+                                                                                <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
+                                                                                    Remove
+                                                                                </span>
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                                123
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                            1
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="right">
+                                                                                568
+                                                                            </Td>
+                                                                        </Tr>
+                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                            <Td>
+                                                                                <Image className="cart-box-image" src=''  />
+                                                                            </Td>
+                                                                            <Td width="250px" textAlign="left">
+                                                                                Part No.: 
+                                                                                <br/>
+                                                                                <b>abc</b>
+                                                                                <br/>
+                                                                                <br/>
+                                                                                Replaced By: 123
+                                                                                <br/>
+                                                                                <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(cartItem.id)}>
+                                                                                    Remove
+                                                                                </span>
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                                123
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                            1
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="right">
+                                                                                568
+                                                                            </Td>
+                                                                        </Tr>
+                                                                </Tbody>
+                                                            </Table>
+                                                        </TableContainer>
                                                         </Box>                                              
 
                                                     </form>

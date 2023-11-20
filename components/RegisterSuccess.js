@@ -46,7 +46,7 @@ const RegisterSuccess = () => {
                                 My Account
                             </Text>
                             <Box className="success-leftside-box">
-                                <Link className="success-leftside-link"  href="/">
+                                <Link className="success-leftside-link"  href="/AccountDashboard">
                                     Dashboard
                                 </Link>
                             </Box>

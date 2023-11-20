@@ -32,7 +32,8 @@ import {
 import '../styles//global.css';
 import {checkAuth, register} from '../components/API/api'
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import {changeEmail} from './API/api'
+import {changeEmail} from './API/api';
+
 const AcctDash = () => {
     const [currentEmail, setCurrentEmail] = useState('');
     const [newEmail, setNewEmail] = useState('');
@@ -89,6 +90,7 @@ const AcctDash = () => {
     const toggleEditBoxVisibility = () => {
         setIsEditBox1Visible(!isEditBox1Visible);
     };
+
     const toggleEditBoxVisibility2 = () => {
         setIsEditBox2Visible(!isEditBox2Visible);
     };
@@ -143,18 +145,16 @@ const AcctDash = () => {
                             <Text className="vm-leftside-heading" size="lg">
                                 My Account
                             </Text>
-                            <Box className="success-leftside-box">
-                                <Link className="success-leftside-link"  href="/">
-                                    Dashboard
-                                </Link>
-                            </Box>
-                            <Box onClick={() => setActiveGridItem(1)} className="success-leftside-box">
-                                Order History
+                            <Box onClick={() => setActiveGridItem(1)} className="success-leftside-box">                             
+                                    Dashboard                             
                             </Box>
                             <Box onClick={() => setActiveGridItem(2)} className="success-leftside-box">
-                                Account Setting
+                                Order History
                             </Box>
                             <Box onClick={() => setActiveGridItem(3)} className="success-leftside-box">
+                                Account Setting
+                            </Box>
+                            <Box onClick={() => setActiveGridItem(4)} className="success-leftside-box">
                                 Address Book
                             </Box>
                         </Box>
@@ -195,8 +195,72 @@ const AcctDash = () => {
                         <MenuItem onClick={() => setActiveGridItem(3)}  className="menu-item">Address Book</MenuItem>
                     </MenuList>
                 </Menu>
-                
+            
                 {activeGridItem === 1 &&
+                <GridItem  colSpan={1} bg='#fff'>
+                    <Flex>
+                        <Box width="100%">
+                            <Grid className="list-grid" >
+                                    <Box className="horizontal-listbox">
+                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Account Info</Text>                                    
+                                    </Box>
+                                    <Text fontWeight='bold' ml={25}>
+                                        Login Email: 
+                                        <span style={{fontWeight:'normal', marginLeft:'15px'}}>
+                                             abc@gmail.com
+                                        </span>
+                                    </Text>       
+                                    <Text fontWeight='bold' ml={25}>
+                                        Shipping Address
+                                        <span style={{fontWeight:'normal', marginLeft:'15px'}}>
+                                             abc@gmail.com
+                                        </span>
+                                    </Text> 
+                                    <Box className="horizontal-listbox" style={{borderTop: '1px solid #d0d0d0',borderBottom:'none'}}>
+                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Recent Orders</Text>                                    
+                                    </Box>
+                                    <TableContainer>
+                                                            <Table variant='simple'  borderBottom="2px solid #dfdfdf">
+                                                                <Thead background="#dfdfdf" >
+                                                                    <Tr>
+                                                                        <Th width="150px">Sr.</Th>
+                                                                        <Th width="250px" textAlign="left">Part Description</Th>
+                                                                        <Th width="150px" textAlign="center">Price</Th>
+                                                                        <Th width="150px" textAlign="center">Qty.</Th>
+                                                                        <Th width="150px" textAlign="right">Subtotal</Th>
+                                                                    </Tr>
+                                                                </Thead>
+                                                                <Tbody> 
+                                                                        <Tr mt={15} style={{ marginTop: '10px' }}>
+                                                                            <Td textAlign="center">
+                                                                                1
+                                                                            </Td>
+                                                                            <Td width="250px" textAlign="left">
+                                                                                Part No.: 
+                                                                                <br/>
+                                                                                <b>abc</b>
+                                                                                <br/>
+                                                                              
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                                123
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="center">
+                                                                            1
+                                                                            </Td>
+                                                                            <Td width="150px" textAlign="right">
+                                                                                568
+                                                                            </Td>
+                                                                        </Tr>
+                                                                </Tbody>
+                                                            </Table>
+                                                        </TableContainer>                           
+                            </Grid>
+                        </Box>
+                    </Flex>
+                </GridItem>
+                }
+                {activeGridItem === 2 &&
                 <GridItem  colSpan={1} bg='#fff'>
                     <Flex>
                         <Box width="100%">
@@ -257,7 +321,7 @@ const AcctDash = () => {
                     </Flex>
                 </GridItem>
                 }
-                {activeGridItem === 2 &&
+                {activeGridItem === 3 &&
                 <GridItem  colSpan={1} bg='#fff'>
                     <Flex>
                         <Box width="100%">
@@ -391,7 +455,7 @@ const AcctDash = () => {
                 </GridItem>
                 }
 
-                {activeGridItem === 3 &&
+                {activeGridItem === 4 &&
                     <GridItem  colSpan={1} bg='#fff'>
                         <Flex>
                             <Box width="100%">

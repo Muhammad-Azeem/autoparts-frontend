@@ -104,8 +104,8 @@ const   Cart = () => {
                                             Replaced By: {cartItem.replaces}
                                             <br/>
                                             <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(index)}>
-            Remove
-          </span>
+                                                Remove
+                                            </span>
                                         </Td>
                                         <Td width="150px" textAlign="center">
                                             ${cartItem.price}

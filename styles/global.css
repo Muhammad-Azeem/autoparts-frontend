@@ -1925,6 +1925,7 @@ body{
     border-bottom: 1px solid #d0d0d0;
     position: relative;
 }
+
 .pp-horizontal-listbox{
     display: flex;
     padding: 0px 30px;
