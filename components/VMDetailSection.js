@@ -25,17 +25,17 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import ProductListing from "./ProductListing";
-import {getProductByCategoryId} from "./API/api";
+import {getAllCategories, getProductByCategoryId} from "./API/api";
 const DetailSection = ({title}) => {
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isBoxVisible, setIsBoxVisible] = useState(false);
 
     const toggleBoxVisibility = () => {
-        setIsBoxVisible(!isBoxVisible);
+        setIsBoxVisible(true);
 
         // Scroll to the top of the page
-        if (!isBoxVisible) {
+        if (isBoxVisible) {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth',
@@ -98,11 +98,13 @@ const DetailSection = ({title}) => {
         // Use router.push to navigate to the product list page
         router.push('/'); // Replace '/productlist' with the actual URL of your product list page
     };
-
+    const [categories, setCategories] = useState([])
     useEffect(() => {
         const fetchProductsByCategoryId = async (temp) => {
             try {
                 const data = await getProductByCategoryId(temp);
+                const categories = await getAllCategories();
+                setCategories(categories)
                 setProducts(data.products)
                 setCategory(data.category)
             } catch (error) {
@@ -114,7 +116,11 @@ const DetailSection = ({title}) => {
         }
     }, [categoryId]); // Empty dependency array ensures this effect runs once on mount
 
-
+    const handleCategoryClick =async (id) => {
+        const data = await getProductByCategoryId(id);
+        setProducts(data.products)
+        setCategory(data.category)
+    }
     return (
             <>
                 <Box className="Vm-top-section">
@@ -322,18 +328,13 @@ const DetailSection = ({title}) => {
                                     <Text  className="vm-leftside-heading" size="lg">
                                         Categories
                                     </Text>
-                                    <Box onClick={() => setActiveGridItem(1)}className="vm-leftside-box" fontSize="small" color="grey">
-                                        [+] Body Parts
-                                    </Box>
-                                    <Box onClick={() => setActiveGridItem(2)} className="vm-leftside-box" fontSize="small" color="grey">
-                                        [+] Electrical
-                                    </Box>
-                                    <Box onClick={() => setActiveGridItem(3)} className="vm-leftside-box" fontSize="small" color="grey">
-                                        [+] Engine/Fuel/Tool
-                                    </Box>
-                                    <Box onClick={() => setActiveGridItem(4)} className="vm-leftside-box" fontSize="small" color="grey">
-                                        [+] Power Train/Chassis
-                                    </Box>
+                                    {
+                                        categories.map((category, index) => (
+                                            <Box key={index} onClick={() => handleCategoryClick(category.id)}className="vm-leftside-box" fontSize="small" color="grey">
+                                                [+] {category.name}
+                                            </Box>
+                                        ))
+                                    }
                                 </Box>
                             </GridItem>
                         </Grid>
@@ -386,450 +387,6 @@ const DetailSection = ({title}) => {
                                             </Text>
                                         </Box>
                                     </Flex>
-                            </GridItem>
-                        }
-                        {activeGridItem === 2 &&
-                            <GridItem  colSpan={4} bg='#F4F4F4'>
-                                <Flex>
-                                    <Box width="100%">
-                                        <Breadcrumb className="breadcrum" spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
-                                            <BreadcrumbItem className="breadcrum-ol" >
-                                                <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
-                                            </BreadcrumbItem>
-
-                                            <BreadcrumbItem  className="breadcrum-ol" isCurrentPage>
-                                                <BreadcrumbLink href='#'>Popular Toyota Electrical Parts</BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                        </Breadcrumb>
-                                        <Heading className="section-headings" as="h2" >
-                                            Popular Toyota Electrical Parts
-                                            <a className="see-more" onClick={toggleBoxVisibility}>
-                                                See More {'>'}{'>'}
-                                            </a>
-                                        </Heading>
-
-                                        <Grid className="item productblock-grid" gap={6}>
-                                            <Product
-                                                image="/images/drain-plug.png"
-                                                description="Drain Plug"
-                                            >
-                                            </Product>
-                                            <Product
-                                                image="/images/lug-nuts.png"
-                                                description="Lug Nuts"
-                                            />
-                                            <Product
-                                                image="/images/brake-pad-set.png"
-                                                description="Brake Pad Set"
-                                            />
-                                            <Product
-                                                image="/images/brake-disc.png"
-                                                description="Brake Disc"
-                                            />
-                                            <Product
-                                                image="/images/wheel-bearing.png"
-                                                description="Wheel Bearing"
-                                            />
-                                            <Product
-                                                image="/images/wheel-stud.png"
-                                                description="Wheel Stud"
-                                            />
-                                            <Product
-                                                image="/images/ball-joint.png"
-                                                description="Ball Joint"
-                                            />
-                                            <Product
-                                                image="/images/backing-plate.png"
-                                                description="Backing Plate"
-                                            />
-                                            <Product
-                                                image="/images/wheel-seal.jpg"
-                                                description="Wheel Seal"
-                                            />
-                                            <Product
-                                                image="/images/control-arm.jpg"
-                                                description="Control Arm"
-                                            />
-                                            <Product
-                                                image="/images/torque-converter.jpg"
-                                                description="Torque Converter"
-                                            />
-                                            <Product
-                                                image="/images/transfer-case-seal.jpg"
-                                                description="Transfer Case Seal"
-                                            />
-                                            <Product
-                                                image="/images/strut-housing.jpg"
-                                                description="Strut Housing"
-                                            />
-                                            <Product
-                                                image="/images/coil-springs.jpg"
-                                                description="Coil Springs"
-                                            />
-                                            <Product
-                                                image="/images/tie-rod-end.jpg"
-                                                description="Tie Rod Eend"
-                                            />
-                                            <Product
-                                                image="/images/brake-drum.jpg"
-                                                description="Brake Drum"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-proportioning-valve.jpg"
-                                                description="Brake Proportioning Valve"
-                                            />
-                                            <Product
-                                                image="/images/sway-bar-link.jpg"
-                                                description="Sway Bar Link"
-                                            />
-                                            <Product
-                                                image="/images/steering-shaft.jpg"
-                                                description="Steering Shaft"
-                                            />
-                                            <Product
-                                                image="/images/steering-knuckle.jpg"
-                                                description="Steering Knuckle"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-master-cylinder.jpg"
-                                                description="Brake Master Cylinder"
-                                            />
-                                            <Product
-                                                image="/images/automatic-transmission-filter.jpg"
-                                                description="Automatic Transmission Filter"
-                                            />
-                                            <Product
-                                                image="/images/shift-cable.jpg"
-                                                description="Shift Cable"
-                                            />
-                                            <Product
-                                                image="/images/pinion-bearing.jpg"
-                                                description="Pinion Bearing"
-                                            />
-
-                                            <Product
-                                                image="/images/sway-bar-bushing.jpg"
-                                                description="Sway Bar Bushing"
-                                            />
-                                            <Product
-                                                image="/images/steering-wheel.jpg"
-                                                description="Steering Wheel"
-                                            />
-                                            <Product
-                                                image="/images/parking-brake-cable.jpg"
-                                                description="Parking Brake Cable"
-                                            />
-                                            <Product
-                                                image="/images/steering-column-cover.jpg"
-                                                description="Steering Column Cover"
-                                            />
-
-                                        </Grid>
-                                        <Text ml={10} mb={10} mt={10}>
-                                            <a  className="see-more" onClick={toggleBoxVisibility}>
-                                                See more body parts {'>'}{'>'}
-                                            </a>
-                                        </Text>
-                                    </Box>
-                                </Flex>
-                            </GridItem>
-                        }
-                        {activeGridItem === 3 &&
-                            <GridItem  colSpan={4} bg='#F4F4F4'>
-                                <Flex>
-                                    <Box width="100%">
-                                        <Breadcrumb className="breadcrum" spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
-                                            <BreadcrumbItem className="breadcrum-ol" >
-                                                <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
-                                            </BreadcrumbItem>
-
-                                            <BreadcrumbItem  className="breadcrum-ol" isCurrentPage>
-                                                <BreadcrumbLink href='#'>Popular Toyota Engine/Fuel/Tool Parts</BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                        </Breadcrumb>
-                                        <Heading className="section-headings" as="h2" >
-                                            Popular Toyota Engine/Fuel/Tool Parts
-                                            <a className="see-more" onClick={toggleBoxVisibility}>
-                                                See More {'>'}{'>'}
-                                            </a>
-                                        </Heading>
-
-                                        <Grid className="item productblock-grid" gap={6}>
-                                            <Product
-                                                image="/images/drain-plug.png"
-                                                description="Drain Plug"
-                                            >
-                                            </Product>
-                                            <Product
-                                                image="/images/lug-nuts.png"
-                                                description="Lug Nuts"
-                                            />
-                                            <Product
-                                                image="/images/brake-pad-set.png"
-                                                description="Brake Pad Set"
-                                            />
-                                            <Product
-                                                image="/images/brake-disc.png"
-                                                description="Brake Disc"
-                                            />
-                                            <Product
-                                                image="/images/wheel-bearing.png"
-                                                description="Wheel Bearing"
-                                            />
-                                            <Product
-                                                image="/images/wheel-stud.png"
-                                                description="Wheel Stud"
-                                            />
-                                            <Product
-                                                image="/images/ball-joint.png"
-                                                description="Ball Joint"
-                                            />
-                                            <Product
-                                                image="/images/backing-plate.png"
-                                                description="Backing Plate"
-                                            />
-                                            <Product
-                                                image="/images/wheel-seal.jpg"
-                                                description="Wheel Seal"
-                                            />
-                                            <Product
-                                                image="/images/control-arm.jpg"
-                                                description="Control Arm"
-                                            />
-                                            <Product
-                                                image="/images/torque-converter.jpg"
-                                                description="Torque Converter"
-                                            />
-                                            <Product
-                                                image="/images/transfer-case-seal.jpg"
-                                                description="Transfer Case Seal"
-                                            />
-                                            <Product
-                                                image="/images/strut-housing.jpg"
-                                                description="Strut Housing"
-                                            />
-                                            <Product
-                                                image="/images/coil-springs.jpg"
-                                                description="Coil Springs"
-                                            />
-                                            <Product
-                                                image="/images/tie-rod-end.jpg"
-                                                description="Tie Rod Eend"
-                                            />
-                                            <Product
-                                                image="/images/brake-drum.jpg"
-                                                description="Brake Drum"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-proportioning-valve.jpg"
-                                                description="Brake Proportioning Valve"
-                                            />
-                                            <Product
-                                                image="/images/sway-bar-link.jpg"
-                                                description="Sway Bar Link"
-                                            />
-                                            <Product
-                                                image="/images/steering-shaft.jpg"
-                                                description="Steering Shaft"
-                                            />
-                                            <Product
-                                                image="/images/steering-knuckle.jpg"
-                                                description="Steering Knuckle"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-master-cylinder.jpg"
-                                                description="Brake Master Cylinder"
-                                            />
-                                            <Product
-                                                image="/images/automatic-transmission-filter.jpg"
-                                                description="Automatic Transmission Filter"
-                                            />
-                                            <Product
-                                                image="/images/shift-cable.jpg"
-                                                description="Shift Cable"
-                                            />
-                                            <Product
-                                                image="/images/pinion-bearing.jpg"
-                                                description="Pinion Bearing"
-                                            />
-
-                                            <Product
-                                                image="/images/sway-bar-bushing.jpg"
-                                                description="Sway Bar Bushing"
-                                            />
-                                            <Product
-                                                image="/images/steering-wheel.jpg"
-                                                description="Steering Wheel"
-                                            />
-                                            <Product
-                                                image="/images/parking-brake-cable.jpg"
-                                                description="Parking Brake Cable"
-                                            />
-                                            <Product
-                                                image="/images/steering-column-cover.jpg"
-                                                description="Steering Column Cover"
-                                            />
-
-                                        </Grid>
-                                        <Text ml={10} mb={10} mt={10}>
-                                            <a  className="see-more" onClick={toggleBoxVisibility}>
-                                                See more body parts {'>'}{'>'}
-                                            </a>
-                                        </Text>
-                                    </Box>
-                                </Flex>
-                            </GridItem>
-                        }
-                        {activeGridItem === 4 &&
-                            <GridItem  colSpan={4} bg='#F4F4F4'>
-                                <Flex>
-                                    <Box width="100%">
-                                        <Breadcrumb className="breadcrum" spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
-                                            <BreadcrumbItem className="breadcrum-ol" >
-                                                <BreadcrumbLink cursor="pointer" onClick={handleHomeClick}>Home</BreadcrumbLink>
-                                            </BreadcrumbItem>
-
-                                            <BreadcrumbItem  className="breadcrum-ol" isCurrentPage>
-                                                <BreadcrumbLink href='#'>Popular Toyota Power Train/Chassis Parts</BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                        </Breadcrumb>
-                                        <Heading className="section-headings" as="h2">
-                                            Popular Toyota Power Train/Chassis Parts
-                                            <a className="see-more" onClick={toggleBoxVisibility}>
-                                                See More {'>'}{'>'}
-                                            </a>
-                                        </Heading>
-
-                                        <Grid className="item productblock-grid" gap={6}>
-                                            <Product
-                                                image="/images/drain-plug.png"
-                                                description="Drain Plug"
-                                            >
-                                            </Product>
-                                            <Product
-                                                image="/images/lug-nuts.png"
-                                                description="Lug Nuts"
-                                            />
-                                            <Product
-                                                image="/images/brake-pad-set.png"
-                                                description="Brake Pad Set"
-                                            />
-                                            <Product
-                                                image="/images/brake-disc.png"
-                                                description="Brake Disc"
-                                            />
-                                            <Product
-                                                image="/images/wheel-bearing.png"
-                                                description="Wheel Bearing"
-                                            />
-                                            <Product
-                                                image="/images/wheel-stud.png"
-                                                description="Wheel Stud"
-                                            />
-                                            <Product
-                                                image="/images/ball-joint.png"
-                                                description="Ball Joint"
-                                            />
-                                            <Product
-                                                image="/images/backing-plate.png"
-                                                description="Backing Plate"
-                                            />
-                                            <Product
-                                                image="/images/wheel-seal.jpg"
-                                                description="Wheel Seal"
-                                            />
-                                            <Product
-                                                image="/images/control-arm.jpg"
-                                                description="Control Arm"
-                                            />
-                                            <Product
-                                                image="/images/torque-converter.jpg"
-                                                description="Torque Converter"
-                                            />
-                                            <Product
-                                                image="/images/transfer-case-seal.jpg"
-                                                description="Transfer Case Seal"
-                                            />
-                                            <Product
-                                                image="/images/strut-housing.jpg"
-                                                description="Strut Housing"
-                                            />
-                                            <Product
-                                                image="/images/coil-springs.jpg"
-                                                description="Coil Springs"
-                                            />
-                                            <Product
-                                                image="/images/tie-rod-end.jpg"
-                                                description="Tie Rod Eend"
-                                            />
-                                            <Product
-                                                image="/images/brake-drum.jpg"
-                                                description="Brake Drum"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-proportioning-valve.jpg"
-                                                description="Brake Proportioning Valve"
-                                            />
-                                            <Product
-                                                image="/images/sway-bar-link.jpg"
-                                                description="Sway Bar Link"
-                                            />
-                                            <Product
-                                                image="/images/steering-shaft.jpg"
-                                                description="Steering Shaft"
-                                            />
-                                            <Product
-                                                image="/images/steering-knuckle.jpg"
-                                                description="Steering Knuckle"
-                                            />
-
-                                            <Product
-                                                image="/images/brake-master-cylinder.jpg"
-                                                description="Brake Master Cylinder"
-                                            />
-                                            <Product
-                                                image="/images/automatic-transmission-filter.jpg"
-                                                description="Automatic Transmission Filter"
-                                            />
-                                            <Product
-                                                image="/images/shift-cable.jpg"
-                                                description="Shift Cable"
-                                            />
-                                            <Product
-                                                image="/images/pinion-bearing.jpg"
-                                                description="Pinion Bearing"
-                                            />
-
-                                            <Product
-                                                image="/images/sway-bar-bushing.jpg"
-                                                description="Sway Bar Bushing"
-                                            />
-                                            <Product
-                                                image="/images/steering-wheel.jpg"
-                                                description="Steering Wheel"
-                                            />
-                                            <Product
-                                                image="/images/parking-brake-cable.jpg"
-                                                description="Parking Brake Cable"
-                                            />
-                                            <Product
-                                                image="/images/steering-column-cover.jpg"
-                                                description="Steering Column Cover"
-                                            />
-
-                                        </Grid>
-                                        <Text ml={10} mb={10} mt={10}>
-                                            <a  className="see-more" onClick={toggleBoxVisibility}>
-                                                See more body parts {'>'}{'>'}
-                                            </a>
-                                        </Text>
-                                    </Box>
-                                </Flex>
                             </GridItem>
                         }
                     </Grid>
