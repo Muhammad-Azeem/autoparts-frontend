@@ -30,7 +30,7 @@ import {
     Table, TableCaption, Thead, Th, Tr, Tbody, Td
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import {checkAuth, register} from '../components/API/api'
+import {checkAuth, getAddressesByUserId, register} from '../components/API/api'
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {changeEmail} from './API/api';
 
@@ -47,13 +47,18 @@ const AcctDash = () => {
             setError('');
         }, 10000);
     };
-
-    useEffect(() => {
+    const [addresses, setAddresses]  = useState([]);
+    useEffect(  () => {
         let temp= localStorage.getItem('user');
 
-        temp = JSON.parse(temp); 
+        temp = JSON.parse(temp);
         setUser(temp);
         setCurrentEmail(temp.email)
+        const getAddress = async () => {
+            const data = await getAddressesByUserId(temp.id)
+            setAddresses(data);
+        }
+        getAddress();
         // console.log(JSON.parse(temp));
     }, []);
 
@@ -67,7 +72,7 @@ const AcctDash = () => {
             return;
         }
 
-    
+
         // Send the form data to your backend for validation and update
         try {
             const userData = { currentEmail, newEmail, password };
@@ -129,9 +134,9 @@ const AcctDash = () => {
       const [isBoxVisible, setBoxVisibility] = useState(false);
 
       const handleButtonClick = () => {
-        setBoxVisibility(true); 
+        setBoxVisibility(true);
       };
-    
+
     return (
         <Box >
             <Grid
@@ -145,8 +150,8 @@ const AcctDash = () => {
                             <Text className="vm-leftside-heading" size="lg">
                                 My Account
                             </Text>
-                            <Box onClick={() => setActiveGridItem(1)} className="success-leftside-box">                             
-                                    Dashboard                             
+                            <Box onClick={() => setActiveGridItem(1)} className="success-leftside-box">
+                                    Dashboard
                             </Box>
                             <Box onClick={() => setActiveGridItem(2)} className="success-leftside-box">
                                 Order History
@@ -195,29 +200,29 @@ const AcctDash = () => {
                         <MenuItem onClick={() => setActiveGridItem(3)}  className="menu-item">Address Book</MenuItem>
                     </MenuList>
                 </Menu>
-            
+
                 {activeGridItem === 1 &&
                 <GridItem  colSpan={1} bg='#fff'>
                     <Flex>
                         <Box width="100%">
                             <Grid className="list-grid" >
                                     <Box className="horizontal-listbox">
-                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Account Info</Text>                                    
+                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Account Info</Text>
                                     </Box>
                                     <Text fontWeight='bold' ml={25}>
-                                        Login Email: 
+                                        Login Email:
                                         <span style={{fontWeight:'normal', marginLeft:'15px'}}>
-                                             abc@gmail.com
+                                             {user.email}
                                         </span>
-                                    </Text>       
+                                    </Text>
                                     <Text fontWeight='bold' ml={25}>
                                         Shipping Address
                                         <span style={{fontWeight:'normal', marginLeft:'15px'}}>
                                              abc@gmail.com
                                         </span>
-                                    </Text> 
+                                    </Text>
                                     <Box className="horizontal-listbox" style={{borderTop: '1px solid #d0d0d0',borderBottom:'none'}}>
-                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Recent Orders</Text>                                    
+                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Recent Orders</Text>
                                     </Box>
                                     <TableContainer>
                                                             <Table variant='simple'  borderBottom="2px solid #dfdfdf">
@@ -230,17 +235,17 @@ const AcctDash = () => {
                                                                         <Th width="150px" textAlign="right">Subtotal</Th>
                                                                     </Tr>
                                                                 </Thead>
-                                                                <Tbody> 
+                                                                <Tbody>
                                                                         <Tr mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td textAlign="center">
                                                                                 1
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
-                                                                                Part No.: 
+                                                                                Part No.:
                                                                                 <br/>
                                                                                 <b>abc</b>
                                                                                 <br/>
-                                                                              
+
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 123
@@ -254,7 +259,7 @@ const AcctDash = () => {
                                                                         </Tr>
                                                                 </Tbody>
                                                             </Table>
-                                                        </TableContainer>                           
+                                                        </TableContainer>
                             </Grid>
                         </Box>
                     </Flex>
@@ -293,17 +298,17 @@ const AcctDash = () => {
                                                                         <Th width="150px" textAlign="right">Subtotal</Th>
                                                                     </Tr>
                                                                 </Thead>
-                                                                <Tbody> 
+                                                                <Tbody>
                                                                         <Tr mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td textAlign="center">
                                                                                 1
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
-                                                                                Part No.: 
+                                                                                Part No.:
                                                                                 <br/>
                                                                                 <b>abc</b>
                                                                                 <br/>
-                                                                              
+
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 123
@@ -317,7 +322,7 @@ const AcctDash = () => {
                                                                         </Tr>
                                                                 </Tbody>
                                                             </Table>
-                                                        </TableContainer>  
+                                                        </TableContainer>
                                             <Text padding="0px 30px">
                                                 Your order list is empty
                                             </Text>
@@ -337,17 +342,17 @@ const AcctDash = () => {
                                                                         <Th width="150px" textAlign="right">Subtotal</Th>
                                                                     </Tr>
                                                                 </Thead>
-                                                                <Tbody> 
+                                                                <Tbody>
                                                                         <Tr mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td textAlign="center">
                                                                                 1
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
-                                                                                Part No.: 
+                                                                                Part No.:
                                                                                 <br/>
                                                                                 <b>abc</b>
                                                                                 <br/>
-                                                                              
+
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 123
@@ -361,7 +366,7 @@ const AcctDash = () => {
                                                                         </Tr>
                                                                 </Tbody>
                                                             </Table>
-                                                        </TableContainer>  
+                                                        </TableContainer>
                                         <Text padding="0px 30px">
                                             Your canceled orders list is empty
                                         </Text>
@@ -522,7 +527,7 @@ const AcctDash = () => {
                                                 Add a New Shipping Address
                                             </span>
                                         </Text>
-                                        {isBoxVisible && (
+                                        {(isBoxVisible || addresses) && (
                                         <Box className="editBox3 account-sectionbox">
                                                 <Heading mt={10} className="account-login" as="h3" >
                                                     Shipping Address
@@ -664,7 +669,6 @@ const AcctDash = () => {
 const withAuth = (WrappedComponent) => {
     return (props) => {
         const router = useRouter();
-
         useEffect(() => {
             const checkAuthentication = async () => {
                 try {
