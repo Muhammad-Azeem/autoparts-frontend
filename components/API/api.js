@@ -220,10 +220,10 @@ export const checkAuth = async () => {
         throw error;
     }
 };
-export const vehicleYears = async () => {
+export const vehicleYears = async (model) => {
 
     try {
-        const response = await axios.get(`${API_BASE_URL}/vehicle/allYears`, {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/allYears/`+model, {
         });
         return response.data;
     } catch (error) {
@@ -231,10 +231,10 @@ export const vehicleYears = async () => {
     }
 };
 
-export const vehicleModels = async () => {
+export const vehicleModels = async (company) => {
 
     try {
-        const response = await axios.get(`${API_BASE_URL}/vehicle/allModels`, {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/allModels/`+company, {
         });
         return response.data;
     } catch (error) {
@@ -289,6 +289,16 @@ export const getAllCategories = async () => {
     }
 };
 
+export const getVehicleId = async (data) => {
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/searchVehicle/`+data.year+`/`+data.model+`/`+data.company);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
 export const getProductbyId = async (id) => {
 
     try {
@@ -306,9 +316,9 @@ export const getProductByCategoryId = async (categoryId) => {
         throw error;
     }
 };
-export const getProductsBySubCategoryId = async (subCategoryId) => {
+export const getProductsBySubCategoryId = async (subCategoryId,vehicleId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/product/getProductsBySubCategoryId/`+subCategoryId, {});
+        const response = await axios.get(`${API_BASE_URL}/product/getProductsBySubCategoryId/`+subCategoryId+ `/`+vehicleId, {});
         return response.data;
     } catch (error) {
         throw error;
