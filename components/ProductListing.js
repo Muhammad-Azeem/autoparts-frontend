@@ -35,29 +35,13 @@ const ProductListing = () => {
 
 
     const [categories, setCategories] = useState([]);
-    const [vehicleId, setvehicleId] = useState([]);
-    const [activeVehicle, setActiveVehicle] = useState({
-        company: 'toyota',
-        model: 'corolla',
-        year: '2020'
-    });
+    const [vehicleId, setVehicleId] = useState([]);
+    const [activeVehicle, setActiveVehicle] = useState([]);
+
+
 
     useEffect(() => {
-        const fetchVehicleId = async () => {
-            try {
-                const data = await getVehicleId(activeVehicle);
-                setvehicleId(data.id);
 
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        };
-
-        fetchVehicleId();
-    }, []);
-
-    useEffect(() => {
-        const selectedGarage = getSelectedGarageFromCookie();
         const fetchCategories = async () => {
             try {
                 const data = await getAllCategories();
@@ -70,7 +54,23 @@ const ProductListing = () => {
 
         fetchCategories();
     }, []);
+    useEffect(async() => {
+        const fetchVehicleId = async () => {
+            const data1 = await getSelectedGarageFromCookie();
+            setActiveVehicle(data1);
+            if (data1){
+                try {
+                    const data = await getVehicleId(data1);
+                    setVehicleId(data.id);
 
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                }
+        }
+        };
+
+        fetchVehicleId();
+    }, []);
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -263,7 +263,11 @@ const ProductListing = () => {
             </Breadcrumb>
 
             <Heading className="Product-listing-heading"  margin="0" as="h2" mt={4}>
-                2022 Toyota 4Runner Parts
+                {activeVehicle && (
+                    <>
+                        {activeVehicle.year} {activeVehicle.company} {activeVehicle.model} Parts
+                    </>
+                )}
             </Heading>
             <Grid
                 templateColumns="20% 80%"
@@ -331,7 +335,11 @@ const ProductListing = () => {
                             </Text>
                             <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
-                                2022 Toyota 4Runner
+                                {activeVehicle && (
+                                    <>
+                                        {activeVehicle.year} {activeVehicle.company} {activeVehicle.model}
+                                    </>
+                                )}
                             </Box>
                         </Box>
 
