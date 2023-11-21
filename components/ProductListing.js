@@ -23,7 +23,12 @@ import '../styles//global.css';
 import { DeleteIcon } from '@chakra-ui/icons';
 import {getAllCategories, getProductsBySubCategoryId} from './API/api';
 import {FaMinus, FaPlus} from "react-icons/fa";
-import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {
+    clearAllGaragesFromCookie,
+    getGarageFromCookie,
+    getSelectedGarageFromCookie,
+    removeGarageFromCookie
+} from "./utility/cookies";
 import AddVehicleModal from "./AddVehicleModal";
 
 const ProductListing = () => {
@@ -32,6 +37,7 @@ const ProductListing = () => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
+        const selectedGarage = getSelectedGarageFromCookie();
         const fetchCategories = async () => {
             try {
                 const data = await getAllCategories();
@@ -269,7 +275,7 @@ const ProductListing = () => {
                                         onMouseLeave={handleMouseLeaveGarage}
                                     >
                                         {/* Content of the div */}
-                                        <p className="vehicle-list">Vehicle List</p>                                      
+                                        <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
                                                 garages.map((garageEntry) => (
@@ -301,7 +307,7 @@ const ProductListing = () => {
                                             <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
                                         </div>
                                     </div>
-                                )} 
+                                )}
                             </Text>
                             <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">

@@ -39,7 +39,12 @@ import * as PropTypes from "prop-types";
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import AddVehicleModal from "./AddVehicleModal";
-import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {
+    clearAllGaragesFromCookie,
+    getGarageFromCookie,
+    removeGarageFromCookie,
+    setGarageCookie
+} from "./utility/cookies";
 import {logout} from "./API/api";
 
 function Backdrop(props) {
@@ -144,7 +149,7 @@ const SubHeader = () => {
 
     useEffect(() => {
         setGarage(getGarageFromCookie());
-        console.log(garage);
+        console.log(garage, 'garata');
     }, [isDivOpen]); // Run only once on component mount
 
     const handleClearAllGarages = () => {
@@ -161,7 +166,25 @@ const SubHeader = () => {
             console.error('Logout failed:', error);
         }
     };
+    const handleRadioChange = (selectedIndex) => {
+        const updatedGarageList = garage.map((garageEntry, index) => ({
+            ...garageEntry,
+            is_selected: index === selectedIndex,
+        }));
 
+        // Set is_selected to false for all other garages except the selected one
+        updatedGarageList.forEach((garageEntry, index) => {
+            if (index !== selectedIndex) {
+                garageEntry.is_selected = false;
+            }
+        });
+
+        // Sort the updated garage list to display the selected garage on top
+        updatedGarageList.sort((a, b) => (a.is_selected ? -1 : b.is_selected ? 1 : 0));
+        // Update the cookie with the updated garage list
+        setGarageCookie(updatedGarageList);
+        window.location.reload();
+    };
     return (
         <Flex className="sub-header">
             <div className={`abc ${isAbcVisible ? 'visible' : 'hidden'}`}></div>
@@ -327,14 +350,14 @@ const SubHeader = () => {
                         <p className="vehicle-list">Vehicle List</p>
                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                             {garage.length > 0 ? (
-                                garage.map((garageEntry) => (
+                                garage.map((garageEntry, index) => (
                                     <li
                                         key={garageEntry.id}
                                         className="no-vehicles"
                                         style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
                                     >
                                         <div>
-                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name}  checked={garageEntry.is_selected} />
+                                            <input type="radio" id={garageEntry.id} value={garageEntry.name} name='garage'   checked={garageEntry.is_selected}  onChange={() => handleRadioChange(index)} />
                                             <label htmlFor={garageEntry.id}>
                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
                                             </label>

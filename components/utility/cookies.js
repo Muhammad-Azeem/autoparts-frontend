@@ -136,3 +136,7 @@ export const clearAllGaragesFromCookie = () => {
   Cookies.remove('garage'); // Assuming 'garage' is the cookie key
 };
 
+export const getSelectedGarageFromCookie = () => {
+  const allGarages = getGarageFromCookie();
+  return allGarages.find((garage) => garage.is_selected) || null;
+};
