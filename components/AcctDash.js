@@ -289,7 +289,12 @@ const AcctDash = () => {
                                         </span>
                                     </Text>
                                     <Box className="horizontal-listbox" style={{borderTop: '1px solid #d0d0d0',borderBottom:'none'}}>
-                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>Recent Orders</Text>
+                                        <Text className="horizontal-listmenu" fontSize='20px' fontWeight='bold' mr={5}>
+                                            Recent Orders
+                                                <span className='view-more-orders'>
+                                                    (view more)
+                                                </span>
+                                            </Text>
                                     </Box>
                                     <TableContainer>
                                         { orders.length ? (
