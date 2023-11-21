@@ -5,7 +5,6 @@ const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
     try {
-        console.log('testing start')
         let data = new FormData();
         data.append('email', userData.email);
         data.append('password', userData.password);
@@ -115,16 +114,16 @@ export const bussinesAcct = async (userData) => {
         let data = new FormData();
         data.append('first_name', userData.firstName);
         data.append('last_name', userData.lastName);
-        data.append('job_title', userData.job_title);
+        data.append('job_title', userData.jobTitle);
         data.append('email', userData.email);
         data.append('password', userData.password);
-        data.append('bussiness_type', userData.bussiness_type);
-        data.append('bussiness_name', userData.bussiness_name);
-        data.append('phone_number', userData.phone_number);
-        data.append('bussiness_address1', userData.bussiness_address1);
-        data.append('bussiness_address2', userData.bussiness_address2);
-        data.append('zip_code', userData.zip_code);
-        data.append('city', userData.city_state);
+        data.append('business_type', userData.bussinessType);
+        data.append('business_name', userData.bussinessName);
+        data.append('business_phone_number', userData.phoneNumber);
+        data.append('business_address1', userData.bussinessAddress1);
+        data.append('business_address2', userData.bussinessAddress2);
+        data.append('zip_code', userData.zipCode);
+        data.append('city', userData.cityState);
 
         // data.append('user', JSON.stringify(userData.user));
         // data.append('cart', JSON.stringify(userData.cart));

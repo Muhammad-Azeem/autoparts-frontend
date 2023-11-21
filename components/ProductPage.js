@@ -29,6 +29,7 @@ import {
     Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList
 } from '@chakra-ui/react';
 import '../styles//global.css';
+import LoaderSpinner from "../components/LoaderSpinner"
 
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
@@ -37,8 +38,11 @@ import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
 import {getProductbyId} from "./API/api";
 import {addToCartToCockie} from "./utility/cookies";
+import {formatCurrency} from "./utility/constants";
 
 const ProductPage = () => {
+    const [loading, setLoading] = useState(true);
+
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
 
     const toggleEstimateVisibility = () => {
@@ -52,8 +56,12 @@ const ProductPage = () => {
     useEffect(() => {
         const fetchProducts = async (id) => {
             try {
+                setLoading(true);
+
                 const data = await getProductbyId(id);
                 setProduct(data);
+
+                setLoading(false);
 
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -136,6 +144,10 @@ const ProductPage = () => {
                         <Image className="pp-box1-simg" src="/images/toyota-plug.jpg" alt="Image 2" />
                     </Box>
                 </Box>
+                {loading ? (
+                    <LoaderSpinner />
+                    ) : (
+                    <>
 
                 <Box className="pp-box2" flex="1">
                     <Flex className="productDetail-box2-flex" >
@@ -163,24 +175,18 @@ const ProductPage = () => {
                                 <Text className="pp-box2-heading2" margin={0} fontSize="xl">
                                     {product.manufacturer}</Text>
                             </Box>
-                            {/*<Box mt={30} display="flex">*/}
-                            {/*    <Text width="200px" cursor="pointer" className="pp-box2-heading2" margin={0} fontSize="xl">*/}
-                            {/*        Customer Questions & Answers</Text>*/}
-                            {/*</Box>*/}
                         </Box>
 
                         <Box className="pp-price-box">
-                            <Text className="pp-price" fontSize="xl">{product.price}
-                                <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        {product.discounted_price}
-                                    </span>
-                                </span>
+                            <Text className="pp-price" fontSize="xl">{formatCurrency(product.price)}
+                                {/*<span className="product-price-span" >*/}
+                                {/*    MSRP:*/}
+                                {/*    <span style={{textDecoration:'line-through'}}>*/}
+                                {/*        {formatCurrency(product.discounted_price)}*/}
+                                {/*    </span>*/}
+                                {/*</span>*/}
                             </Text>
-                            {/*<Text className="pp-save-price" >*/}
-                            {/*    You Save: $1.86 (29%)*/}
-                            {/*</Text>*/}
+                         
                             <Box display="flex">
                                 <input value={quantity} className="pp-input-num" type="number" placeholder="1"  onChange={(e) => setQuantity(e.target.value)} />
                                 <Button ml={15} mt={10} className="pp-cart-btn" colorScheme="teal" type={'button'} onClick={handleAddToCart}>Add to Cart</Button>
@@ -230,6 +236,8 @@ const ProductPage = () => {
                         </Box>
                     </Flex>
                 </Box>
+                    </>
+                    )}
             </Flex>
         </Box>
 

@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 import HeaderMobile from "../components/HeaderMobile";
 import MobileFooter from "../components/MobileFooter";
 import SignUpForm from "../components/SignUpForm";
-import LoaderSpinner from "../components/LoaderSpinner";
+// import LoaderSpinner from "../components/LoaderSpinner";
 
 const signUp = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -22,12 +22,12 @@ const signUp = () => {
       // Simulate an API call or any asynchronous task
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // After the task is done, set loading to false
-      setLoading(false);
-    };
+//       // After the task is done, set loading to false
+//       setLoading(false);
+//     };
 
-    fetchData();
-  }, []);
+//     fetchData();
+//   }, []);
     return (
         <div>
             <div className="main-header">
@@ -39,13 +39,9 @@ const signUp = () => {
             </div>
 
             <main>
-            {loading ? (
-                <LoaderSpinner />
-                ) : (
-            <>
+
                 <SignUpForm />
-                </>
-                )}
+
             </main>
 
             <div className="main-footer">

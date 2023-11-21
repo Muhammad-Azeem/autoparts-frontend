@@ -39,7 +39,13 @@ import * as PropTypes from "prop-types";
 import { DeleteIcon } from '@chakra-ui/icons';
 
 import AddVehicleModal from "./AddVehicleModal";
-import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {
+    clearAllGaragesFromCookie,
+    getGarageFromCookie,
+    removeGarageFromCookie,
+    setGarageCookie
+} from "./utility/cookies";
+import {logout} from "./API/api";
 
 function Backdrop(props) {
     return null;
@@ -68,6 +74,14 @@ const SubHeader = () => {
         // document.body.style.opacity = "1";
         setIsAbcVisible(!isAbcVisible);
     };
+    const [User, setUser] = useState();
+    useEffect(() => {
+        let temp= localStorage.getItem('user');
+
+        temp = JSON.parse(temp);
+        setUser(temp);
+
+    }, []);
 
 
     useEffect(() => {
@@ -135,13 +149,41 @@ const SubHeader = () => {
 
     useEffect(() => {
         setGarage(getGarageFromCookie());
-        console.log(garage);
+        console.log(garage, 'garata');
     }, [isDivOpen]); // Run only once on component mount
 
     const handleClearAllGarages = () => {
         clearAllGaragesFromCookie();
         setGarage([]); // Clear the garage state in your component
         router.push('/');
+    };
+    const handleLogout = async () => {
+        try {
+            await logout();
+            // window.location.reload();
+            await router.push('/signUp');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+    const handleRadioChange = (selectedIndex) => {
+        const updatedGarageList = garage.map((garageEntry, index) => ({
+            ...garageEntry,
+            is_selected: index === selectedIndex,
+        }));
+
+        // Set is_selected to false for all other garages except the selected one
+        updatedGarageList.forEach((garageEntry, index) => {
+            if (index !== selectedIndex) {
+                garageEntry.is_selected = false;
+            }
+        });
+
+        // Sort the updated garage list to display the selected garage on top
+        updatedGarageList.sort((a, b) => (a.is_selected ? -1 : b.is_selected ? 1 : 0));
+        // Update the cookie with the updated garage list
+        setGarageCookie(updatedGarageList);
+        window.location.reload();
     };
     return (
         <Flex className="sub-header">
@@ -211,16 +253,27 @@ const SubHeader = () => {
                                     <li href="#" className="main-nav-li">Resources and Links</li>
                                 </ul>
                                 <ul className="main-nav-ul-last" style={{borderBottom: "none"}}>
-                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/signUp" className="main-nav-li">
-                                        <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
-                                               className="right-subheader-img"/>
-                                        Login/Register
-                                    </Link>
-                                    <li href="#" className="main-nav-li">
+                                    {
+                                        User ? (
+                                            <Link display="flex" color="black" textDecoration="none" alignItems="center" href="#"  onClick={handleLogout} className="main-nav-li">
+                                                <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
+                                                       className="right-subheader-img"/>
+                                                Logout
+                                            </Link>
+                                        )          : (
+                                            <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/signUp" className="main-nav-li">
+                                                <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
+                                                       className="right-subheader-img"/>
+                                                Login/Register
+                                            </Link>
+
+                                        )
+                                    }
+                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/AccountDashboard" className="main-nav-li">
                                         <Image mr={15} src="/images/profile.png " alt="Image Alt Text"
                                                className="right-subheader-img"/>
                                         My Account
-                                    </li>
+                                    </Link>
                                     <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/TrackOrder" className="main-nav-li">
                                         <Image mr={15} src="/images/track.jpg " alt="Image Alt Text"
                                                className="right-subheader-img"/>
@@ -294,17 +347,17 @@ const SubHeader = () => {
                         onMouseLeave={handleMouseLeave}
                     >
                         {/* Content of the div */}
-                        <p className="vehicle-list">Vehicle List</p>                    
+                        <p className="vehicle-list">Vehicle List</p>
                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                             {garage.length > 0 ? (
-                                garage.map((garageEntry) => (
+                                garage.map((garageEntry, index) => (
                                     <li
                                         key={garageEntry.id}
                                         className="no-vehicles"
                                         style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
                                     >
                                         <div>
-                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                            <input type="radio" id={garageEntry.id} value={garageEntry.name} name='garage'   checked={garageEntry.is_selected}  onChange={() => handleRadioChange(index)} />
                                             <label htmlFor={garageEntry.id}>
                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
                                             </label>

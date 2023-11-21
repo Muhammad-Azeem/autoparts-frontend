@@ -20,6 +20,8 @@ import { useRouter } from 'next/router';
 import { FaUser ,FaShoppingCart } from "react-icons/fa";
 import { RiDashboardLine, RiSettingsLine, RiHistoryLine } from "react-icons/ri";
 import {login, logout} from '../components/API/api'
+import {getCartTotalPriceFromCookie} from "./utility/cookies";
+import {formatCurrency} from "./utility/constants";
 const Header = () => {
     const [isDivOpen, setIsDivOpen] = useState(false);
     const divRef = useRef();
@@ -35,9 +37,12 @@ const Header = () => {
     const handleMouseLeave = () => {
         setIsDivOpen(false);
     };
-
+    const [cartValue, setCartValue] = useState(0)
     // Add click outside event listener when the div is open
     useEffect(() => {
+        const cartTotal = getCartTotalPriceFromCookie();
+        setCartValue(cartTotal)
+
         if (isDivOpen) {
             document.addEventListener('click', handleClickOutside);
         } else {
@@ -52,7 +57,11 @@ const Header = () => {
     const [User, setUser] = useState();
     useEffect(() => {
         // const token = localStorage.getItem('token');
-        setUser(localStorage.getItem('token'))
+        let temp= localStorage.getItem('user');
+
+        temp = JSON.parse(temp);
+        setUser(temp);
+
     }, []);
 
     const router = useRouter();
@@ -132,9 +141,27 @@ const Header = () => {
                         </Box>
                         <div>
                             <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
-                                <Text className="header-right-box-text" fontWeight="semibold">Hello, Log In <br/>
-                                    <span className="blue-text">My Account </span>
-                                </Text>
+
+                                    { User ? (
+                                        <Text className="header-right-box-text" fontWeight="semibold">
+
+                                            {User.first_name} {User.last_name}
+                                            <br/>
+                                            <span className="blue-text">My Account </span>
+                                        </Text>
+
+                                        ) :
+                                        (
+                                        <Text className="header-right-box-text" fontWeight="semibold">
+
+                                            Hello, Log In
+                                            <br/>
+                                            <span className="blue-text">My Account </span>
+                                        </Text>
+                                        )
+
+                                    }
+                                    <br/>
                             {isDivOpen && (
                             User ? (
                                 <div
@@ -216,7 +243,7 @@ const Header = () => {
                         </Box>
                         <Box display="flex" flexDir="column" textAlign="left">
                             <Text className="header-right-box-text"  fontWeight="semibold">Cart<br/>
-                                <span className="blue-text">$73.35 </span>
+                                <span className="blue-text">{formatCurrency(cartValue)} </span>
                             </Text>
                         </Box>
                     </Button>

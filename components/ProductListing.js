@@ -23,7 +23,12 @@ import '../styles//global.css';
 import { DeleteIcon } from '@chakra-ui/icons';
 import {getAllCategories, getProductsBySubCategoryId,getVehicleId} from './API/api';
 import {FaMinus, FaPlus} from "react-icons/fa";
-import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {
+    clearAllGaragesFromCookie,
+    getGarageFromCookie,
+    getSelectedGarageFromCookie,
+    removeGarageFromCookie
+} from "./utility/cookies";
 import AddVehicleModal from "./AddVehicleModal";
 
 const ProductListing = () => {
@@ -52,6 +57,7 @@ const ProductListing = () => {
     }, []);
 
     useEffect(() => {
+        const selectedGarage = getSelectedGarageFromCookie();
         const fetchCategories = async () => {
             try {
                 const data = await getAllCategories();

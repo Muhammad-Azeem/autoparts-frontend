@@ -20,18 +20,11 @@ import {
     Center
 } from '@chakra-ui/react';
 import '../styles//global.css';
-import {ChevronDownIcon} from "@chakra-ui/icons";
-import ProductBlock from "./ProductBlock";
-import SecondProductBlock from "./SecondProductBlock";
-import ThirdProductBlock from "./ThirdProductBlock";
-import FourthProductBlock from "./FourthProductBlock";
-import FifthProductBlock from "./FifthProductBlock";
-import SixthProductBlock from "./SixthProductBlock";
-import SeventhProductBlock from "./SeventhProductBlock";
-import Product from './Product';
 import {getAllProductsByCategory } from './API/api';
-const ProductBox = () => {
+import LoaderSpinner from "../components/LoaderSpinner"
 
+const ProductBox = () => {
+    const [loading, setLoading] = useState(true);
 
     const handleViewMoreClick = (id) => {
         // Use router.push to navigate to the product list page
@@ -43,8 +36,12 @@ const ProductBox = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                setLoading(true);
+
                 const data = await getAllProductsByCategory();
                 setProducts(data);
+                
+                setLoading(false);
 
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -62,10 +59,15 @@ const ProductBox = () => {
 
     return (
         <Flex>
+               {loading ? (
+                <LoaderSpinner />
+                ) : (
+                    <>
             <Box colSpan={4} bg='#F4F4F4'>
             {products.map((product, index) => (
                 // eslint-disable-next-line react/jsx-key
                 <Flex>
+                
                     <Box width="100%">
                         <Heading ml={15} fontStyle="bold" color="black" as="h4" size="lg" mb={4}>
                             {product.name}
@@ -102,9 +104,13 @@ const ProductBox = () => {
                             </Button>
                         </Center>
                     </Box>
+                  
+             
                 </Flex>
                  ))}
             </Box>
+            </>
+                )}
         </Flex>
     )
 };

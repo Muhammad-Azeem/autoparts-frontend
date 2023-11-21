@@ -50,6 +50,7 @@ const BussinessAccountForm = () => {
     const [bussinessAddress2, setBussinessAddress2] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [cityState, setCityState] = useState('');
+    const [error, setError] = useState('');
 
     const handleBussinessAcct = async () => {
 
@@ -70,7 +71,7 @@ const BussinessAccountForm = () => {
             return;
         }
         try {
-            const userData = { email, password };
+            const userData = { bussinessAddress1,bussinessAddress2,zipCode,cityState ,firstName,lastName, jobTitle,bussinessType,bussinessName,email, password,phoneNumber, };
             let response = await bussinesAcct(userData);
              console.log('rest', response)
             // const token  = response.token;
@@ -85,6 +86,11 @@ const BussinessAccountForm = () => {
         }
     };
 
+    const displayErrorAndHide = () => {
+        setTimeout(() => {
+            setError('');
+        }, 10000);
+    };
     return (
 
         <Flex className="bussiness-box" >
@@ -110,13 +116,13 @@ const BussinessAccountForm = () => {
                             <FormLabel mr={5} className="returing-label">Last Name:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input mr={5} value={lastName} onChange={(e) => setLastName(e.target.value)} className="bussiness-input" type="email" />
+                            <Input mr={5} value={lastName} onChange={(e) => setLastName(e.target.value)} className="bussiness-input" type="text" />
                         </FormControl>
                         <FormControl mt={20}>
                             <FormLabel mr={5} className="returing-label">Job Title:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input mr={5} value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="bussiness-input" type="email" />
+                            <Input mr={5} value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="bussiness-input" type="text" />
                         </FormControl>
                     </Box>
                     <Box className="forms-box" >
@@ -141,14 +147,14 @@ const BussinessAccountForm = () => {
                             <FormLabel mr={10} className="returing-label">Password:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input mr={5} value={password} onChange={(e) => setPassword(e.target.value)} className="bussiness-input2"  type="email" />
+                            <Input mr={5} value={password} onChange={(e) => setPassword(e.target.value)} className="bussiness-input2"  type="password" />
                         </FormControl>
 
                         <FormControl mt={20}>
                             <FormLabel mr={5} className="returing-label">Confirm Password:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input mr={5} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="bussiness-input2"  type="email" />
+                            <Input mr={5} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="bussiness-input2"  type="password" />
                         </FormControl>
 
                     </Box>
@@ -174,14 +180,14 @@ const BussinessAccountForm = () => {
                             <FormLabel mr={10} className="returing-label">Bussniess Name:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={bussinessName} onChange={(e) => setBussinessName(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={bussinessName} onChange={(e) => setBussinessName(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                         <FormControl mt={20}>
                             <FormLabel mr={5} className="returing-label"> Phone Number:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                     </Box>
@@ -190,14 +196,14 @@ const BussinessAccountForm = () => {
                             <FormLabel mr={10} className="returing-label">Billing Address Line 1:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={bussinessAddress1} onChange={(e) => setBussinessAddress1(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={bussinessAddress1} onChange={(e) => setBussinessAddress1(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                         <FormControl mt={20}>
                             <FormLabel mr={5} className="returing-label">Billing Address Line 2:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={bussinessAddress2} onChange={(e) => setBussinessAddress2(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={bussinessAddress2} onChange={(e) => setBussinessAddress2(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                     </Box>
@@ -207,14 +213,14 @@ const BussinessAccountForm = () => {
                             <FormLabel mr={10} className="returing-label">Zip Code:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={zipCode} onChange={(e) => setZipCode(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={zipCode} onChange={(e) => setZipCode(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                         <FormControl mt={20}>
                             <FormLabel mr={5} className="returing-label">City & State:
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
-                            <Input value={cityState} onChange={(e) => setCityState(e.target.value)} mr={5} className="bussiness-input2"  type="email" />
+                            <Input value={cityState} onChange={(e) => setCityState(e.target.value)} mr={5} className="bussiness-input2"  type="text" />
                         </FormControl>
 
                     </Box>

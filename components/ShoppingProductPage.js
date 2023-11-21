@@ -21,24 +21,14 @@ import {
     Text,
     Flex,
     Link,
-    Button,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList,
     FormControl, FormLabel
 } from '@chakra-ui/react';
 import '../styles//global.css';
 
-import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import {FaMinus, FaPlus} from "react-icons/fa";
-import Product from "./Product";
-import SmallProduct from "./SmallProduct";
-import AddVehicleModal from "./AddVehicleModal";
 import {getAddressesByUserId, orderPlace, updateShipping} from "./API/api";
 import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";
+import {formatCurrency} from "./utility/constants";
 import Select from 'react-select';
 import { countries } from 'countries-list';
 
@@ -468,7 +458,7 @@ const ShoppingProductPage = () => {
                                                     </Heading>
                                                 </Box>
                                             </Box>
-                                          
+
 
                                                     </form>
                                                 </Box>
@@ -482,7 +472,7 @@ const ShoppingProductPage = () => {
                                                 Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                ${subTotal}
+                                                {formatCurrency(parseFloat(subTotal))}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -490,7 +480,7 @@ const ShoppingProductPage = () => {
                                                 Estimated Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $0
+                                                0
                                             </Text>
                                         </Box>
                                         <Box mt={5}  display='flex' justifyContent='space-between'>
@@ -507,7 +497,7 @@ const ShoppingProductPage = () => {
                                                     Estimated Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                         </Text>
@@ -601,7 +591,7 @@ const ShoppingProductPage = () => {
                                                     Subtotal
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                             <Box mt={5} display='flex' justifyContent='space-between'>
@@ -609,7 +599,7 @@ const ShoppingProductPage = () => {
                                                     Estimated Shipping & Handling
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    $0
+                                                    0
                                                 </Text>
                                             </Box>
 
@@ -619,7 +609,7 @@ const ShoppingProductPage = () => {
                                                         Estimated Order Total
                                                     </Text>
                                                     <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                        ${subTotal}
+                                                        {formatCurrency(parseFloat(subTotal))}
                                                     </Text>
                                                 </Box>
                                             </Text>
@@ -737,7 +727,7 @@ const ShoppingProductPage = () => {
                                                 Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                ${subTotal}
+                                                {formatCurrency(parseFloat(subTotal))}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -745,7 +735,7 @@ const ShoppingProductPage = () => {
                                                 Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $0
+                                                0
                                             </Text>
                                         </Box>
 
@@ -755,7 +745,7 @@ const ShoppingProductPage = () => {
                                                     Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                             By placing an order, you agree with our Terms and Conditions
