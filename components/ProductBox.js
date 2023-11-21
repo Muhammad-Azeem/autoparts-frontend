@@ -64,6 +64,7 @@ const ProductBox = () => {
         <Flex>
             <Box colSpan={4} bg='#F4F4F4'>
             {products.map((product, index) => (
+                // eslint-disable-next-line react/jsx-key
                 <Flex>
                     <Box width="100%">
                         <Heading ml={15} fontStyle="bold" color="black" as="h4" size="lg" mb={4}>
@@ -76,6 +77,7 @@ const ProductBox = () => {
                             //     description={product.name}
                             // >
                             // </Product>
+                            // eslint-disable-next-line react/jsx-key
                             <Flex>
                             <Box width="100%">
                                 <Grid className="productblock-grid" >

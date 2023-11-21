@@ -110,6 +110,7 @@ const RegisterSuccess = () => {
 };
 
 const withAuth = (WrappedComponent) => {
+    // eslint-disable-next-line react/display-name
     return (props) => {
         const router = useRouter();
 

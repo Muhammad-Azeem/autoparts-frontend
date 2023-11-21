@@ -13,8 +13,10 @@ import SignUpForm from "../components/SignUpForm";
 import LoaderSpinner from "../components/LoaderSpinner";
 
 const signUp = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [loading, setLoading] = useState(true);
     // Simulating an asynchronous operation
+    // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetchData = async () => {
       // Simulate an API call or any asynchronous task

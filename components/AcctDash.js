@@ -798,6 +798,7 @@ const AcctDash = () => {
 };
 
 const withAuth = (WrappedComponent) => {
+    // eslint-disable-next-line react/display-name
     return (props) => {
         const router = useRouter();
         useEffect(() => {

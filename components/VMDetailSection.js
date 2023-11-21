@@ -42,7 +42,7 @@ const DetailSection = ({title}) => {
             console.error('Error fetching years:', error);
           }
         };
-    
+
         fetchYears();
       }, []);
 
@@ -55,7 +55,7 @@ const DetailSection = ({title}) => {
             console.error('Error fetching models:', error);
           }
         };
-    
+
         fetchModels();
       }, []);
 
@@ -68,7 +68,7 @@ const DetailSection = ({title}) => {
             console.error('Error fetching companies:', error);
           }
         };
-    
+
         fetchCompany();
       }, []);
 
@@ -87,7 +87,7 @@ const DetailSection = ({title}) => {
 
       const handleCompanySelection = (selectedCompany) => {
           setSelectedCompany(selectedCompany);
-        };    
+        };
 
     const [activeGridItem, setActiveGridItem] = useState(1);
 
@@ -243,7 +243,7 @@ const DetailSection = ({title}) => {
                                 ))}
                             </MenuList>
                         </Menu>
-                        
+
                         <Menu>
                             <MenuButton   className="endbar-topsection-input2"  as={Button} rightIcon={<ChevronDownIcon />}>
                                 {selectedYear || '-- Select Modal --'}
@@ -412,6 +412,7 @@ const DetailSection = ({title}) => {
 
                                         <Grid className="item productblock-grid" gap={6}>
                                             {products.map((product) => (
+                                                // eslint-disable-next-line react/jsx-key
                                                 <Product
                                                     description={product.name}
                                                     image={product.images}

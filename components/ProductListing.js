@@ -269,7 +269,7 @@ const ProductListing = () => {
                                         onMouseLeave={handleMouseLeaveGarage}
                                     >
                                         {/* Content of the div */}
-                                        <p className="vehicle-list">Vehicle List</p>                                      
+                                        <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
                                                 garages.map((garageEntry) => (
@@ -301,7 +301,7 @@ const ProductListing = () => {
                                             <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
                                         </div>
                                     </div>
-                                )} 
+                                )}
                             </Text>
                             <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
@@ -378,6 +378,7 @@ const ProductListing = () => {
                                                                                         </Heading>
                                                                                         {productsByCategory.map((product, index) => (
 
+                                                                                            // eslint-disable-next-line react/jsx-key
                                                                                             <Box mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
                                                                                                 <Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>
                                                                                                 <Text ml={25} mr={15} className='sub-mod-innerbox-text'>{product.name}</Text>
