@@ -39,6 +39,7 @@ import AddVehicleModal from "./AddVehicleModal";
 import {getAddressesByUserId, orderPlace, updateShipping} from "./API/api";
 import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";
+import {formatCurrency} from "./utility/constants";
 
 const ShoppingProductPage = () => {
 
@@ -456,7 +457,7 @@ const ShoppingProductPage = () => {
                                                 Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                ${subTotal}
+                                                {formatCurrency(parseFloat(subTotal))}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -464,7 +465,7 @@ const ShoppingProductPage = () => {
                                                 Estimated Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $0
+                                                0
                                             </Text>
                                         </Box>
                                         <Box mt={5}  display='flex' justifyContent='space-between'>
@@ -481,7 +482,7 @@ const ShoppingProductPage = () => {
                                                     Estimated Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                         </Text>
@@ -575,7 +576,7 @@ const ShoppingProductPage = () => {
                                                     Subtotal
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                             <Box mt={5} display='flex' justifyContent='space-between'>
@@ -583,7 +584,7 @@ const ShoppingProductPage = () => {
                                                     Estimated Shipping & Handling
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    $0
+                                                    0
                                                 </Text>
                                             </Box>
 
@@ -593,7 +594,7 @@ const ShoppingProductPage = () => {
                                                         Estimated Order Total
                                                     </Text>
                                                     <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                        ${subTotal}
+                                                        {formatCurrency(parseFloat(subTotal))}
                                                     </Text>
                                                 </Box>
                                             </Text>
@@ -711,7 +712,7 @@ const ShoppingProductPage = () => {
                                                 Subtotal
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                ${subTotal}
+                                                {formatCurrency(parseFloat(subTotal))}
                                             </Text>
                                         </Box>
                                         <Box mt={5} display='flex' justifyContent='space-between'>
@@ -719,7 +720,7 @@ const ShoppingProductPage = () => {
                                                 Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                $0
+                                                0
                                             </Text>
                                         </Box>
 
@@ -729,7 +730,7 @@ const ShoppingProductPage = () => {
                                                     Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    ${subTotal}
+                                                    {formatCurrency(parseFloat(subTotal))}
                                                 </Text>
                                             </Box>
                                             By placing an order, you agree with our Terms and Conditions

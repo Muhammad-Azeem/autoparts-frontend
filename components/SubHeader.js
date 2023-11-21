@@ -40,6 +40,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 
 import AddVehicleModal from "./AddVehicleModal";
 import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {logout} from "./API/api";
 
 function Backdrop(props) {
     return null;
@@ -68,6 +69,14 @@ const SubHeader = () => {
         // document.body.style.opacity = "1";
         setIsAbcVisible(!isAbcVisible);
     };
+    const [User, setUser] = useState();
+    useEffect(() => {
+        let temp= localStorage.getItem('user');
+
+        temp = JSON.parse(temp);
+        setUser(temp);
+
+    }, []);
 
 
     useEffect(() => {
@@ -143,6 +152,16 @@ const SubHeader = () => {
         setGarage([]); // Clear the garage state in your component
         router.push('/');
     };
+    const handleLogout = async () => {
+        try {
+            await logout();
+            // window.location.reload();
+            await router.push('/signUp');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+
     return (
         <Flex className="sub-header">
             <div className={`abc ${isAbcVisible ? 'visible' : 'hidden'}`}></div>
@@ -211,16 +230,27 @@ const SubHeader = () => {
                                     <li href="#" className="main-nav-li">Resources and Links</li>
                                 </ul>
                                 <ul className="main-nav-ul-last" style={{borderBottom: "none"}}>
-                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/signUp" className="main-nav-li">
-                                        <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
-                                               className="right-subheader-img"/>
-                                        Login/Register
-                                    </Link>
-                                    <li href="#" className="main-nav-li">
+                                    {
+                                        User ? (
+                                            <Link display="flex" color="black" textDecoration="none" alignItems="center" href="#"  onClick={handleLogout} className="main-nav-li">
+                                                <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
+                                                       className="right-subheader-img"/>
+                                                Logout
+                                            </Link>
+                                        )          : (
+                                            <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/signUp" className="main-nav-li">
+                                                <Image mr={15} src="/images/logout.svg" alt="Image Alt Text"
+                                                       className="right-subheader-img"/>
+                                                Login/Register
+                                            </Link>
+
+                                        )
+                                    }
+                                    <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/AccountDashboard" className="main-nav-li">
                                         <Image mr={15} src="/images/profile.png " alt="Image Alt Text"
                                                className="right-subheader-img"/>
                                         My Account
-                                    </li>
+                                    </Link>
                                     <Link display="flex" color="black" textDecoration="none" alignItems="center" href="/TrackOrder" className="main-nav-li">
                                         <Image mr={15} src="/images/track.jpg " alt="Image Alt Text"
                                                className="right-subheader-img"/>
@@ -294,7 +324,7 @@ const SubHeader = () => {
                         onMouseLeave={handleMouseLeave}
                     >
                         {/* Content of the div */}
-                        <p className="vehicle-list">Vehicle List</p>                    
+                        <p className="vehicle-list">Vehicle List</p>
                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                             {garage.length > 0 ? (
                                 garage.map((garageEntry) => (
@@ -304,7 +334,7 @@ const SubHeader = () => {
                                         style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
                                     >
                                         <div>
-                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name}  checked={garageEntry.is_selected} />
                                             <label htmlFor={garageEntry.id}>
                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
                                             </label>

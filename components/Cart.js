@@ -34,6 +34,7 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import {getCartFromCookie, removeCartFromCookie} from "./utility/cookies";
+import {formatCurrency} from "./utility/constants";
 
 const   Cart = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -110,13 +111,13 @@ const   Cart = () => {
                                             </span>
                                         </Td>
                                         <Td width="150px" textAlign="center">
-                                            ${cartItem.price}
+                                            {formatCurrency(cartItem.price)}
                                         </Td>
                                         <Td width="150px" textAlign="center">
                                             {cartItem.quantity}
                                         </Td>
                                         <Td width="150px" textAlign="right">
-                                            ${(cartItem.price * cartItem.quantity)}
+                                            {formatCurrency(cartItem.price * cartItem.quantity)}
                                         </Td>
                                     </Tr>
                                 ))}
@@ -132,7 +133,7 @@ const   Cart = () => {
 
                     <Box mt={20} className="detail-cartbox-show" background="#f4f4f4" border="1px solid #b0b0b0" alignItems="center">
                         <Text  className="detail-rightside-heading" size="lg">
-                            Subtotal: <span style={{color:'#bc0001'}}>${subTotal}</span>
+                            Subtotal: <span style={{color:'#bc0001'}}>{formatCurrency(subTotal)}</span>
                         </Text>
                         <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
                             <Button mt={10} className="add-to-cart-btn" colorScheme="teal" onClick={handleCheckout}>SECURE CHECKOUT </Button>
@@ -196,7 +197,7 @@ const   Cart = () => {
                         <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                             <Box background="#f4f4f4" border="1px solid #b0b0b0" alignItems="center">
                                 <Text  className="detail-rightside-heading" size="lg">
-                                    Subtotal: <span style={{color:'#bc0001'}}>${subTotal}</span>
+                                    Subtotal: <span style={{color:'#bc0001'}}>{formatCurrency(subTotal)}</span>
                                 </Text>
                                 <Box className="detail-rightside-upperbox" fontSize="small" color="grey">
                                     <Button mt={10} className="add-to-cart-btn" colorScheme="teal" onClick={handleCheckout}>SECURE CHECKOUT </Button>

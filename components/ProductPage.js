@@ -37,6 +37,7 @@ import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
 import {getProductbyId} from "./API/api";
 import {addToCartToCockie} from "./utility/cookies";
+import {formatCurrency} from "./utility/constants";
 
 const ProductPage = () => {
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -170,13 +171,13 @@ const ProductPage = () => {
                         </Box>
 
                         <Box className="pp-price-box">
-                            <Text className="pp-price" fontSize="xl">{product.price}
-                                <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        {product.discounted_price}
-                                    </span>
-                                </span>
+                            <Text className="pp-price" fontSize="xl">{formatCurrency(product.price)}
+                                {/*<span className="product-price-span" >*/}
+                                {/*    MSRP:*/}
+                                {/*    <span style={{textDecoration:'line-through'}}>*/}
+                                {/*        {formatCurrency(product.discounted_price)}*/}
+                                {/*    </span>*/}
+                                {/*</span>*/}
                             </Text>
                             {/*<Text className="pp-save-price" >*/}
                             {/*    You Save: $1.86 (29%)*/}
