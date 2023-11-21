@@ -34,13 +34,9 @@ const ViewMore = () => {
             </div>
 
             <main>
-                {loading ? (
-                    <LoaderSpinner />
-                    ) : (
-                <>
+                
                  <VMDetailSection />
-                </>
-                    )}
+              
             </main>
 
             <div className="main-footer">

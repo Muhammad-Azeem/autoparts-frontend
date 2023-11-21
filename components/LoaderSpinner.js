@@ -7,11 +7,24 @@ const override = css`
   margin: 20% auto; /* Adjust the percentage to position it at the desired vertical position */
   border-color: red;
 `;
+
+const loaderContainerStyle = css`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(5px); /* Adjust the blur intensity */
+  background: rgba(255, 255, 255, 0.5); /* Adjust the background color and opacity */
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+`;
+
 const LoaderSpinner = () => {
   return (
-    <div className="sweet-loading">
-      <ClipLoader css={override} size={150} color={'#123abc'} loading={true} />
-    </div>
+    <div className="sweet-loading" css={loaderContainerStyle}>
+    <ClipLoader css={override} size={150} color={'#123abc'} loading={true} />
+  </div>
   );
 };
 

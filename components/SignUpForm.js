@@ -20,9 +20,10 @@ import {
     Center, FormControl, FormLabel
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
+import LoaderSpinner from "../components/LoaderSpinner"
 import {login, register} from "./API/api";
 const SignUpForm = () => {
+    const [loading, setLoading] = useState(true);
     const router = useRouter();
 
     const [email, setEmail] = useState('');
@@ -54,6 +55,7 @@ const SignUpForm = () => {
         try {
             const userData = { email, password };
             console.log('register call started')
+            setLoading(true);
             let response = await register(userData);
             console.log(response)
             const token  = response.data.token;
@@ -61,6 +63,7 @@ const SignUpForm = () => {
             localStorage.setItem('token', token);
             localStorage.setItem('user', user);
             router.push('/Register-Success');
+            setLoading(false);
         } catch (error) {
             console.error('Registration failed:', error);
             setError('Registration failed. Please try again.');
@@ -146,7 +149,7 @@ const SignUpForm = () => {
                         <Input className="returning-input" type="email" placeholder="Confirm Email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} />
                     </FormControl>
                     <FormControl  mt={20}>
-                        <FormLabel placeholder="atleat 6 characters" className="returing-label">Password:
+                        <FormLabel placeholder="atleat 8 characters" className="returing-label">Password:
                             <sup style={{color: '#E52222'}}>*</sup>
                         </FormLabel>
                         <Input
