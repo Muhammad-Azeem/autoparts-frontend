@@ -149,7 +149,7 @@ const SignUpForm = () => {
                         <Input className="returning-input" type="email" placeholder="Confirm Email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} />
                     </FormControl>
                     <FormControl  mt={20}>
-                        <FormLabel placeholder="atleat 6 characters" className="returing-label">Password:
+                        <FormLabel placeholder="atleat 8 characters" className="returing-label">Password:
                             <sup style={{color: '#E52222'}}>*</sup>
                         </FormLabel>
                         <Input

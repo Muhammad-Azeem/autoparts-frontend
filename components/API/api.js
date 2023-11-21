@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
+// const API_BASE_URL = 'https://cars.xnaj.com/backend.cars.xnaj.com/public/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
     try {
-        console.log('testing start')
         let data = new FormData();
         data.append('email', userData.email);
         data.append('password', userData.password);

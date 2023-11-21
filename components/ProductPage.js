@@ -38,6 +38,7 @@ import SmallProduct from "./SmallProduct";
 import AddVehicleModal from "./AddVehicleModal";
 import {getProductbyId} from "./API/api";
 import {addToCartToCockie} from "./utility/cookies";
+import {formatCurrency} from "./utility/constants";
 
 const ProductPage = () => {
     const [loading, setLoading] = useState(true);
@@ -177,13 +178,13 @@ const ProductPage = () => {
                         </Box>
 
                         <Box className="pp-price-box">
-                            <Text className="pp-price" fontSize="xl">{product.price}
-                                <span className="product-price-span" >
-                                    MSRP:
-                                    <span style={{textDecoration:'line-through'}}>
-                                        {product.discounted_price}
-                                    </span>
-                                </span>
+                            <Text className="pp-price" fontSize="xl">{formatCurrency(product.price)}
+                                {/*<span className="product-price-span" >*/}
+                                {/*    MSRP:*/}
+                                {/*    <span style={{textDecoration:'line-through'}}>*/}
+                                {/*        {formatCurrency(product.discounted_price)}*/}
+                                {/*    </span>*/}
+                                {/*</span>*/}
                             </Text>
                          
                             <Box display="flex">
