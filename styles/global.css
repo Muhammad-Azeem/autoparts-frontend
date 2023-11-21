@@ -1173,6 +1173,14 @@ body{
     width: 245px;
     margin-top: 3px;
     border: 1px solid #dededb;
+    border-radius: 4px;
+}
+.bussiness-input-select{
+    padding: 5px 0px;
+    width: 263px;
+    margin-top: 3px;
+    color: gray;
+    font-size: 14px;
 }
 .track-input{
     padding: 8px 0px;
@@ -1753,8 +1761,8 @@ body{
 .shipping-price-box{
     padding: 10px;
     position: absolute;
-    top: 232px;
-    right: 10px;
+    top: 255px;
+    right: 150px;
     border: 1px solid #b0b0b0;
     width: 250px;
 }
@@ -2175,6 +2183,12 @@ body{
  }
  .inner-shipAdrs-box{
 
+ }
+ .view-more-orders{
+    font-size: 14px;
+    font-weight: 200;
+    cursor: pointer;
+    margin-left: 10px;
  }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */

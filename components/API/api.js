@@ -31,6 +31,7 @@ export const register = async (userData) => {
 };
 
 
+
 export const updateShipping = async (userData) => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -107,6 +108,45 @@ export const orderPlace = async (userData) => {
     }
 };
 
+export const bussinesAcct = async (userData) => {
+    try {
+
+        let data = new FormData();
+        data.append('first_name', userData.firstName);
+        data.append('last_name', userData.lastName);
+        data.append('job_title', userData.job_title);
+        data.append('email', userData.email);
+        data.append('password', userData.password);
+        data.append('bussiness_type', userData.bussiness_type);
+        data.append('bussiness_name', userData.bussiness_name);
+        data.append('phone_number', userData.phone_number);
+        data.append('bussiness_address1', userData.bussiness_address1);
+        data.append('bussiness_address2', userData.bussiness_address2);
+        data.append('zip_code', userData.zip_code);
+        data.append('city', userData.city_state);
+
+        // data.append('user', JSON.stringify(userData.user));
+        // data.append('cart', JSON.stringify(userData.cart));
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/bussinessAcct`,
+            data : data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                console.log(error );
+            });
+
+    } catch (error) {
+        throw error;
+    }
+};
 
 export const changeEmail = async (userData) => {
     const token = localStorage.getItem('token');
