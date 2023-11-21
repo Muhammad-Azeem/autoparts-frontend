@@ -27,7 +27,7 @@ import {
     MenuList,
     MenuItem,
     Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList,
-    FormControl, FormLabel,Select
+    FormControl, FormLabel
 } from '@chakra-ui/react';
 import '../styles//global.css';
 
@@ -40,8 +40,20 @@ import {getAddressesByUserId, orderPlace, updateShipping} from "./API/api";
 import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";
 import {formatCurrency} from "./utility/constants";
+import Select from 'react-select';
+import { countries } from 'countries-list';
 
 const ShoppingProductPage = () => {
+    const [selectedCountry, setSelectedCountry] = useState(null);
+
+    const countryOptions = Object.keys(countries).map((countryCode) => ({
+        value: countryCode,
+        label: countries[countryCode].name,
+    }));
+
+    const handleCountryChange = (selectedOption) => {
+        setSelectedCountry(selectedOption);
+    };
 
     const [user, setUser] = useState('');
     const [cart, setCart] = useState([]);
@@ -314,14 +326,25 @@ const ShoppingProductPage = () => {
                                     If you already have an account, please <Link href='/signUp'> LOGIN </Link>.
                                 </Heading>
                                     )}
-                                <Flex className="shipping-box" >
+                                <Flex mt={20} className="shipping-box" >
                                     <Box className=""  >
                                         <form className="shipping-form">
                                             <Heading className="returning-heading" as="h3">User Information</Heading>
                                             <Box display='flex'>
                                                 <Box className='boxOne'>
                                                     <Box >
-                                                        <FormControl mt={20}>
+                                                    <FormControl  mt={20}>
+                                                    <Select
+                                                        className="bussiness-input-select"
+                                                        placeholder='Select Country'
+                                                        value={selectedCountry}
+                                                        onChange={handleCountryChange}
+                                                        options={countryOptions}
+                                                    />
+                                                    </FormControl>
+                                                    </Box>
+                                                    <Box >
+                                                        <FormControl mt={10}>
                                                             <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                                                             {error1 && (
                                                                 <p style={{ color: 'red' }}>{error1}</p>
@@ -329,7 +352,7 @@ const ShoppingProductPage = () => {
                                                         </FormControl>
                                                     </Box>
                                                     <Box >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                                                             {error2 && (
                                                                 <p style={{ color: 'red' }}>{error2}</p>
@@ -338,7 +361,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
 
                                                     <Box  >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)}/>
                                                             {error3 && (
                                                                 <p style={{ color: 'red' }}>{error3}</p>
@@ -346,7 +369,7 @@ const ShoppingProductPage = () => {
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
                                                             {error4 && (
                                                                 <p style={{ color: 'red' }}>{error4}</p>
@@ -354,7 +377,7 @@ const ShoppingProductPage = () => {
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" value={appartment} onChange={(e) => setAppartment(e.target.value)}/>
                                                             {error5 && (
                                                                 <p style={{ color: 'red' }}>{error5}</p>
@@ -362,8 +385,9 @@ const ShoppingProductPage = () => {
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
-                                                        <FormControl mt={2}>
-                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/>Enter Zip Code for City and State
+                                                        <FormControl mt={15}>
+                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/><br/>
+                                                            <span style={{fontSize:'11px', color:'gray'}}>Enter Zip Code for City and State</span>
                                                             {error6 && (
                                                                 <p style={{ color: 'red' }}>{error6}</p>
                                                             )}
@@ -380,7 +404,7 @@ const ShoppingProductPage = () => {
                                                     {!user && (
                                                         <Box  >
                                                     <Box  >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="E-mail Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
                                                             {error && (
                                                                 <p style={{ color: 'red' }}>{error}</p>
@@ -388,7 +412,7 @@ const ShoppingProductPage = () => {
                                                         </FormControl>
                                                     </Box>
                                                     <Box  >
-                                                        <FormControl mt={5}>
+                                                        <FormControl mt={15}>
                                                             <Input mr={5} className="bussiness-input"  type="text" placeholder="Confirm E-mail Address" value={cEmail} onChange={(e) => setCEmail(e.target.value)}/>
                                                             {error && (
                                                                 <p style={{ color: 'red' }}>{error}</p>
@@ -397,53 +421,55 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                         </Box>
                                                         )}
+                                                          {user ? ( <Box> <Heading margin='0'  fontWeight="200">
+
+                                                            <span style={{fontSize:'14px', color:'gray'}}>Save Address As(Optional)</span>
+                                                            </Heading>
+                                                            <Box>
+                                                                <FormControl mt={15}>
+                                                                    <Input mr={5} className="bussiness-input"  type="text" placeholder="" value={addressAs} onChange={(e) => setAddressAs(e.target.value)}/>
+                                                                </FormControl>
+                                                            </Box>
+                                                            <Box  >
+                                                                <FormControl mt={15}>
+                                                                <Input mr={5}   type="checkbox" />
+                                                                Save this address for future orders
+
+                                                                </FormControl>
+                                                            </Box>
+                                                                <Text className='continue-btn' onClick={handleShippingForm}>
+                                                                    Ship to this address
+                                                                </Text>
+                                                            </Box>
+                                                            ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
+                                                            <Box display='flex'>
+                                                                <Box className='boxOne'>
+                                                                    <Box>
+                                                                        <FormControl mt={5}>
+                                                                            <Input mr={5} className="bussiness-input"  type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                                                        </FormControl>
+                                                                    </Box>
+                                                                    <Box>
+                                                                        <FormControl mt={5}>
+                                                                            <Input mr={5} className="bussiness-input"  type="password" placeholder="Confirm Password" value={cPassword} onChange={(e) => setCPassword(e.target.value)} />
+                                                                        </FormControl>
+                                                                    </Box>
+                                                                </Box>
+                                                                <Box className='boxTwo'>
+                                                                    <Heading as="h5" fontWeight="200">
+                                                                        You have the option of creating an account for future orders and faster checkouts.
+                                                                    </Heading>
+                                                                </Box>
+                                                            </Box>
+                                                        </Box>)}
                                                 </Box>
                                                 <Box className='boxTwo'>
-                                                <Heading as="h5" fontWeight="200">
-                                                    We ship to all 50 states including P.O. Box, APO, FPO, and U.S. Territories.
-                                                </Heading>
+                                                    <Heading as="h5" fontWeight="200">
+                                                        We ship to all 50 states including P.O. Box, APO, FPO, and U.S. Territories.
+                                                    </Heading>
                                                 </Box>
                                             </Box>
-                                            {user ? ( <Box> <Heading  fontWeight="200">
 
-                                                Save Address As(Optional)
-                                                </Heading>
-                                                <Box>
-                                                    <FormControl mt={5}>
-                                                        <Input mr={5} className="bussiness-input"  type="text" placeholder="" value={addressAs} onChange={(e) => setAddressAs(e.target.value)}/>
-                                                    </FormControl>
-                                                </Box>
-                                                <Box  >
-                                                <FormControl mt={5}>
-                                                <Input mr={5} className="bussiness-input"  type="checkbox" />Save this address for future orders
-
-                                                </FormControl>
-                                                </Box>
-                                                    <Text className='continue-btn' onClick={handleShippingForm}>
-                                                        Ship to this address
-                                                    </Text>
-                                                </Box>
-                                                ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                <Box display='flex'>
-                                                <Box className='boxOne'>
-                                                <Box>
-                                                <FormControl mt={5}>
-                                                <Input mr={5} className="bussiness-input"  type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                                </FormControl>
-                                                </Box>
-                                                <Box>
-                                                <FormControl mt={5}>
-                                                <Input mr={5} className="bussiness-input"  type="password" placeholder="Confirm Password" value={cPassword} onChange={(e) => setCPassword(e.target.value)} />
-                                                </FormControl>
-                                                </Box>
-                                                </Box>
-                                                <Box className='boxTwo'>
-                                                <Heading as="h5" fontWeight="200">
-                                                You have the option of creating an account for future orders and faster checkouts.
-                                                </Heading>
-                                                </Box>
-                                                </Box>
-                                            </Box>)}
 
                                                     </form>
                                                 </Box>
