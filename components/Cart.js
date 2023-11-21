@@ -34,8 +34,11 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import {getCartFromCookie, removeCartFromCookie} from "./utility/cookies";
+import LoaderSpinner from "../components/LoaderSpinner";
 
 const   Cart = () => {
+    const [loading, setLoading] = useState(true);
+
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
 
     const toggleEstimateVisibility = () => {
@@ -60,16 +63,23 @@ const   Cart = () => {
         }, 0);
     };
     const handleRemoveFromCart = (index) => {
+        setLoading(true);
+
         removeCartFromCookie(index)
         const data = getCartFromCookie();
         setCart(data);
         setSubTotal(calculateSubtotal(data))
 
+        setLoading(false);
     };
     useEffect(() => {
+        setLoading(true);
+
         const data = getCartFromCookie();
         setCart(data);
         setSubTotal(calculateSubtotal(data))
+        setLoading(false);
+
     }, [])
     return (
         <Box >
@@ -92,6 +102,11 @@ const   Cart = () => {
                                 </Tr>
                             </Thead>
                             <Tbody>
+                            {loading ? (
+                                <LoaderSpinner />
+                                ) : (
+                                <>
+
                                 {cart.map((cartItem, index) => (
                                     <Tr key={cartItem.id} style={{ marginTop: '10px' }}>
                                         <Td>
@@ -105,6 +120,7 @@ const   Cart = () => {
                                             <br/>
                                             Replaced By: {cartItem.replaces}
                                             <br/>
+                                            
                                             <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(index)}>
                                                 Remove
                                             </span>
@@ -120,6 +136,8 @@ const   Cart = () => {
                                         </Td>
                                     </Tr>
                                 ))}
+                                </>
+                                )}
                             </Tbody>
                         </Table>
                     </TableContainer>

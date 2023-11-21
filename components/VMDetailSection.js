@@ -26,9 +26,11 @@ import Product from "./Product";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import ProductListing from "./ProductListing";
 import {vehicleCompany, vehicleModels , vehicleYears,getAllCategories, getProductByCategoryId} from "./API/api";
+import LoaderSpinner from "../components/LoaderSpinner"
 
 const DetailSection = ({title}) => {
 
+    const [loading, setLoading] = useState(true);
     const [years, setYears] = useState([]);
     const [models, setModels] = useState([]);
     const [company, setCompany] = useState([]);
@@ -164,11 +166,13 @@ const DetailSection = ({title}) => {
     useEffect(() => {
         const fetchProductsByCategoryId = async (temp) => {
             try {
+                setLoading(true);
                 const data = await getProductByCategoryId(temp);
                 const categories = await getAllCategories();
                 setCategories(categories)
                 setProducts(data.products)
                 setCategory(data.category)
+                setLoading(false);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -179,9 +183,11 @@ const DetailSection = ({title}) => {
     }, [categoryId]); // Empty dependency array ensures this effect runs once on mount
 
     const handleCategoryClick =async (id) => {
+        setLoading(true);
         const data = await getProductByCategoryId(id);
         setProducts(data.products)
         setCategory(data.category)
+        setLoading(false);
     }
     return (
             <>
@@ -409,16 +415,23 @@ const DetailSection = ({title}) => {
                                                     See More {'>'}{'>'}
                                                 </a>
                                             </Heading>
+                                            {loading ? (
+                                                <LoaderSpinner />
+                                                ) : (
+                                                    <>
 
-                                        <Grid className="item productblock-grid" gap={6}>
-                                            {products.map((product) => (
-                                                <Product
-                                                    description={product.name}
-                                                    image={product.images}
-                                                    id={product.id}
-                                                />
-                                            ))}
-                                        </Grid>
+                                                    <Grid className="item productblock-grid" gap={6}>
+                                                        {products.map((product) => (
+                                                            <Product
+                                                                description={product.name}
+                                                                image={product.images}
+                                                                id={product.id}
+                                                            />
+                                                        ))}
+                                                    </Grid>
+                                                    </>
+                                                )}
+
                                             <Text ml={10} mb={10} mt={10}>
                                                 <a  className="see-more" onClick={toggleBoxVisibility}>
                                                     See more body parts {'>'}{'>'}

@@ -38,10 +38,7 @@ const HomePage = () => {
             </div>
            
             <main>
-            {loading ? (
-                <LoaderSpinner />
-                ) : (
-            <>
+           
                 <div className="main-top-section">
                 <TopSection/>
                 </div>
@@ -52,9 +49,7 @@ const HomePage = () => {
                 <GeniunePartsSection/>
                 <MainModelSection/>
                 <WholeSaleSection/>
-            </>
-
-                )}
+           
             </main>
             <div className="main-footer">
                 <Footer/>
