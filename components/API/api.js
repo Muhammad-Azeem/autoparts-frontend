@@ -4,7 +4,7 @@ const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
     try {
-
+        console.log('testing start')
         let data = new FormData();
         data.append('email', userData.email);
         data.append('password', userData.password);
@@ -16,14 +16,14 @@ export const register = async (userData) => {
             data : data
         };
 
-        axios.request(config)
-            .then((response) => {
-                return response;
-                console.log(response );
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        return await axios.request(config)
+            // .then((response) => {
+            //     console.log(response, 'responsess' );
+            //     return response;
+            // })
+            // .catch((error) => {
+            //     console.log(error);
+            // });
 
     } catch (error) {
         throw error;
