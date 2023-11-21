@@ -21,21 +21,10 @@ import {
     Text,
     Flex,
     Link,
-    Button,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    Center, Breadcrumb, BreadcrumbItem, BreadcrumbLink, ListItem, List, Icon, UnorderedList,
     FormControl, FormLabel
 } from '@chakra-ui/react';
 import '../styles//global.css';
 
-import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
-import {FaMinus, FaPlus} from "react-icons/fa";
-import Product from "./Product";
-import SmallProduct from "./SmallProduct";
-import AddVehicleModal from "./AddVehicleModal";
 import {getAddressesByUserId, orderPlace, updateShipping} from "./API/api";
 import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";

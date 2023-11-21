@@ -23,9 +23,14 @@ import {
 } from '@chakra-ui/react';
 import '../styles//global.css';
 import { DeleteIcon } from '@chakra-ui/icons';
-import {getAllCategories, getProductsBySubCategoryId} from './API/api';
+import {getAllCategories, getProductsBySubCategoryId,getVehicleId} from './API/api';
 import {FaMinus, FaPlus} from "react-icons/fa";
-import {clearAllGaragesFromCookie, getGarageFromCookie, removeGarageFromCookie} from "./utility/cookies";
+import {
+    clearAllGaragesFromCookie,
+    getGarageFromCookie,
+    getSelectedGarageFromCookie,
+    removeGarageFromCookie
+} from "./utility/cookies";
 import AddVehicleModal from "./AddVehicleModal";
 import LoaderSpinnerMini from './LoaderSpinnerMini';
 import LoaderSpinner from './LoaderSpinner';
@@ -34,8 +39,29 @@ const ProductListing = () => {
     const [loading2, setLoading2] = useState(true);
 
     const [categories, setCategories] = useState([]);
+    const [vehicleId, setvehicleId] = useState([]);
+    const [activeVehicle, setActiveVehicle] = useState({
+        company: 'toyota',
+        model: 'corolla',
+        year: '2020'
+    });
 
     useEffect(() => {
+        const fetchVehicleId = async () => {
+            try {
+                const data = await getVehicleId(activeVehicle);
+                setvehicleId(data.id);
+
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            }
+        };
+
+        fetchVehicleId();
+    }, []);
+
+    useEffect(() => {
+        const selectedGarage = getSelectedGarageFromCookie();
         const fetchCategories = async () => {
             try {
                 setLoading2(true);
@@ -158,11 +184,8 @@ const ProductListing = () => {
       
         setLoading(true);
         setIsDivOpen(subCategoryName);
-        
 
-        const response = await getProductsBySubCategoryId(subCategoryId)
-        
-
+        const response = await getProductsBySubCategoryId(subCategoryId,vehicleId)
         setProductsByCategory(response.products);
         setLoading(false);
         console.log(response.products, 'tp')
@@ -283,7 +306,7 @@ const ProductListing = () => {
                                         onMouseLeave={handleMouseLeaveGarage}
                                     >
                                         {/* Content of the div */}
-                                        <p className="vehicle-list">Vehicle List</p>                                      
+                                        <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
                                                 garages.map((garageEntry) => (
@@ -315,7 +338,7 @@ const ProductListing = () => {
                                             <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
                                         </div>
                                     </div>
-                                )} 
+                                )}
                             </Text>
                             <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
@@ -402,7 +425,9 @@ const ProductListing = () => {
 
                                                                                         {productsByCategory.map((product, index) => (
 
-                                                                                            <Box position='relative' mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
+
+                                                                                            // eslint-disable-next-line react/jsx-key
+                                                                                            <Box mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
                                                                                                 <Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>
                                                                                                 <Text ml={25} mr={15} className='sub-mod-innerbox-text'>{product.name}</Text>
                                                                                                 {/* <div className="sweet-loading22" css={loaderContainerStyle}>

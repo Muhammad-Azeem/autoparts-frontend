@@ -32,31 +32,24 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
       const [company, setCompany] = useState([]);
 
 
-      useEffect(() => {
-          const fetchYears = async () => {
-            try {
-              const response = await vehicleYears();
-               setYears(response);
-            } catch (error) {
-              console.error('Error fetching years:', error);
-            }
-          };
+    const fetchYears = async (selectedModal) => {
+        try {
+            const response = await vehicleYears(selectedModal);
+            setYears(response);
+        } catch (error) {
+            console.error('Error fetching years:', error);
+        }
+    };
 
-          fetchYears();
-        }, []);
+    const fetchModels = async (selectedCompany) => {
+        try {
+            const response = await vehicleModels(selectedCompany);
+            setModels(response);
+        } catch (error) {
+            console.error('Error fetching models:', error);
+        }
+    };
 
-        useEffect(() => {
-          const fetchModels = async () => {
-            try {
-              const response = await vehicleModels();
-              setModels(response);
-            } catch (error) {
-              console.error('Error fetching models:', error);
-            }
-          };
-
-          fetchModels();
-        }, []);
 
         useEffect(() => {
           const fetchCompany = async () => {
@@ -71,22 +64,29 @@ const AddVehicleModal = ({ isOpen, onClose }) => {
           fetchCompany();
         }, []);
 
-        const [selectedYear, setSelectedYear] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
 
-        const handleYearSelection = (selectedYear) => {
-            setSelectedYear(selectedYear);
-        };
-        const [selectedModal, setSelectedModal] = useState(null);
+    const handleYearSelection = (selectedYear) => {
+        setSelectedYear(selectedYear);
+    };
+    const [selectedModal, setSelectedModal] = useState(null);
 
-        const handleModelSelection = (selectedModal) => {
-          setSelectedModal(selectedModal);
-        };
+    const handleModelSelection = (selectedModal) => {
+        setSelectedModal(selectedModal);
+        fetchYears(selectedModal);
+        setSelectedYear(null);
+    };
 
-        const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
-        const handleCompanySelection = (selectedCompany) => {
-            setSelectedCompany(selectedCompany);
-          };
+    const handleCompanySelection = (selectedCompany) => {
+        setSelectedCompany(selectedCompany);
+        fetchModels(selectedCompany);
+        setYears([]);
+        setSelectedModal(null);
+        setSelectedYear(null);
+
+    };
 
 
     return (
