@@ -2124,6 +2124,7 @@ body{
     position: relative;
     width: 100%;
     cursor: pointer;
+    height: 150px;
 
  }
  .sub-mod-head{
@@ -2199,6 +2200,32 @@ body{
     position: fixed;
     top: 45%;
     left: 50%;
+    transform: translate(-50%, -50%);
+ }
+
+ .sweet-loading2{
+    display: flex;
+    justify-content: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    backdrop-filter: blur(5px); /* Adjust the blur intensity */
+    background: rgba(255, 255, 255, 0.5); /* Adjust the background color and opacity */
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    position: absolute;
+    /* height: 100%;
+    width: 100%; */
+ }
+ .sweet-loading2 span{
+    width: 50px !important;
+    height: 50px !important;
+    position: fixed;
+    top: 45%;
+    left: 0%;
     transform: translate(-50%, -50%);
  }
  .inner-shipAdrs-box{
