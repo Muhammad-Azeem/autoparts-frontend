@@ -21,7 +21,7 @@ const TopSection = () => {
             console.error('Error fetching years:', error);
           }
         };
-    
+
         fetchYears();
       }, []);
 
@@ -34,7 +34,7 @@ const TopSection = () => {
             console.error('Error fetching models:', error);
           }
         };
-    
+
         fetchModels();
       }, []);
 
@@ -47,7 +47,7 @@ const TopSection = () => {
             console.error('Error fetching companies:', error);
           }
         };
-    
+
         fetchCompany();
       }, []);
 
@@ -66,8 +66,8 @@ const TopSection = () => {
 
       const handleCompanySelection = (selectedCompany) => {
           setSelectedCompany(selectedCompany);
-        };      
-      
+        };
+
 
 
     const images = [
@@ -144,7 +144,7 @@ const TopSection = () => {
                                 ))}
                             </MenuList>
                         </Menu>
-                        
+
                         <Menu>
                             <MenuButton mt={10}  className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
                                 {selectedYear || '-- Select Modal --'}
@@ -165,7 +165,7 @@ const TopSection = () => {
                     </Box>
                 </Container>
             </GridItem>
-            <GridItem className="section-second" >
+            <GridItem className="section-second" style={{zIndex: '-1'}}>
                 <div className="image-container">
                     <ImageCarousel images={images} />
 
