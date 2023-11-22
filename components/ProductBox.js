@@ -40,7 +40,7 @@ const ProductBox = () => {
 
                 const data = await getAllProductsByCategory();
                 setProducts(data);
-                
+
                 setLoading(false);
 
             } catch (error) {
@@ -67,7 +67,7 @@ const ProductBox = () => {
             {products.map((product, index) => (
                 // eslint-disable-next-line react/jsx-key
                 <Flex>
-                
+
                     <Box width="100%">
                         <Heading ml={15} fontStyle="bold" color="black" as="h4" size="lg" mb={4}>
                             {product.name}
@@ -86,7 +86,7 @@ const ProductBox = () => {
                                     {/* Your existing content */}
                                     <GridItem onClick={() => handleProductDetailClick(product.id)} className="product-box">
                                         <Box  className="grid-product_box" >
-                                            <Image src={product.images} className="images-product_box" alt="Image Alt Text"  />
+                                            <Image src={JSON.parse(product.images)[0].image1} className="images-product_box" alt="Image Alt Text"  />
                                             <Text className="title-product_block">{product.name}</Text>
                                         </Box>
                                     </GridItem>
@@ -104,8 +104,8 @@ const ProductBox = () => {
                             </Button>
                         </Center>
                     </Box>
-                  
-             
+
+
                 </Flex>
                  ))}
             </Box>

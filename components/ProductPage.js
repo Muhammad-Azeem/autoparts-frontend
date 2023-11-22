@@ -136,12 +136,29 @@ const ProductPage = () => {
             <Flex className="pp-productDetail-innerbox" >
                 <Box className="pp-box1" display="flex" flexDirection="column">
                     <Box mb={4}>
-                        <Image className="pp-box1-img"  src={product.images} alt="Image 1" />
+                        {product.images &&
+                            Array.isArray(JSON.parse(product.images)) &&
+                            JSON.parse(product.images).length > 0 && (
+                                <Image
+                                    className="pp-box1-img"
+                                    src={JSON.parse(product.images)[0].image1}
+                                    alt="Image 1"
+                                />
+                            )}
                     </Box>
                     <Box display="flex" mb={4}>
-                        <Image className="pp-box1-simg" src="/images/toyota-plug.jpg" alt="Image 2" />
-                        <Image className="pp-box1-simg" src="/images/toyota-plug.jpg" alt="Image 2" />
-                        <Image className="pp-box1-simg" src="/images/toyota-plug.jpg" alt="Image 2" />
+                        {product.images &&
+                            Array.isArray(JSON.parse(product.images)) &&
+                            JSON.parse(product.images).slice(1).map((image, index) => (
+                                image && (
+                                    <Image
+                                        key={index}
+                                        className="pp-box1-simg"
+                                        src={image[`image${index + 2}`]}
+                                        alt={`Image ${index + 2}`}
+                                    />
+                                )
+                            ))}
                     </Box>
                 </Box>
                 {loading ? (
@@ -186,7 +203,7 @@ const ProductPage = () => {
                                 {/*    </span>*/}
                                 {/*</span>*/}
                             </Text>
-                         
+
                             <Box display="flex">
                                 <input value={quantity} className="pp-input-num" type="number" placeholder="1"  onChange={(e) => setQuantity(e.target.value)} />
                                 <Button ml={15} mt={10} className="pp-cart-btn" colorScheme="teal" type={'button'} onClick={handleAddToCart}>Add to Cart</Button>
@@ -247,79 +264,6 @@ const ProductPage = () => {
             mb={35}
             mt={0}
         >
-            <GridItem colSpan={4} bg="#fff">
-                <Flex>
-                    <Box width="60%">
-                        <Grid className="detail-grid">
-                            <Heading className="detail-heading" as="h3">
-                                Related Parts
-                                <Text margin={0} fontSize="12px" className="bussiness-url">
-                                    Shop for related parts for your vehicle
-                                </Text>
-                            </Heading>
-                        </Grid>
-                        <Grid className="ppdetail-grid" gap={6}>
-                            <SmallProduct
-                                image="/images/pp1.png"
-                                description="Block Sub-Assy, Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-
-                            <SmallProduct
-                                image="/images/pp2.png"
-                                description="Bolt"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                            <SmallProduct
-                                image="/images/pp3.png"
-                                description="Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                            <SmallProduct
-                                image="/images/pp1.png"
-                                description="Block Sub-Assy, Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-
-                            <SmallProduct
-                                image="/images/pp2.png"
-                                description="Bolt"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                            <SmallProduct
-                                image="/images/pp3.png"
-                                description="Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                            <SmallProduct
-                                image="/images/pp1.png"
-                                description="Block Sub-Assy, Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-
-                            <SmallProduct
-                                image="/images/pp2.png"
-                                description="Bolt"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                            <SmallProduct
-                                image="/images/pp3.png"
-                                description="Cylinder"
-                                text="11401-09210"
-                            >
-                            </SmallProduct>
-                        </Grid>
-                    </Box>
-                </Flex>
-            </GridItem>
         </Grid>
 
         <Box className="pp-table-box" >

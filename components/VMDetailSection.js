@@ -424,7 +424,7 @@ const DetailSection = ({title}) => {
                                                             // eslint-disable-next-line react/jsx-key
                                                             <Product
                                                                 description={product.name}
-                                                                image={product.images}
+                                                                image={JSON.parse(product.images)[0].image1}
                                                                 id={product.id}
                                                             />
                                                         ))}
