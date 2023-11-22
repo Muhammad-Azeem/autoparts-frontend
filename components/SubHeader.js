@@ -154,7 +154,8 @@ const SubHeader = () => {
 
     const handleClearAllGarages = () => {
         clearAllGaragesFromCookie();
-        setGarage([]); // Clear the garage state in your component
+        setGarage([]); 
+        window.location.reload();
         router.push('/');
     };
     const handleLogout = async () => {

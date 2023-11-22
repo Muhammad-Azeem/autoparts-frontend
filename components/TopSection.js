@@ -1,12 +1,35 @@
 // components/Header.js
-import React, {useEffect,useState} from 'react';
+import React, {useRef,useEffect,useState} from 'react';
 import { useRouter } from 'next/router';
 import {Heading,Input,Grid, GridItem ,Box,Container, Image,Text, Flex, Link, Button, Menu, MenuButton, MenuList, MenuItem} from '@chakra-ui/react';
 import '../styles//global.css';
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import ImageCarousel from '../components/ImageCarousel';
 import {vehicleCompany, vehicleModels , vehicleYears } from './API/api';
+import {
+    removeGarageFromCookie,
+    clearAllGaragesFromCookie,
+    getSelectedGarageFromCookie,
+    getGarageFromCookie,
+    addGarageToCookie
+} from "./utility/cookies";
+
+import { DeleteIcon } from '@chakra-ui/icons';
 const TopSection = () => {
+    const [selectedVehicle, setSelectedVehicle] = useState([]);
+    const [isDivOpen, setIsDivOpen] = useState(false);
+    const divRef = useRef();
+
+    useEffect(() => {
+        const vehicle = getSelectedGarageFromCookie();
+        setSelectedVehicle(vehicle);
+    }, []);
+
+    const handleButtonClick = () => {
+        // Toggle the state to show/hide the divs
+        setSelectedVehicle(!selectedVehicle);
+      };
+      
 
     const [years, setYears] = useState([]);
     const [models, setModels] = useState([]);
@@ -77,11 +100,152 @@ const TopSection = () => {
     const handleFindPartsClick = () => {
         router.push('/ProductList');
     };
+    const [isGarageOpen, setIsGarageOpen] = useState(false);
+    const divGarageRef = useRef();
+
+    // Close the div when clicking outside
+    const handleClickOutsideGarage = (event) => {
+        if (divRef.current && !divRef.current.contains(event.target)) {
+            setIsGarageOpen(false);
+        }
+    };
+
+    // Close the div when the cursor hovers out
+    const handleMouseLeaveGarage = () => {
+        setIsGarageOpen(false);
+    };
+
+    // Add click outside event listener when the div is open
+    useEffect(() => {
+        if (isGarageOpen) {
+            document.addEventListener('click', handleClickOutsideGarage);
+        } else {
+            document.removeEventListener('click', handleClickOutsideGarage);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutsideGarage);
+        };
+    }, [isGarageOpen]);
+    const [garages, setGarages] = useState(getGarageFromCookie());
+    const [garage, setGarage] = useState(getGarageFromCookie());
+    const handleDeleteGarage = (id) => {
+        removeGarageFromCookie(id);
+        window.location.reload();
+        setGarages(getGarageFromCookie());
+    };
+
+    useEffect(() => {
+        setGarages(getGarageFromCookie());
+        console.log(garages);
+    }, [isDivOpen]); // Run only once on component mount
+
+
+    const handleClearAllGarages = () => {
+        clearAllGaragesFromCookie();
+        setGarages([]); // Clear the garage state in your component
+        window.location.reload();
+        router.push('/');
+    };
+
+    
+    const handleAddGarage = () => {
+        const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
+        addGarageToCookie(newGarage);
+        setGarage(getGarageFromCookie());
+        // onClose();
+        router.push('/ProductList');
+      };
 
     return (
 
         <Grid className="topSection_main-padding" >
             <GridItem className="section-first"   >
+
+            {selectedVehicle ? (
+                <>
+                <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
+                    Shop for Toyota Parts 
+                </Heading>
+                <Container className="topsection-container"  maxW="container.md">
+                    <Box className="topsextion_heading1">
+                        <Flex mt={25} ml={25} align="center">
+                            <Heading className="topsextion_headings-text" as="h4" size="lg" mb={4}>
+                                My Vehicle
+                            </Heading>
+                        </Flex>
+
+                        <Text ml={25} >
+                            {selectedVehicle.year}  {selectedVehicle.company} {selectedVehicle.model}
+                        </Text>
+                    </Box>
+
+                    <Box className="topsextion_heading2">
+                       
+                        {/* <Heading cursor='pointer' onClick={handleButtonClick}  mt={40} ml={25} as="h4" size="lg"  >
+                            Change Vehicle
+                        </Heading> */}
+                         <Heading cursor='pointer' onMouseEnter={() => setIsGarageOpen(true)} mt={40} ml={25} as="h4" size="lg"  >
+                            Change Vehicle
+                        </Heading>
+                        {isGarageOpen && (
+                                    <div
+                                        ref={divGarageRef}
+                                        style={{
+                                            position: 'absolute',
+                                            // top: '300px', // Adjust the positioning as needed
+                                            // left: '200px',
+                                            width: '400px', // Set the desired width
+                                            background: 'white',
+                                            boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                                            zIndex: '1',
+                                            // Add other styles as needed
+                                        }}
+                                        onMouseLeave={handleMouseLeaveGarage}
+                                    >
+                                        {/* Content of the div */}
+                                        <p className="vehicle-list">Vehicle List</p>
+                                        <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
+                                            {garages.length > 0 ? (
+                                                garages.map((garageEntry) => (
+                                                    <li
+                                                        key={garageEntry.id}
+                                                        className="no-vehicles"
+                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                                    >
+                                                        <div>
+                                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
+                                                            <label htmlFor={garageEntry.id}>
+                                                                {garageEntry.company} {garageEntry.model} {garageEntry.year}
+                                                            </label>
+                                                        </div>
+                                                        <div>
+                                                            <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)}  />
+                                                        </div>
+                                                    </li>
+                                                ))
+                                            ) : (
+                                                <li className="no-vehicles" style={{ textAlign: 'center' }}>
+                                                    No vehicles in the garage
+                                                </li>
+                                            )}
+                                        </ul>
+                                        <div className="vehicle-list-box">
+                                            <p onClick={handleButtonClick} className="add-new-vehicle">Add New Vehicle</p>
+
+                                            <p className="clear-all" onClick={handleClearAllGarages} >Clear All</p>
+                                        </div>
+                                    </div>
+                                )}
+
+                        <Flex ml={25}>
+                            <Button onClick={handleFindPartsClick}  className="find-parts-btn" >Find My Parts</Button>
+                        </Flex>
+                    </Box>
+                </Container>
+                </>
+            ) : (
+  <>
                 <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
                     Shop for Toyota Parts
                 </Heading>
@@ -158,10 +322,13 @@ const TopSection = () => {
                         </Menu>
 
                         <Flex justify="end">
-                            <Button onClick={handleFindPartsClick} mt={14} className="find-parts-btn" >Find My Parts</Button>
+                            <Button  onClick={handleAddGarage}  mt={14} className="find-parts-btn" >Find My Parts</Button>
                         </Flex>
                     </Box>
                 </Container>
+                </>
+            )
+            }
             </GridItem>
             <GridItem className="section-second" style={{zIndex: '-1'}}>
                 <div className="image-container">
