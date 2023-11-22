@@ -432,16 +432,6 @@ const DetailSection = ({title}) => {
                                                     </>
                                                 )}
 
-                                        <Grid className="item productblock-grid" gap={6}>
-                                            {products.map((product) => (
-                                                // eslint-disable-next-line react/jsx-key
-                                                <Product
-                                                    description={product.name}
-                                                    image={product.images}
-                                                    id={product.id}
-                                                />
-                                            ))}
-                                        </Grid>
 
                                             <Text ml={10} mb={10} mt={10}>
                                                 <a  className="see-more" onClick={toggleBoxVisibility}>
