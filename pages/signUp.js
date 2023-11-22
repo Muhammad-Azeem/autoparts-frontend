@@ -13,19 +13,6 @@ import SignUpForm from "../components/SignUpForm";
 // import LoaderSpinner from "../components/LoaderSpinner";
 
 const signUp = () => {
-//     const [loading, setLoading] = useState(true);
-//     // Simulating an asynchronous operation
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       // Simulate an API call or any asynchronous task
-//       await new Promise((resolve) => setTimeout(resolve, 2000));
-
-//       // After the task is done, set loading to false
-//       setLoading(false);
-//     };
-
-//     fetchData();
-//   }, []);
     return (
         <div>
             <div className="main-header">
@@ -37,9 +24,9 @@ const signUp = () => {
             </div>
 
             <main>
-            
+
                 <SignUpForm />
-              
+
             </main>
 
             <div className="main-footer">

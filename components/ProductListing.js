@@ -1,6 +1,8 @@
 // components/Header.js
 import React, {useRef, useState , useEffect} from 'react';
 import { useRouter } from 'next/router';
+import { css } from '@emotion/react';
+import { ClipLoader } from 'react-spinners';
 import {
     Heading,
     Input,
@@ -21,7 +23,7 @@ import {
 } from '@chakra-ui/react';
 import '../styles//global.css';
 import { DeleteIcon } from '@chakra-ui/icons';
-import {getAllCategories, getProductsBySubCategoryId} from './API/api';
+import {getAllCategories, getProductsBySubCategoryId,getVehicleId} from './API/api';
 import {FaMinus, FaPlus} from "react-icons/fa";
 import {
     clearAllGaragesFromCookie,
@@ -30,18 +32,26 @@ import {
     removeGarageFromCookie
 } from "./utility/cookies";
 import AddVehicleModal from "./AddVehicleModal";
-
+import LoaderSpinnerMini from './LoaderSpinnerMini';
+import LoaderSpinner from './LoaderSpinner';
 const ProductListing = () => {
-
+    const [loading, setLoading] = useState(true);
+    const [loading2, setLoading2] = useState(true);
 
     const [categories, setCategories] = useState([]);
+    const [vehicleId, setVehicleId] = useState([]);
+    const [activeVehicle, setActiveVehicle] = useState([]);
+
+
 
     useEffect(() => {
-        const selectedGarage = getSelectedGarageFromCookie();
+
         const fetchCategories = async () => {
             try {
+                setLoading2(true);
                 const data = await getAllCategories();
                 setCategories(data);
+                setLoading2(false);
 
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -50,7 +60,23 @@ const ProductListing = () => {
 
         fetchCategories();
     }, []);
+    useEffect(async() => {
+        const fetchVehicleId = async () => {
+            const data1 = await getSelectedGarageFromCookie();
+            setActiveVehicle(data1);
+            if (data1){
+                try {
+                    const data = await getVehicleId(data1);
+                    setVehicleId(data.id);
 
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                }
+        }
+        };
+
+        fetchVehicleId();
+    }, []);
     const [activeGridItem, setActiveGridItem] = useState(1);
 
     const [isBoxVisible, setIsBoxVisible] = useState(false);
@@ -155,10 +181,15 @@ const ProductListing = () => {
     };
     const [productsByCategory, setProductsByCategory] = useState([])
     const handleMouseEnter = async (subCategoryId, subCategoryName) => {
+      
+        setLoading(true);
         setIsDivOpen(subCategoryName);
-        const response = await getProductsBySubCategoryId(subCategoryId)
+
+        const response = await getProductsBySubCategoryId(subCategoryId,vehicleId)
         setProductsByCategory(response.products);
+        setLoading(false);
         console.log(response.products, 'tp')
+
     };
 
     // Add click outside event listener when the div is open
@@ -243,7 +274,11 @@ const ProductListing = () => {
             </Breadcrumb>
 
             <Heading className="Product-listing-heading"  margin="0" as="h2" mt={4}>
-                2022 Toyota 4Runner Parts
+                {activeVehicle && (
+                    <>
+                        {activeVehicle.year} {activeVehicle.company} {activeVehicle.model} Parts
+                    </>
+                )}
             </Heading>
             <Grid
                 templateColumns="20% 80%"
@@ -311,7 +346,11 @@ const ProductListing = () => {
                             </Text>
                             <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />
                             <Box className="vmm-leftside-box" fontSize="lg" fontWeight="600" color="black">
-                                2022 Toyota 4Runner
+                                {activeVehicle && (
+                                    <>
+                                        {activeVehicle.year} {activeVehicle.company} {activeVehicle.model}
+                                    </>
+                                )}
                             </Box>
                         </Box>
 
@@ -344,6 +383,11 @@ const ProductListing = () => {
                                 </Heading>
 
                                     <Box className="list-category-box" >
+                                    {loading2 ? (
+                                        <LoaderSpinner />
+                                            ) : (
+                                            <>
+
                                         {categories.map((category, index) => (
                                             <>
                                                 <Heading className="list-category"  onClick={() => toggleList(category.name)} as="h3">
@@ -378,17 +422,31 @@ const ProductListing = () => {
                                                                                     }}
                                                                                     onMouseLeave={handleMouseLeave}
                                                                                 >
-                                                                                    <div className='sub-mod-box' >
+                                                                                    <div className='sub-mod-box' style={{position:'relative'}} >
                                                                                         <Heading className='sub-mod-head'  margin="0" as="h2" mt={4}>
                                                                                             Parts in {subCategory.name}
                                                                                         </Heading>
+                                                                                        {loading ? (
+                                                                                            <LoaderSpinnerMini />
+                                                                                                ) : (
+                                                                                                <>
+
                                                                                         {productsByCategory.map((product, index) => (
 
+
+                                                                                            // eslint-disable-next-line react/jsx-key
                                                                                             <Box mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
                                                                                                 <Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>
                                                                                                 <Text ml={25} mr={15} className='sub-mod-innerbox-text'>{product.name}</Text>
+                                                                                                {/* <div className="sweet-loading22" css={loaderContainerStyle}>
+                                                                                                    <ClipLoader css={override} size={150} color={'#123abc'} loading={true} />
+                                                                                                </div> */}
                                                                                             </Box>
-                                                                                            ))}
+                                                                                            ))} 
+                                                                                            </>
+                                                                                                )}
+
+                                                                                               
                                                                                     </div>
                                                                                 </div>
                                                                         )}
@@ -400,6 +458,8 @@ const ProductListing = () => {
                                                     )}
                                             </>
                                         ))}
+                                        </>
+                                            )}
                                     </Box>
                             </Grid>
                         </Box>

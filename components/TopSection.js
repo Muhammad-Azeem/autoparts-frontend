@@ -12,31 +12,23 @@ const TopSection = () => {
     const [models, setModels] = useState([]);
     const [company, setCompany] = useState([]);
 
-    useEffect(() => {
-        const fetchYears = async () => {
+        const fetchYears = async (selectedModal) => {
           try {
-            const response = await vehicleYears();
+            const response = await vehicleYears(selectedModal);
              setYears(response);
           } catch (error) {
             console.error('Error fetching years:', error);
           }
         };
 
-        fetchYears();
-      }, []);
-
-      useEffect(() => {
-        const fetchModels = async () => {
+        const fetchModels = async (selectedCompany) => {
           try {
-            const response = await vehicleModels();
+            const response = await vehicleModels(selectedCompany);
             setModels(response);
           } catch (error) {
             console.error('Error fetching models:', error);
           }
         };
-
-        fetchModels();
-      }, []);
 
       useEffect(() => {
         const fetchCompany = async () => {
@@ -60,6 +52,8 @@ const TopSection = () => {
 
       const handleModelSelection = (selectedModal) => {
         setSelectedModal(selectedModal);
+          fetchYears(selectedModal);
+          setSelectedYear(null);
       };
 
       const [selectedCompany, setSelectedCompany] = useState(null);
@@ -147,7 +141,7 @@ const TopSection = () => {
 
                         <Menu>
                             <MenuButton mt={10}  className="topsection-input"  as={Button} rightIcon={<ChevronDownIcon />}>
-                                {selectedYear || '-- Select Modal --'}
+                                {selectedYear || '-- Select Year --'}
                             </MenuButton>
                             <MenuList zIndex={1}   maxHeight="200px" overflowY="auto">
                                 {years.length > 0 &&

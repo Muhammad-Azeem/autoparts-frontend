@@ -35,31 +35,23 @@ const DetailSection = ({title}) => {
     const [models, setModels] = useState([]);
     const [company, setCompany] = useState([]);
 
-    useEffect(() => {
-        const fetchYears = async () => {
-          try {
-            const response = await vehicleYears();
-             setYears(response);
-          } catch (error) {
+    const fetchYears = async (selectedModal) => {
+        try {
+            const response = await vehicleYears(selectedModal);
+            setYears(response);
+        } catch (error) {
             console.error('Error fetching years:', error);
-          }
-        };
-    
-        fetchYears();
-      }, []);
+        }
+    };
 
-      useEffect(() => {
-        const fetchModels = async () => {
-          try {
-            const response = await vehicleModels();
+    const fetchModels = async (selectedCompany) => {
+        try {
+            const response = await vehicleModels(selectedCompany);
             setModels(response);
-          } catch (error) {
+        } catch (error) {
             console.error('Error fetching models:', error);
-          }
-        };
-    
-        fetchModels();
-      }, []);
+        }
+    };
 
       useEffect(() => {
         const fetchCompany = async () => {
@@ -70,26 +62,33 @@ const DetailSection = ({title}) => {
             console.error('Error fetching companies:', error);
           }
         };
-    
+
         fetchCompany();
       }, []);
 
-      const [selectedYear, setSelectedYear] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
 
-      const handleYearSelection = (selectedYear) => {
-          setSelectedYear(selectedYear);
-      };
-      const [selectedModal, setSelectedModal] = useState(null);
+    const handleYearSelection = (selectedYear) => {
+        setSelectedYear(selectedYear);
+    };
+    const [selectedModal, setSelectedModal] = useState(null);
 
-      const handleModelSelection = (selectedModal) => {
+    const handleModelSelection = (selectedModal) => {
         setSelectedModal(selectedModal);
-      };
+        fetchYears(selectedModal);
+        setSelectedYear(null);
+    };
 
-      const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
-      const handleCompanySelection = (selectedCompany) => {
-          setSelectedCompany(selectedCompany);
-        };    
+    const handleCompanySelection = (selectedCompany) => {
+        setSelectedCompany(selectedCompany);
+        fetchModels(selectedCompany);
+        setYears([]);
+        setSelectedModal(null);
+        setSelectedYear(null);
+
+    };
 
     const [activeGridItem, setActiveGridItem] = useState(1);
 
@@ -249,7 +248,7 @@ const DetailSection = ({title}) => {
                                 ))}
                             </MenuList>
                         </Menu>
-                        
+
                         <Menu>
                             <MenuButton   className="endbar-topsection-input2"  as={Button} rightIcon={<ChevronDownIcon />}>
                                 {selectedYear || '-- Select Modal --'}
@@ -431,6 +430,7 @@ const DetailSection = ({title}) => {
                                                     </Grid>
                                                     </>
                                                 )}
+
 
                                             <Text ml={10} mb={10} mt={10}>
                                                 <a  className="see-more" onClick={toggleBoxVisibility}>

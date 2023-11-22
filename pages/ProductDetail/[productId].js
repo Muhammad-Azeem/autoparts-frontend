@@ -8,7 +8,7 @@ import HeaderMobile from "../../components/HeaderMobile";
 import MobileFooter from "../../components/MobileFooter";
 import ProductDetail from "../../components/ProductDetail";
 import ModelSection from "../../components/ModelSection";
-import LoaderSpinner from "../components/LoaderSpinner"
+import LoaderSpinner from "../../components/LoaderSpinner"
 const HomePage = () => {
 
     const [loading, setLoading] = useState(true);
