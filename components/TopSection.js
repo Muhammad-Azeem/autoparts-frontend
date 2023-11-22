@@ -60,6 +60,10 @@ const TopSection = () => {
 
       const handleCompanySelection = (selectedCompany) => {
           setSelectedCompany(selectedCompany);
+          fetchModels(selectedCompany);
+          setYears([]);
+          setSelectedModal(null);
+          setSelectedYear(null);
         };
 
 
