@@ -30,6 +30,7 @@ import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";
 import {formatCurrency} from "./utility/constants";
 import Select from 'react-select';
+
 import { countries } from 'countries-list';
 
 const ShoppingProductPage = () => {
@@ -164,6 +165,7 @@ const ShoppingProductPage = () => {
             localStorage.removeItem('cEmail');
             localStorage.removeItem('subTotal');
             Cookies.remove('cart');
+            Cookies.remove('total');
 
             if(user){
                 await router.push('/AccountDashboard');
