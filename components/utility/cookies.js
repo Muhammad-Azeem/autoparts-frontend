@@ -82,38 +82,64 @@ export const setCartTotalCookie = (amount) => {
   Cookies.set(CART_TOTAL_COOKIE_NAME, amount, { expires: 100 }); // Set expiration as needed
 };
 
-export const addToCartToCockie = (newCart, quantity = 1) => {
-  let cartTotal = getCartTotalPriceFromCookie();
-  if(cartTotal){
-    cartTotal = parseInt(cartTotal) + (parseInt(newCart.price) * quantity)
-    setCartTotalCookie(cartTotal);
-  }else
-  {
-    let total = parseInt(newCart.price) * quantity;
-    setCartTotalCookie(total);
-  }
-  const existingCart = getCartFromCookie();
-  newCart.quantity = quantity;
-  // Check if the cart already exists based on company and model
-  const existingItemIndex = existingCart.findIndex((item) => item.id === newCart.id);
-  if (existingItemIndex !== -1) {
-    // const updatedCart = [...newCart];
-    existingCart[existingItemIndex].quantity = parseInt(existingCart[existingItemIndex].quantity) + parseInt(newCart.quantity);
-    setCartCookie(existingCart);
-  }else {
-    const cart = getCartFromCookie();
-    cart.push(newCart);
-    setCartCookie(cart);
+// export const addToCartToCockie = async (newCart, quantity = 1) => {
+//   let cartTotal = getCartTotalPriceFromCookie();
+//   if(cartTotal){
+//     cartTotal = parseInt(cartTotal) + (parseInt(newCart.price) * quantity)
+//     setCartTotalCookie(cartTotal);
+//   }else
+//   {
+//     let total = parseInt(newCart.price) * quantity;
+//     setCartTotalCookie(total);
+//   }
+//   const existingCart = getCartFromCookie();
+//   newCart.quantity = quantity;
+//   // Check if the cart already exists based on company and model
+//   const existingItemIndex = existingCart.findIndex((item) => item.id === newCart.id);
+//   if (existingItemIndex !== -1) {
+//     // const updatedCart = [...newCart];
+//     existingCart[existingItemIndex].quantity = parseInt(existingCart[existingItemIndex].quantity) + parseInt(newCart.quantity);
+//     setCartCookie(existingCart);
+//   }else {
+//     const cart = await getCartFromCookie();
+//     cart.push(newCart);
+//     console.log('yad')
+//     console.log(cart)
+//     await setCartCookie(cart);
+//
+//   }
+// };
+export const addToCartToCockie = async (newCart, quantity = 1) => {
+  try {
+    let cartTotal = getCartTotalPriceFromCookie();
 
+    if (cartTotal) {
+      cartTotal = parseInt(cartTotal) + parseInt(newCart.price) * quantity;
+      setCartTotalCookie(cartTotal);
+    } else {
+      let total = parseInt(newCart.price) * quantity;
+      setCartTotalCookie(total);
+    }
+
+    const existingCart = getCartFromCookie();
+    newCart.quantity = quantity;
+
+    // Check if the cart already exists based on the item ID
+    const existingItemIndex = existingCart.findIndex((item) => item.id === newCart.id);
+
+    if (existingItemIndex !== -1) {
+      existingCart[existingItemIndex].quantity += parseInt(newCart.quantity);
+      setCartCookie(existingCart);
+    } else {
+      const cart = await getCartFromCookie();
+      cart.push(newCart);
+      await setCartCookie(cart);
+    }
+  } catch (error) {
+    console.error('Error in addToCartToCockie:', error);
   }
-  // if(isCartUnique){
-  //   const cart = getCartFromCookie();
-  //   cart.push(newCart);
-  //   setCartCookie(cart);
-  // }else {
-  //   console.log('idar aya?')
-  // }
 };
+
 export const setCartCookie = (cart) => {
   Cookies.set(AddToCart_COOKIE_NAME, JSON.stringify(cart), { expires: 100 }); // Set expiration as needed
 };
