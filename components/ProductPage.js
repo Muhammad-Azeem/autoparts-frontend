@@ -115,8 +115,17 @@ const ProductPage = () => {
 
     const [quantity, setQuantity] = useState();
 
-    const handleAddToCart = () => {
-        addToCartToCockie(product, quantity)
+    const handleAddToCart = async () => {
+        let temp = {};
+        temp.id = product.id
+        temp.name = product.name
+        temp.description = product.description
+        temp.images = product.images
+        temp.part_number = product.part_number
+        temp.replaces = product.replaces
+        temp.price = product.price
+
+        await addToCartToCockie(temp, quantity)
         router.push('/AddToCart/');
 
     };

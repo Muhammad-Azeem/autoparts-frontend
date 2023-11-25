@@ -111,7 +111,17 @@ const   Cart = () => {
                                 {cart.map((cartItem, index) => (
                                     <Tr key={cartItem.id} style={{ marginTop: '10px' }}>
                                         <Td>
-                                            <Image className="cart-box-image" src={cartItem.images} alt={`Image ${cartItem.id}`} />
+                                            {cartItem.images &&
+                                                Array.isArray(JSON.parse(cartItem.images)) &&
+                                                JSON.parse(cartItem.images).length > 0 && (
+                                                    <Image
+                                                        className="pp-box1-img"
+                                                        src={JSON.parse(cartItem.images)[0].image1}
+                                                        alt="Image 1"
+                                                    />
+                                                )}
+
+                                            {/*<Image className="cart-box-image" src={cartItem.images} alt={`Image ${cartItem.id}`} />*/}
                                         </Td>
                                         <Td width="250px" textAlign="left">
                                             Part No.: {cartItem.part_number}
@@ -121,7 +131,7 @@ const   Cart = () => {
                                             <br/>
                                             Replaced By: {cartItem.replaces}
                                             <br/>
-                                            
+
                                             <span style={{ cursor: 'pointer', fontSize: '12px', color: '#E52222' }} onClick={() => handleRemoveFromCart(index)}>
                                                 Remove
                                             </span>
