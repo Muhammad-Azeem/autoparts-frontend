@@ -138,5 +138,5 @@ export const clearAllGaragesFromCookie = () => {
 
 export const getSelectedGarageFromCookie = () => {
   const allGarages = getGarageFromCookie();
-  return allGarages.find((garage) => garage.is_selected) || null;
+  return allGarages.find((garage) => garage.is_selected) || [];
 };
