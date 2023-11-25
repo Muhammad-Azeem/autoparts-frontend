@@ -29,7 +29,7 @@ const TopSection = () => {
         // Toggle the state to show/hide the divs
         setSelectedVehicle(!selectedVehicle);
       };
-      
+
 
     const [years, setYears] = useState([]);
     const [models, setModels] = useState([]);
@@ -148,7 +148,7 @@ const TopSection = () => {
         router.push('/');
     };
 
-    
+
     const handleAddGarage = () => {
         const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
         addGarageToCookie(newGarage);
@@ -162,10 +162,10 @@ const TopSection = () => {
         <Grid className="topSection_main-padding" >
             <GridItem className="section-first"   >
 
-            {selectedVehicle ? (
+            {selectedVehicle.length ? (
                 <>
                 <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
-                    Shop for Toyota Parts 
+                    Shop for Toyota Parts
                 </Heading>
                 <Container className="topsection-container"  maxW="container.md">
                     <Box className="topsextion_heading1">
@@ -181,7 +181,7 @@ const TopSection = () => {
                     </Box>
 
                     <Box className="topsextion_heading2">
-                       
+
                         {/* <Heading cursor='pointer' onClick={handleButtonClick}  mt={40} ml={25} as="h4" size="lg"  >
                             Change Vehicle
                         </Heading> */}
