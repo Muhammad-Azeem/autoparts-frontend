@@ -35,12 +35,25 @@ import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {FaMinus, FaPlus} from "react-icons/fa";
 import Product from "./Product";
 import SmallProduct from "./SmallProduct";
-import AddVehicleModal from "./AddVehicleModal";
 import {getProductbyId} from "./API/api";
-import {addToCartToCockie} from "./utility/cookies";
+import {addToCartToCockie,getSelectedGarageFromCookie,} from "./utility/cookies";
 import {formatCurrency} from "./utility/constants";
-
+import CheckFitModal from './CheckFitModal';
+// import {
+//     removeGarageFromCookie,
+//     clearAllGaragesFromCookie,
+    
+//     getGarageFromCookie,
+//     addGarageToCookie
+// } from "./utility/cookies";
 const ProductPage = () => {
+    const [selectedVehicle, setSelectedVehicle] = useState([]);
+    useEffect(() => {
+        const vehicle = getSelectedGarageFromCookie();
+        setSelectedVehicle(vehicle);
+    }, []);
+      
+
     const [loading, setLoading] = useState(true);
 
     const [isEstimateVisible, setIsEstimateVisible] = useState(false);
@@ -99,7 +112,9 @@ const ProductPage = () => {
 
     const onModalOpen = () => setIsModalOpen(true);
     const onModalClose = () => setIsModalOpen(false);
-    const [quantity, setQuantity] = useState()
+
+    const [quantity, setQuantity] = useState();
+
     const handleAddToCart = () => {
         addToCartToCockie(product, quantity)
         router.push('/AddToCart/');
@@ -119,17 +134,72 @@ const ProductPage = () => {
                     <BreadcrumbLink fontWeight="600" href='#'>Toyota 9034112012</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-
-            {/*<Box className="pp-innerbox">*/}
-            {/*    <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>*/}
-            {/*    <Text mr={15} className="pp-innerbox-text">*/}
-            {/*        Make sure this part fits your vehicle*/}
-            {/*    </Text>*/}
-            {/*    <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">*/}
-            {/*        Check Fit {'>'}*/}
-            {/*    </Text>*/}
-            {/*    <AddVehicleModal isOpen={isModalOpen} onClose={onModalClose} />*/}
-            {/*</Box>*/}
+            {selectedVehicle && selectedVehicle.id == product.id  ? (
+           
+             <Box className="pp-innerbox-fits">
+             <Box display='flex'>
+                 <Image ml={15} className="pp-images-fits" src="/images/check.png" alt="Image 1"/>
+                 <Box ml={15}>
+                         <Text mr={15} mb={0} className="pp-innerbox-text-green">
+                             This part fits the vehicle you selected:
+                         </Text>
+                         <Text mr={15} className="pp-innerbox-text-fits">
+                             My Vehicle: 2018 Toyota 4Runner
+                         </Text>
+                         <Box className='pp-inner-whitebox'>
+                             <Text className="pp-innerbox-text-fits">
+                                 The vehicle options this part fits:
+                             </Text>
+                             <Text ml={5} mt={10} fontWeight='normal' fontSize='12px' className="pp-innerbox-text-fits">
+                                 Production Date: 08/2013-08/2019
+                             </Text>
+                             <Text ml={5} fontWeight='normal' fontSize='12px' className="pp-innerbox-text-fits">
+                                 Fitting Vehicle Options: 1GRFE.. GRN28#
+                             </Text>
+                         </Box>
+                 </Box>
+             </Box>
+            <Text cursor="pointer" onClick={onModalOpen}  mr={35} >
+                Change Vehicle
+            </Text>
+           
+         </Box>
+            ) : (
+                <Box className="pp-innerbox-unfits">
+                <Box display='flex'>
+                    <Image ml={15} className="pp-images-fits" src="/images/danger.png" alt="Image 1"/>
+                    <Box ml={15}>
+                            <Text mr={15} mb={0} className="pp-innerbox-text-red">
+                                This part does not fit the vehicle you selected:
+                            </Text>
+                            <Text mr={15} className="pp-innerbox-text-fits">
+                                
+                                My Vehicle: {selectedVehicle.year} {selectedVehicle.company} {selectedVehicle.model}
+                            </Text>
+                            <Box className='pp-inner-blackbox'>
+                                <Link href='/ProductList' textDecoration='none' className="pp-blackbox-text-fits">
+                                    View Similar Parts That Fit
+                                </Link>                            
+                            </Box>
+                    </Box>
+                </Box>
+               <Text cursor="pointer" onClick={onModalOpen}  mr={35} >
+                   Change Vehicle
+               </Text>              
+            </Box>
+            )}
+              {selectedVehicle.length === 0 ? (
+            <Box className="pp-innerbox">
+               <Image ml={15} className="pp-images" src="/images/caution.png" alt="Image 1"/>
+               <Text mr={15} className="pp-innerbox-text">
+                   Make sure this part fits your vehicle
+               </Text>
+               <Text cursor="pointer" onClick={onModalOpen}  mr={35} className="pp-checkbtn">
+                   Check Fit {'>'}
+               </Text>
+               <CheckFitModal isOpen={isModalOpen} onClose={onModalClose} />
+            </Box>
+              ) : null}
         </Box>
 
         <Box className="pp-productDetail-main-box">

@@ -2295,6 +2295,67 @@ body{
     background: #f0f0f0;
     /*width: max-content;*/
 }
+.pp-innerbox-fits{
+    display: flex;
+    justify-content: space-between;
+    background: #E8F5E9;
+    /*width: max-content;*/
+}
+.pp-innerbox-unfits{
+    display: flex;
+    justify-content: space-between;
+    background: #ffebee;
+    /*width: max-content;*/
+}
+.pp-innerbox-text-red{
+    color: #c62828;
+    font-size: 14px;
+    font-weight: 700;
+
+}
+.pp-images-fits {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-right: 5px;
+}
+.pp-innerbox-text-green{
+    color: #008006;
+    font-size: 14px;
+    font-weight: 700;
+
+}
+.pp-inner-whitebox{
+    background: white;
+    padding: 6px;
+    margin-top: 5px;
+    border: 1px solid grey; 
+    width: 400px;
+    margin-bottom: 15px;
+}
+.pp-inner-blackbox{
+    background: linear-gradient(180deg,#404040,#404040 0,#202020 100%,#202020 0);
+    border: 0.01rem solid #202020;
+    padding: 6px;
+    margin-top: 5px;
+    width: 300px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.pp-innerbox-text-fits{
+    color: #333;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+}
+.pp-blackbox-text-fits{
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    cursor: pointer;
+}
 .pp-innerbox-text{
     color: #c89010;
     font-size: 14px;
