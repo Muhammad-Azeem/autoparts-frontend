@@ -1468,6 +1468,7 @@ body{
     font-weight: 600;
     line-height: 1.33;
     margin: 0;
+    width: 75%;
 }
 .pp-box2-heading1{
     border-bottom: 1px dotted #d0d0d0;
@@ -1712,6 +1713,9 @@ body{
 }
 .pp-table2{
     margin-left: 26px;
+    height: 390px;
+    width: 80%;
+    padding: 5px 10px;
 }
 .pp-td1{
     background: #eff0f0;
@@ -2512,10 +2516,18 @@ li {
         padding: 8px;
     }
     .pp-price-box {
-        width: 225px;
+        width: 200px;
+        right: -60px;
     }
     .pp-price-box2 {
-        width: 225px;
+        width: 200px;
+        right: -60px;
+    }
+    .spec-div{
+        width: 80%;
+    }
+    .pp-box2-title{
+        width: 80%;
     }
 }
 @media only screen and (min-width: 1024px) and (min-height: 1366px){
@@ -2618,8 +2630,12 @@ li {
     .or-image {
         left: -20px;
     }
+
 }
 @media(max-width:1280px){
+    .productDetail-box2-heads{
+        width: 60%;
+    }
     .endbar-topsection-input{
         margin-left: 15px;
         width: 115px;
@@ -2666,6 +2682,10 @@ li {
 }
 
 @media(max-width:1024px){
+    .pp-box2-title {
+        font-size: 15px;
+    }
+
     .acsry-text-bottom {
         padding: 0px 45px;
     }
@@ -2723,6 +2743,19 @@ li {
     }
 }
 @media(max-width:768px){
+    .pp-box {
+        padding: 0px 30px;
+    }
+    .pp-productDetail-main-box {
+        margin: 10px 35px;
+    }
+    .pp-table-box {
+
+        padding: 0px 40px;
+    }
+    .pp-inner-whitebox{
+        width: 280px;
+    }
     .header {
         padding: 20px 10px;
     }
@@ -2820,7 +2853,27 @@ li {
 /*    */
 /*}*/
 @media(max-width:480px) {
-
+    .pp-inner-whitebox {
+        width: 220px;
+    }
+        .pp-innerbox-unfits{
+        display: block;
+    }
+    .pp-innerbox-fits{
+        display: block;
+    }
+    .pp-innerbox-unfits p{
+        text-align: center;
+        padding-bottom: 15px;
+    }
+    .pp-innerbox-fits p{
+        text-align: center;
+        padding-bottom: 15px;
+    }
+    .pp-inner-blackbox{
+        width: 230px;
+        margin-top: 15px;
+    }
     .wholesale-heading{
         font-size: 30px;
         top: -50px;
