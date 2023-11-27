@@ -685,7 +685,16 @@ const ShoppingProductPage = () => {
                                                                     {cart.map((cartItem, index) => (
                                                                         <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
+                                                                                {cartItem.images &&
+                                                                                    Array.isArray(JSON.parse(cartItem.images)) &&
+                                                                                    JSON.parse(cartItem.images).length > 0 && (
+                                                                                        <Image
+                                                                                            className="pp-box1-img"
+                                                                                            src={JSON.parse(cartItem.images)[0].image1}
+                                                                                            alt="Image 1"
+                                                                                            height={'85px'}
+                                                                                        />
+                                                                                    )}
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
                                                                                 Part No.: {cartItem.part_number}
@@ -698,13 +707,13 @@ const ShoppingProductPage = () => {
 
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                                ${cartItem.price}
+                                                                                {formatCurrency(cartItem.price)}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 {cartItem.quantity}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="right">
-                                                                                ${(cartItem.price * cartItem.quantity)}
+                                                                                {formatCurrency(cartItem.price * cartItem.quantity)}
                                                                             </Td>
                                                                         </Tr>
                                                                     ))}

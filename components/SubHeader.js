@@ -116,7 +116,12 @@ const SubHeader = () => {
 
     // Close the div when the cursor hovers out
     const handleMouseLeave = () => {
-        setIsDivOpen(false);
+        if (
+            divRef.current?.contains &&
+            (!divRef.current.contains(event.relatedTarget) || event.relatedTarget.classList.contains("vehicle-list-box"))
+        ) {
+            setIsDivOpen(false);
+        }
     };
 
     // Add click outside event listener when the div is open
@@ -141,6 +146,7 @@ const SubHeader = () => {
 
 
     const handleDeleteGarage = (id) => {
+        setIsDivOpen(false);
         removeGarageFromCookie(id);
         setGarage(getGarageFromCookie());
     };
@@ -154,7 +160,7 @@ const SubHeader = () => {
 
     const handleClearAllGarages = () => {
         clearAllGaragesFromCookie();
-        setGarage([]); 
+        setGarage([]);
         window.location.reload();
         router.push('/');
     };
@@ -328,7 +334,7 @@ const SubHeader = () => {
             <div>
                 <Flex align="center" onMouseEnter={() => setIsDivOpen(true)}>
                     <Image src="/images/black-car.png" alt="Image Alt Text" className="right-subheader-img"/>
-                    <Link className="sub-header-rightlinks" href="#">
+                    <Link className="sub-header-rightlinks" href="#" onMouseLeave={handleMouseLeave}>
                         My Garage
                     </Link>
                 </Flex>
@@ -355,13 +361,14 @@ const SubHeader = () => {
                                     <li
                                         key={garageEntry.id}
                                         className="no-vehicles"
-                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', cursor: 'pointer !important' }}
+                                        onClick={() => handleRadioChange(index)}
                                     >
                                         <div>
-                                            <input type="radio" id={garageEntry.id} value={garageEntry.name} name='garage'   checked={garageEntry.is_selected}  onChange={() => handleRadioChange(index)} />
-                                            <label htmlFor={garageEntry.id}>
+                                            <input type="radio" id={garageEntry.id} value={garageEntry.name} name='garage'   checked={garageEntry.is_selected}   />
+                                            <span >
                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
-                                            </label>
+                                            </span>
                                         </div>
                                         <div>
                                             <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)} />
