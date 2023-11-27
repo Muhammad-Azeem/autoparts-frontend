@@ -433,7 +433,7 @@ const ShoppingProductPage = () => {
                                                                 </Text>
                                                             </Box>
                                                             ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                            <Box display='flex'>
+                                                            <Box >
                                                                 <Box className='boxOne'>
                                                                     <Box>
                                                                         <FormControl mt={5}>
@@ -446,7 +446,8 @@ const ShoppingProductPage = () => {
                                                                         </FormControl>
                                                                     </Box>
                                                                 </Box>
-                                                                <Box className='boxTwo'>
+                                                                {/*<Box className='boxTwo'>*/}
+                                                                <Box >
                                                                     <Heading as="h5" fontWeight="200">
                                                                         You have the option of creating an account for future orders and faster checkouts.
                                                                     </Heading>
