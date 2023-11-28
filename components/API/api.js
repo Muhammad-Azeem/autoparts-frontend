@@ -231,6 +231,19 @@ export const vehicleYears = async (model) => {
     }
 };
 
+
+export const getVehicles = async () => {
+
+    try {
+        const response = await axios.get(`${API_BASE_URL}/vehicle/getVehicles`, {
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 export const vehicleModels = async (company) => {
 
     try {

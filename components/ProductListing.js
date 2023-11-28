@@ -29,7 +29,7 @@ import {
     clearAllGaragesFromCookie,
     getGarageFromCookie,
     getSelectedGarageFromCookie,
-    removeGarageFromCookie
+    removeGarageFromCookie, setGarageCookie
 } from "./utility/cookies";
 import AddVehicleModal from "./AddVehicleModal";
 import LoaderSpinnerMini from './LoaderSpinnerMini';
@@ -60,21 +60,24 @@ const ProductListing = () => {
 
         fetchCategories();
     }, []);
-    useEffect(async() => {
-        const fetchVehicleId = async () => {
-            const data1 = await getSelectedGarageFromCookie();
-            setActiveVehicle(data1);
-            if (data1){
-                try {
-                    const data = await getVehicleId(data1);
-                    setVehicleId(data.id);
+    const fetchVehicleId = async () => {
+        const data1 = await getSelectedGarageFromCookie();
+        setActiveVehicle(data1);
+        if (data1.length != 0 ){
+            try {
+                const data = await getVehicleId(data1);
+                setVehicleId(data.id);
 
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                }
+            } catch (error) {
+                console.error('Error fetching product:', error);
+            }
         }
-        };
+        else{
+            window.location.href = '/';
+        }
+    };
 
+    useEffect(async() => {
         fetchVehicleId();
     }, []);
     const [activeGridItem, setActiveGridItem] = useState(1);
@@ -161,7 +164,7 @@ const ProductListing = () => {
         router.push('/');
     };
     const handleProductClick = (id) => {
-        router.push('/ProductPage/'+id);
+        window.location.href = '/ProductPage/'+id;
     };
     const [isDivOpen, setIsDivOpen] = useState(false);
     const divRef = useRef();
@@ -181,7 +184,7 @@ const ProductListing = () => {
     };
     const [productsByCategory, setProductsByCategory] = useState([])
     const handleMouseEnter = async (subCategoryId, subCategoryName) => {
-      
+
         setLoading(true);
         setIsDivOpen(subCategoryName);
 
@@ -245,8 +248,37 @@ const ProductListing = () => {
     };
 
     // Close the div when the cursor hovers out
-    const handleMouseLeaveGarage = () => {
-        setIsGarageOpen(false);
+    // const handleMouseLeaveGarage = () => {
+    //     setIsGarageOpen(false);
+    // };
+    const handleMouseLeaveGarage = (event) => {
+        // Check if the mouse is leaving both the "Change Vehicle" link and the garage dropdown
+        if (
+            divGarageRef.current?.contains &&
+            (!divGarageRef.current.contains(event.relatedTarget) || event.relatedTarget.classList.contains("vehicle-list-box"))
+        ) {
+            setIsGarageOpen(false);
+        }
+    };
+    const [garage, setGarage] = useState(getGarageFromCookie());
+    const handleRadioChange = (selectedIndex) => {
+        const updatedGarageList = garage.map((garageEntry, index) => ({
+            ...garageEntry,
+            is_selected: index === selectedIndex,
+        }));
+
+        // Set is_selected to false for all other garages except the selected one
+        updatedGarageList.forEach((garageEntry, index) => {
+            if (index !== selectedIndex) {
+                garageEntry.is_selected = false;
+            }
+        });
+
+        // Sort the updated garage list to display the selected garage on top
+        updatedGarageList.sort((a, b) => (a.is_selected ? -1 : b.is_selected ? 1 : 0));
+        // Update the cookie with the updated garage list
+        setGarageCookie(updatedGarageList);
+        window.location.reload();
     };
 
     // Add click outside event listener when the div is open
@@ -289,9 +321,9 @@ const ProductListing = () => {
                 <Grid colSpan={1} className="product-listing-left-row" mt={15} gap={6}>
                     <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                         <Box border="1px solid #b0b0b0" alignItems="center">
-                            <Text position='relative' className="vm-leftside-heading" size="lg">
+                            <Text position='relative' className="vm-leftside-heading" size="lg" onMouseLeave={handleMouseLeaveGarage} >
                                 My Vehicle
-                                <a  onMouseEnter={() => setIsGarageOpen(true)}  className="change-vehicle">
+                                <a  onMouseEnter={() => setIsGarageOpen(true)}  className="change-vehicle" >
                                     Change Vehicle
                                 </a>
                                 {isGarageOpen && (
@@ -313,17 +345,18 @@ const ProductListing = () => {
                                         <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
-                                                garages.map((garageEntry) => (
+                                                garages.map((garageEntry, index) => (
                                                     <li
                                                         key={garageEntry.id}
                                                         className="no-vehicles"
-                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', cursor: 'pointer !important' }}
+                                                        onClick={() => handleRadioChange(index)}
                                                     >
                                                         <div>
-                                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
-                                                            <label htmlFor={garageEntry.id}>
+                                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} checked={garageEntry.is_selected}  />
+                                                            <span key={garageEntry.id}>
                                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
-                                                            </label>
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)}  />
@@ -436,17 +469,29 @@ const ProductListing = () => {
 
                                                                                             // eslint-disable-next-line react/jsx-key
                                                                                             <Box mt={5} className='sub-mod-innerbox' display='flex' onClick={() => handleProductClick(product.id)}>
-                                                                                                <Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>
+                                                                                                {product.images &&
+                                                                                                    Array.isArray(JSON.parse(product.images)) &&
+                                                                                                    JSON.parse(product.images).length > 0 && (
+                                                                                                        <Image
+                                                                                                            className="sub-mod-innerbox-img"
+                                                                                                            src={JSON.parse(product.images)[0].image1}
+                                                                                                            alt="Image 1"
+                                                                                                            float="right" height="15px"
+                                                                                                            mr="2"
+                                                                                                        />
+                                                                                                    )}
+
+                                                                                                {/*<Image className='sub-mod-innerbox-img' float="right" height="15px"src={product.images} mr="2"/>*/}
                                                                                                 <Text ml={25} mr={15} className='sub-mod-innerbox-text'>{product.name}</Text>
                                                                                                 {/* <div className="sweet-loading22" css={loaderContainerStyle}>
                                                                                                     <ClipLoader css={override} size={150} color={'#123abc'} loading={true} />
                                                                                                 </div> */}
                                                                                             </Box>
-                                                                                            ))} 
+                                                                                            ))}
                                                                                             </>
                                                                                                 )}
 
-                                                                                               
+
                                                                                     </div>
                                                                                 </div>
                                                                         )}

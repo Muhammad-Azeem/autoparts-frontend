@@ -528,7 +528,7 @@ const ShoppingProductPage = () => {
                                                                 </Text>
                                                             </Box>
                                                             ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                            <Box display='flex'>
+                                                            <Box >
                                                                 <Box className='boxOne'>
                                                                     <Box>
                                                                         <FormControl mt={5}>
@@ -541,7 +541,8 @@ const ShoppingProductPage = () => {
                                                                         </FormControl>
                                                                     </Box>
                                                                 </Box>
-                                                                <Box className='boxTwo'>
+                                                                {/*<Box className='boxTwo'>*/}
+                                                                <Box >
                                                                     <Heading as="h5" fontWeight="200">
                                                                         You have the option of creating an account for future orders and faster checkouts.
                                                                     </Heading>
@@ -783,7 +784,16 @@ const ShoppingProductPage = () => {
                                                                     {cart.map((cartItem, index) => (
                                                                         <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
+                                                                                {cartItem.images &&
+                                                                                    Array.isArray(JSON.parse(cartItem.images)) &&
+                                                                                    JSON.parse(cartItem.images).length > 0 && (
+                                                                                        <Image
+                                                                                            className="pp-box1-img"
+                                                                                            src={JSON.parse(cartItem.images)[0].image1}
+                                                                                            alt="Image 1"
+                                                                                            height={'85px'}
+                                                                                        />
+                                                                                    )}
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
                                                                                 Part No.: {cartItem.part_number}
@@ -796,13 +806,13 @@ const ShoppingProductPage = () => {
 
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                                ${cartItem.price}
+                                                                                {formatCurrency(cartItem.price)}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 {cartItem.quantity}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="right">
-                                                                                ${(cartItem.price * cartItem.quantity)}
+                                                                                {formatCurrency(cartItem.price * cartItem.quantity)}
                                                                             </Td>
                                                                         </Tr>
                                                                     ))}

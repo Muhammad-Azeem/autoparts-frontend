@@ -19,7 +19,7 @@ import {
     Center, Stack, Icon
 } from '@chakra-ui/react';
 import '../styles//global.css';
-
+import getVehicles from './API/api'
 import ModelButton from "./ModelButton";
 const ModelRows = () => {
     const buttons = [

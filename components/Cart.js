@@ -110,7 +110,7 @@ const   Cart = () => {
 
                                 {cart.map((cartItem, index) => (
                                     <Tr key={cartItem.id} style={{ marginTop: '10px' }}>
-                                        <Td>
+                                        <Td style={{textAlign:'center'}}>
                                             {cartItem.images &&
                                                 Array.isArray(JSON.parse(cartItem.images)) &&
                                                 JSON.parse(cartItem.images).length > 0 && (
@@ -221,7 +221,7 @@ const   Cart = () => {
                 </GridItem>
 
                 <GridItem colSpan={1}>
-                    <Grid className="left-row" templateColumns="repeat(1, 1fr)" gap={6}>
+                    <Grid className="left-row add-fix" templateColumns="repeat(1, 1fr)" gap={6}>
                         <GridItem rowSpan={1} colSpan={1} bg="white" p={4}>
                             <Box background="#f4f4f4" border="1px solid #b0b0b0" alignItems="center">
                                 <Text  className="detail-rightside-heading" size="lg">

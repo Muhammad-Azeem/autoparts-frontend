@@ -35,7 +35,12 @@ const Header = () => {
 
     // Close the div when the cursor hovers out
     const handleMouseLeave = () => {
-        setIsDivOpen(false);
+        if (
+            divRef.current?.contains &&
+            (!divRef.current.contains(event.relatedTarget) || event.relatedTarget.classList.contains("vehicle-list-box"))
+        ) {
+            setIsDivOpen(false);
+        }
     };
     const [cartValue, setCartValue] = useState(0)
     // Add click outside event listener when the div is open
@@ -140,7 +145,7 @@ const Header = () => {
                             <Icon as={FaUser} boxSize="24px" mr={10} style={{ color: "#2E5BA5" }} />
                         </Box>
                         <div>
-                            <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)}>
+                            <Box display="flex" flexDir="column" textAlign="left" onMouseEnter={() => setIsDivOpen(true)} onMouseLeave={handleMouseLeave}>
 
                                     { User ? (
                                         <Text className="header-right-box-text" fontWeight="semibold">

@@ -11,7 +11,7 @@ import {
     clearAllGaragesFromCookie,
     getSelectedGarageFromCookie,
     getGarageFromCookie,
-    addGarageToCookie
+    addGarageToCookie, setGarageCookie
 } from "./utility/cookies";
 
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -21,7 +21,8 @@ const TopSection = () => {
     const divRef = useRef();
 
     useEffect(() => {
-        const vehicle = getSelectedGarageFromCookie();
+        let vehicle = getSelectedGarageFromCookie();
+        vehicle = vehicle.length != 0 ? vehicle : null
         setSelectedVehicle(vehicle);
     }, []);
 
@@ -111,8 +112,33 @@ const TopSection = () => {
     };
 
     // Close the div when the cursor hovers out
-    const handleMouseLeaveGarage = () => {
-        setIsGarageOpen(false);
+    const handleMouseLeaveGarage = (event) => {
+        // Check if the mouse is leaving the garage dropdown and not moving to "Change Vehicle"
+        if (
+            divGarageRef.current?.contains &&
+            (!divGarageRef.current.contains(event.relatedTarget) || event.relatedTarget.classList.contains("vehicle-list-box"))
+        ) {
+            setIsGarageOpen(false);
+        }
+    };
+    const handleRadioChange = (selectedIndex) => {
+        const updatedGarageList = garage.map((garageEntry, index) => ({
+            ...garageEntry,
+            is_selected: index === selectedIndex,
+        }));
+
+        // Set is_selected to false for all other garages except the selected one
+        updatedGarageList.forEach((garageEntry, index) => {
+            if (index !== selectedIndex) {
+                garageEntry.is_selected = false;
+            }
+        });
+
+        // Sort the updated garage list to display the selected garage on top
+        updatedGarageList.sort((a, b) => (a.is_selected ? -1 : b.is_selected ? 1 : 0));
+        // Update the cookie with the updated garage list
+        setGarageCookie(updatedGarageList);
+        router.push('/ProductList');
     };
 
     // Add click outside event listener when the div is open
@@ -150,11 +176,15 @@ const TopSection = () => {
 
 
     const handleAddGarage = () => {
-        const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
-        addGarageToCookie(newGarage);
-        setGarage(getGarageFromCookie());
-        // onClose();
-        router.push('/ProductList');
+        if(selectedCompany) {
+            const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
+            addGarageToCookie(newGarage);
+            setGarage(getGarageFromCookie());
+            // onClose();
+            router.push('/ProductList');
+        }else{
+            alert("Please Select All Options")
+        }
       };
 
     return (
@@ -162,7 +192,7 @@ const TopSection = () => {
         <Grid className="topSection_main-padding" >
             <GridItem className="section-first"   >
 
-            {selectedVehicle.length ? (
+            {selectedVehicle ? (
                 <>
                 <Heading background="#003566" color="white" as="h3"  textAlign="left" margin="0px" padding="5px 8px">
                     Shop for Toyota Parts
@@ -185,15 +215,17 @@ const TopSection = () => {
                         {/* <Heading cursor='pointer' onClick={handleButtonClick}  mt={40} ml={25} as="h4" size="lg"  >
                             Change Vehicle
                         </Heading> */}
-                         <Heading cursor='pointer' onMouseEnter={() => setIsGarageOpen(true)} mt={40} ml={25} as="h4" size="lg"  >
-                            Change Vehicle
+                         <Heading cursor='pointer' width={'40%'} onMouseEnter={() => setIsGarageOpen(true)} mt={40} ml={25} as="h4" size="lg"   >
+                            <span onMouseLeave={handleMouseLeaveGarage}>
+                                Change Vehicle
+                            </span>
                         </Heading>
                         {isGarageOpen && (
                                     <div
                                         ref={divGarageRef}
                                         style={{
                                             position: 'absolute',
-                                            // top: '300px', // Adjust the positioning as needed
+                                            top: '60px', // Adjust the positioning as needed
                                             // left: '200px',
                                             width: '400px', // Set the desired width
                                             background: 'white',
@@ -207,17 +239,18 @@ const TopSection = () => {
                                         <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
-                                                garages.map((garageEntry) => (
+                                                garages.map((garageEntry, index) => (
                                                     <li
                                                         key={garageEntry.id}
                                                         className="no-vehicles"
-                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', cursor: 'pointer !important' }}
+                                                        onClick={() => handleRadioChange(index)}
                                                     >
                                                         <div>
-                                                            <input type="radio" id={garageEntry.id} name="gender" value={garageEntry.name} />
-                                                            <label htmlFor={garageEntry.id}>
+                                                            <input type="radio" id={garageEntry.id} name="gender"  checked={garageEntry.is_selected} value={garageEntry.name} />
+                                                            <span key={garageEntry.id}>
                                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
-                                                            </label>
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)}  />
