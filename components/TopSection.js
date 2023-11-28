@@ -11,7 +11,7 @@ import {
     clearAllGaragesFromCookie,
     getSelectedGarageFromCookie,
     getGarageFromCookie,
-    addGarageToCookie
+    addGarageToCookie, setGarageCookie
 } from "./utility/cookies";
 
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -121,6 +121,26 @@ const TopSection = () => {
             setIsGarageOpen(false);
         }
     };
+    const handleRadioChange = (selectedIndex) => {
+        const updatedGarageList = garage.map((garageEntry, index) => ({
+            ...garageEntry,
+            is_selected: index === selectedIndex,
+        }));
+
+        // Set is_selected to false for all other garages except the selected one
+        updatedGarageList.forEach((garageEntry, index) => {
+            if (index !== selectedIndex) {
+                garageEntry.is_selected = false;
+            }
+        });
+
+        // Sort the updated garage list to display the selected garage on top
+        updatedGarageList.sort((a, b) => (a.is_selected ? -1 : b.is_selected ? 1 : 0));
+        // Update the cookie with the updated garage list
+        setGarageCookie(updatedGarageList);
+        router.push('/ProductList');
+    };
+
     // Add click outside event listener when the div is open
     useEffect(() => {
         if (isGarageOpen) {
@@ -156,11 +176,15 @@ const TopSection = () => {
 
 
     const handleAddGarage = () => {
-        const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
-        addGarageToCookie(newGarage);
-        setGarage(getGarageFromCookie());
-        // onClose();
-        router.push('/ProductList');
+        if(selectedCompany) {
+            const newGarage = { company: selectedCompany , model: selectedModal, year: selectedYear };
+            addGarageToCookie(newGarage);
+            setGarage(getGarageFromCookie());
+            // onClose();
+            router.push('/ProductList');
+        }else{
+            alert("Please Select All Options")
+        }
       };
 
     return (
@@ -215,17 +239,18 @@ const TopSection = () => {
                                         <p className="vehicle-list">Vehicle List</p>
                                         <ul style={{ padding: '0px', overflowY: 'auto', maxHeight: '250px' }}>
                                             {garages.length > 0 ? (
-                                                garages.map((garageEntry) => (
+                                                garages.map((garageEntry, index) => (
                                                     <li
                                                         key={garageEntry.id}
                                                         className="no-vehicles"
-                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}
+                                                        style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', cursor: 'pointer !important' }}
+                                                        onClick={() => handleRadioChange(index)}
                                                     >
                                                         <div>
                                                             <input type="radio" id={garageEntry.id} name="gender"  checked={garageEntry.is_selected} value={garageEntry.name} />
-                                                            <label htmlFor={garageEntry.id}>
+                                                            <span key={garageEntry.id}>
                                                                 {garageEntry.company} {garageEntry.model} {garageEntry.year}
-                                                            </label>
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)}  />
