@@ -143,7 +143,7 @@ const ProductPage = () => {
                     <BreadcrumbLink fontWeight="600" href='#'>Toyota 9034112012</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-                {selectedVehicle && selectedVehicle.id == product.id  ? (
+                {selectedVehicle && selectedVehicle.id !== product.id  ? (
 
                  <Box className="pp-innerbox-fits">
                  <Box display='flex'>
@@ -346,7 +346,7 @@ const ProductPage = () => {
         </Grid>
 
         <Box className="pp-table-box" >
-            <Grid className="list-grid" >
+            <Grid className="list-grid spec-div" >
                 <Box className="pp-horizontal-listbox">
                     <Text className="pp-horizontal-listmenu" mr={25} onClick={showTableOne}>Product Specifications</Text>
                     <Text className="pp-horizontal-listmenu"   onClick={showTableTwo}>Vehicle Fitment</Text>
@@ -412,79 +412,15 @@ const ProductPage = () => {
                     )}
 
                     {showTable2 && (
-                        <Table variant="simple" mt={5} className="pp-table2" >
-                            <Tbody>
-                                <Tr className="pp-row2">
-                                    <Td className="pp-td3">Year Make Model</Td>
-                                    <Td className="pp-td3">Trim & Engine</Td>
-                                    <Td className="pp-td3">Important vehicle option details</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-                                <Tr>
-                                    <Td className="pp-td4">2003-2009 Toyota 4Runner</Td>
-                                    <Td className="pp-td4">Limited, SR5|8 Cyl 4.7L</Td>
-                                    <Td className="pp-td4">2UZFE; 2UZFE; UZN210L-GKAGKA,</Td>
-                                </Tr>
-
-
-                            </Tbody>
-                        </Table>
-
-                    )}
+                        <Box mt={5} className="pp-table2">
+                            <Heading as="h3" size="md" mb={4}>
+                                Fits the following Toyota Models
+                            </Heading>
+                            <Box style={{textAlign:'left', fontSize:'14px' , lineHeight:'1.5'}}>
+                                {product.vehicle_fitment}
+                            </Box>
+                        </Box>
+                        )}
                 </Box>
             </Grid>
         </Box>
