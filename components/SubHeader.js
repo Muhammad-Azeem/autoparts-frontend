@@ -237,7 +237,7 @@ const SubHeader = () => {
                                     </li>
                                 </ul>
                                 <ul className="main-nav-ul-middle">
-                                    <Link display="flex" color="black" textDecoration="none" justifyContent="space-between" href="/" className="main-nav-li">
+                                    <Link display="flex" color="black" textDecoration="none" justifyContent="space-between" href="/search-products/all" className="main-nav-li">
                                         Toyota Parts
                                         <span className="chevron-icon">
                                             {/* Include your SVG chevron icon here */}
@@ -256,7 +256,7 @@ const SubHeader = () => {
                                             </svg>
                                           </span>
                                     </Link>
-                                    <li href="#" className="main-nav-li">Toyota Accessories</li>
+                                    <li href="search-products/all" className="main-nav-li">Toyota Accessories</li>
                                     <li href="#" className="main-nav-li">Resources and Links</li>
                                 </ul>
                                 <ul className="main-nav-ul-last" style={{borderBottom: "none"}}>
@@ -318,10 +318,10 @@ const SubHeader = () => {
                 </MenuList>
             </Menu>
             <Box>
-                <Link className="sub-header-links" href="/">
+                <Link className="sub-header-links" href="/search-products/all">
                     Toyota Parts
                 </Link>
-                <Link className="sub-header-links" href="#">
+                <Link className="sub-header-links" href="/search-products/all">
                     Toyota Accesories
                 </Link>
                 <Link className="sub-header-links" href="#">

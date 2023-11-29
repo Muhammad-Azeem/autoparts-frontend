@@ -96,6 +96,17 @@ const Header = () => {
             console.error('Logout failed:', error);
         }
     };
+    const [searchValue, setSearchValue] = useState('');
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            // Redirect to a URL with the search value
+            window.location.href = `/search-products/${encodeURIComponent(searchValue)}`;
+        }
+    };
+    const handleChange = (event) => {
+        setSearchValue(event.target.value);
+    };
     return (
         <Flex className="header" as="header" >
             {/* Left-aligned logo */}
@@ -127,7 +138,7 @@ const Header = () => {
                     borderTopRightRadius="4px"
                     borderBottomRightRadius="4px"
                 >
-                    <input className="search-placeholder" type="text" placeholder="Search by Part Number, Part Name, Description" />
+                    <input className="search-placeholder" type="text" value={searchValue}  onKeyPress={handleKeyPress} onChange={handleChange} placeholder="Search by Part Number, Part Name, Description" />
                 </Box>
             </Flex>
 

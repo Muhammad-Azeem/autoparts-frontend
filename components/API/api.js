@@ -453,3 +453,11 @@ export const updateAddressBook = async (addressId, addressData) => {
         throw error;
     }
 };
+export const getProductBySearchString = async (searchString) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/search/`+searchString, {});
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
