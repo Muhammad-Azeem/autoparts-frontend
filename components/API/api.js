@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
-const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
+const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
+// const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
 // const API_BASE_URL = 'https://cars.xnaj.com/backend.cars.xnaj.com/public/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
@@ -454,6 +454,14 @@ export const updateAddressBook = async (addressId, addressData) => {
                 console.log(error);
             });
 
+    } catch (error) {
+        throw error;
+    }
+};
+export const getProductBySearchString = async (searchString) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/product/search/`+searchString, {});
+        return response.data;
     } catch (error) {
         throw error;
     }
