@@ -125,6 +125,7 @@ export const bussinesAcct = async (userData) => {
         data.append('business_address2', userData.bussinessAddress2);
         data.append('zip_code', userData.zipCode);
         data.append('city', userData.cityState);
+        data.append('type', 3);
 
         // data.append('user', JSON.stringify(userData.user));
         // data.append('cart', JSON.stringify(userData.cart));
@@ -136,13 +137,7 @@ export const bussinesAcct = async (userData) => {
             data : data
         };
 
-        axios.request(config)
-            .then((response) => {
-                return response;
-            })
-            .catch((error) => {
-                console.log(error );
-            });
+        return await axios.request(config);
 
     } catch (error) {
         throw error;

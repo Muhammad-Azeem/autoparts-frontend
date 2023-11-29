@@ -521,9 +521,9 @@ const AcctDash = () => {
                                             <Text >
                                                {user.email}
                                             </Text>
-                                            <Text onClick={toggleEditBoxVisibility} className="account-edit-btn">
-                                                Edit
-                                            </Text>
+                                            {/*<Text onClick={toggleEditBoxVisibility} className="account-edit-btn">*/}
+                                            {/*    Edit*/}
+                                            {/*</Text>*/}
                                         </Box>
                                     </Box>
                                         ) : (
@@ -599,7 +599,7 @@ const AcctDash = () => {
                                                 <form>
                                                     <FormControl className="acctSet-inputbox">
                                                         <FormLabel className="account-label" flex={1} pr={4}>Email Address</FormLabel>
-                                                        <Text margin="0"> xyz@gmail.com</Text>
+                                                        <Text margin="0">    {user.email}</Text>
                                                     </FormControl>
 
                                                     <FormControl className="acctSet-inputbox">
