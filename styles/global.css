@@ -2406,6 +2406,11 @@ li {
     color: black;
     width: fit-content;
 }
+.thank-heading{
+    padding: 5px 30px;
+    font-weight: 600;
+    color: black;
+}
 .account-setting-heading{
     padding: 5px 30px;
     font-weight: 600;
@@ -2413,6 +2418,11 @@ li {
     width: fit-content;
 }
 .success-message{
+    margin: 0;
+    padding: 5px 30px;
+    align-items: center;
+}
+.thank-message{
     margin: 0;
     padding: 5px 30px;
     align-items: center;
