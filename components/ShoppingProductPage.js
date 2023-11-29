@@ -176,14 +176,9 @@ const ShoppingProductPage = () => {
             Cookies.remove('total');
 
 
-            if (response.status === 200) {
-                if(user){
-                await router.push('/AccountDashboard');
-            }else{
-                await router.push('/');
-            }
+            if (response.success === true) {
+                await router.push('/ThankYou');
             } else {
-                // Payment failed, handle accordingly (e.g., show an error message)
                 console.error('Payment failed.');
             }
 
