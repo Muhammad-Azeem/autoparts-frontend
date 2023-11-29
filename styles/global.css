@@ -915,7 +915,7 @@ body{
     background: transparent;
     color: #a0d0fc;
     position: absolute;
-    right: 210px;
+    right: 350px;
     top: -2px;
     border: none;
     cursor: pointer;
@@ -2406,6 +2406,11 @@ li {
     color: black;
     width: fit-content;
 }
+.thank-heading{
+    padding: 5px 30px;
+    font-weight: 600;
+    color: black;
+}
 .account-setting-heading{
     padding: 5px 30px;
     font-weight: 600;
@@ -2413,6 +2418,11 @@ li {
     width: fit-content;
 }
 .success-message{
+    margin: 0;
+    padding: 5px 30px;
+    align-items: center;
+}
+.thank-message{
     margin: 0;
     padding: 5px 30px;
     align-items: center;
@@ -2490,6 +2500,9 @@ li {
     .productblock-grid{
         margin-left: 8px;
     }
+    .chakra-modal__close-btn{
+        right: 265px;
+    }
 }
 
 @media(max-width:1500px){
@@ -2499,8 +2512,15 @@ li {
     .footer_images-bottom {
         width: 60px;
     }
+    .chakra-modal__close-btn {
+        right: 210px;
+    }
+
 }
 @media(max-width:1440px){
+    .chakra-modal__close-btn {
+        right: 175px;
+    }
     .pp-price-box2 {
         right: -50px;
     }
@@ -2513,6 +2533,9 @@ li {
 }
 
 @media(max-width:1360px){
+    .chakra-modal__close-btn {
+        right: 140px;
+    }
     .pp-box1-img {
         height: 100px;
     }
@@ -2535,6 +2558,9 @@ li {
     }
 }
 @media only screen and (min-width: 1024px) and (min-height: 1366px){
+    .chakra-modal__close-btn {
+        right: 101px;
+    }
     .sub-header-rightlinks {
         font-size: 12px;
     }
@@ -2637,6 +2663,9 @@ li {
 
 }
 @media(max-width:1280px){
+    .chakra-modal__close-btn {
+        right: 101px;
+    }
     .shipping-price-box{
         right: 85px;
     }
@@ -2701,6 +2730,9 @@ li {
 }
 
 @media(max-width:1024px){
+    .chakra-modal__close-btn {
+        right: 10px;
+    }
     .add-fix{
         width: 240px;
     }

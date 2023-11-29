@@ -131,6 +131,7 @@ const ShoppingProductPage = () => {
     const [error6, setError6] = useState('');
     const [error7, setError7] = useState('');
     const [paymentError, setPaymentError] = useState(null);
+    const [error8, setError8] = useState('');
 
 
     const [showTable1, setShowTable1] = useState(true);
@@ -151,6 +152,7 @@ const ShoppingProductPage = () => {
             setError6('');
             setError7('');
             setPaymentError(null);
+            setError8('');
         }, 10000);
     };
 
@@ -225,6 +227,11 @@ const ShoppingProductPage = () => {
             displayErrorAndHide();
             return;
         }
+        if (email == '') {
+            setError8("Email is required");
+            displayErrorAndHide();
+            return;
+        }
         if(!user) {
             if (email !== cEmail) {
                 setError("Emails don't match");
@@ -277,17 +284,6 @@ const ShoppingProductPage = () => {
     const [showPaymentDiv, setShowPaymentDiv] = useState(false);
     const [showReviewDiv, setShowReviewDiv] = useState(false);
 
-    //shipping
-    // if (showShippingDiv) {
-    //     // Move from Shipping to Payment
-    //     setShowPaymentDiv(true);
-    //     setShowReviewDiv(true);
-    //   } else if (showReviewDiv) {
-    //     // Move from Payment to Review
-    //     setShowShippingDiv(true);
-    //     setShowPaymentDiv(true);
-    //   }
-
       const handleContinueToOrderReviewClick = () => {
         // Move from Payment to Review directly
           if(cardToken){
@@ -304,6 +300,111 @@ const ShoppingProductPage = () => {
         setShowShippingDiv(false);
         setShowPaymentDiv(true);
       };
+    const handleFirstNameChange = (e) => {
+        const inputValue = e.target.value;
+        setFirstName(inputValue);
+
+        // Regular expression to allow only alphabets
+        const alphabetRegex = /^[a-zA-Z]+$/;
+
+        if (!alphabetRegex.test(inputValue)) {
+            setError1('Please enter only alphabets');
+        } else {
+            setError1('');
+        }
+    };
+    const handleLastNameChange = (e) => {
+        const inputValue = e.target.value;
+        setLastName(inputValue);
+
+        // Regular expression to allow only alphabets
+        const alphabetRegex = /^[a-zA-Z]+$/;
+
+        if (!alphabetRegex.test(inputValue)) {
+            setError2('Please enter only alphabets');
+        } else {
+            setError2('');
+        }
+    };
+    const handleCompanyChange = (e) => {
+        const inputValue = e.target.value;
+        setCompany(inputValue);
+
+        // Regular expression to allow only alphabets
+        const alphabetRegex = /^[a-zA-Z]+$/;
+
+        if (!alphabetRegex.test(inputValue)) {
+            setError3('Please enter only alphabets');
+        } else {
+            setError3('');
+        }
+    };
+    const handleStreetAddressChange = (e) => {
+        const inputValue = e.target.value;
+        setStreetAddress(inputValue);
+
+        // Regular expression to allow only alphabets
+        const alphabetRegex = /^[a-zA-Z]+$/;
+
+        if (!alphabetRegex.test(inputValue)) {
+            setError4('Please enter only alphabets');
+        } else {
+            setError4('');
+        }
+    };
+    const handleAppartmentChange = (e) => {
+        const inputValue = e.target.value;
+        setAppartment(inputValue);
+
+        // Regular expression to allow only alphabets
+        const alphabetRegex = /^[a-zA-Z]+$/;
+
+        if (!alphabetRegex.test(inputValue)) {
+            setError5('Please enter only alphabets');
+        } else {
+            setError5('');
+        }
+    };
+    const handleZipCodeChange = (e) => {
+        const inputValue = e.target.value;
+        setZipCode(inputValue);
+
+        // Regular expression to allow only alphabets
+        const numberRegex = /^[0-9]+$/;
+
+        if (!numberRegex.test(inputValue)) {
+            setError6('Please enter only numbers');
+        } else {
+            setError6('');
+        }
+    };
+    const handlePhoneChange = (e) => {
+        const inputValue = e.target.value;
+        setPhone(inputValue);
+
+        // Regular expression to allow only alphabets
+        const numberRegex = /^[0-9]+$/;
+
+
+        if (!numberRegex.test(inputValue)) {
+            setError7('Please enter only number');
+        } else {
+            setError7('');
+        }
+    };
+    const handleEmailChange = (e) => {
+        const inputValue = e.target.value;
+        setEmail(inputValue);
+
+        // Regular expression to allow only alphabets
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(inputValue)) {
+            setError8('Please enter correct email!');
+        } else {
+            setError8('');
+        }
+    };
 
 
     const CheckoutForm = () => {
@@ -444,7 +545,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box >
                                                         <FormControl mt={10}>
-                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="First Name" value={firstName}   onChange={handleFirstNameChange} />
                                                             {error1 && (
                                                                 <p style={{ color: 'red' }}>{error1}</p>
                                                             )}
@@ -452,7 +553,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                                                            <Input mr={5} className="bussiness-input" type="text" placeholder="Last Name" value={lastName} onChange={handleLastNameChange}/>
                                                             {error2 && (
                                                                 <p style={{ color: 'red' }}>{error2}</p>
                                                             )}
@@ -461,7 +562,7 @@ const ShoppingProductPage = () => {
 
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)}/>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Company" value={company} onChange={handleCompanyChange}/>
                                                             {error3 && (
                                                                 <p style={{ color: 'red' }}>{error3}</p>
                                                             )}
@@ -469,7 +570,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Street Address" value={streetAddress} onChange={handleStreetAddressChange} />
                                                             {error4 && (
                                                                 <p style={{ color: 'red' }}>{error4}</p>
                                                             )}
@@ -477,7 +578,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" value={appartment} onChange={(e) => setAppartment(e.target.value)}/>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Appartment,suite, building etc" value={appartment} onChange={handleAppartmentChange}/>
                                                             {error5 && (
                                                                 <p style={{ color: 'red' }}>{error5}</p>
                                                             )}
@@ -485,7 +586,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)}/><br/>
+                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={handleZipCodeChange} /><br/>
                                                             <span style={{fontSize:'11px', color:'gray'}}>Enter Zip Code for City and State</span>
                                                             {error6 && (
                                                                 <p style={{ color: 'red' }}>{error6}</p>
@@ -494,7 +595,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={5}>
-                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="phone" value={phone} onChange={handlePhoneChange} />
                                                             {error7 && (
                                                                 <p style={{ color: 'red' }}>{error7}</p>
                                                             )}
@@ -504,9 +605,9 @@ const ShoppingProductPage = () => {
                                                         <Box  >
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="E-mail Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                                            {error && (
-                                                                <p style={{ color: 'red' }}>{error}</p>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="E-mail Address" value={email} onChange={handleEmailChange} />
+                                                            {error8 && (
+                                                                <p style={{ color: 'red' }}>{error8}</p>
                                                             )}
                                                         </FormControl>
                                                     </Box>
