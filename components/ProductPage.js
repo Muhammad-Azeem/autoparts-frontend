@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState,useCallback} from 'react';
 import { useRouter } from 'next/router';
 import {
     Table,
@@ -46,7 +46,19 @@ import {formatCurrency} from "./utility/constants";
 import CheckFitModal from './CheckFitModal';
 
 const ProductPage = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const onModalOpen = () => setIsModalOpen(true);
+    const onModalClose = () => setIsModalOpen(false);
+
+    const [isSliderOpen, setIsSliderOpen] = useState(false);
+
+    const onSliderOpen = () => setIsSliderOpen(true);
+    // const onSliderClose = () => setIsSliderOpen(false);
+    const onSliderClose = useCallback(() => {
+        setIsSliderOpen(false);
+    }, []);
+
     const [currentImage, setCurrentImage] = useState(0);
 
     const settings = {
@@ -121,12 +133,10 @@ const ProductPage = () => {
         setShowTable2(true);
         setOrangeBarStyle({ width: '123px', left: '225px' });
     };
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const onModalOpen = () => setIsModalOpen(true);
-    const onModalClose = () => setIsModalOpen(false);
 
     const [quantity, setQuantity] = useState();
+
+
 
     const handleAddToCart = async () => {
         let temp = {};
@@ -247,10 +257,10 @@ const ProductPage = () => {
                                         className="pp-box1-img"
                                         src={JSON.parse(product.images)[0].image1}
                                         alt="Image 1"
-                                        onClick={onOpen}
                                         cursor="pointer"
+                                        onClick={onSliderOpen}
                                     />
-                                    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+                                    <Modal isOpen={isSliderOpen} onClose={onSliderClose} size="xl">
                                         <ModalOverlay />
                                         <ModalContent
                                             backgroundColor="rgba(255, 255, 255, 0.5)"
@@ -264,13 +274,13 @@ const ProductPage = () => {
                                             p={0}
                                             height="100vh"
                                         >
-                                            <ModalCloseButton />
+                                            <ModalCloseButton onClick={onSliderClose} zIndex="9"/>
                                             <ModalBody p={0}>
                                                 <Slider {...settings} initialSlide={currentImage}>
                                                     {JSON.parse(product.images).map((image, index) => (
                                                         <Image
                                                             key={index}
-                                                            src={image.image1}
+                                                            src={image['image' + (index + 1)]}
                                                             alt={`Image ${index + 1}`}
                                                             h="300px"
                                                             mx="auto"

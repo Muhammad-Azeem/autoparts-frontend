@@ -71,14 +71,17 @@ const BussinessAccountForm = () => {
             return;
         }
         try {
-            const userData = { bussinessAddress1,bussinessAddress2,zipCode,cityState ,firstName,lastName, jobTitle,bussinessType,bussinessName,email, password,phoneNumber, };
+            // const type=3;
+            const userData = {bussinessAddress1,bussinessAddress2,zipCode,cityState ,firstName,lastName, jobTitle,bussinessType,bussinessName,email, password,phoneNumber,};
             let response = await bussinesAcct(userData);
-             console.log('rest', response)
-            // const token  = response.token;
-            // const user = JSON.stringify(response.user);
-            // localStorage.setItem('token', token);
-            // localStorage.setItem('user', user); 
-            // router.push('/Register-Success'); 
+            console.log(response);
+             console.log('rest', response.data)
+            const token  = response.data.token;
+            const user = JSON.stringify(response.data.user);
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', user);
+            console.log('monoply');
+            window.location.href='/Register-Success';
         } catch (error) {
             console.error('Bussiness Account Registration failed:', error);
             setError('Bussiness Account Registration failed. Please try again.');
