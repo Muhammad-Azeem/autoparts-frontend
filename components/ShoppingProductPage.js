@@ -109,6 +109,7 @@ const ShoppingProductPage = () => {
     };
 
     const [subTotal, setSubTotal] = useState('');
+    const [cardToken, setCardToken] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
@@ -129,6 +130,7 @@ const ShoppingProductPage = () => {
     const [error5, setError5] = useState('');
     const [error6, setError6] = useState('');
     const [error7, setError7] = useState('');
+    const [paymentError, setPaymentError] = useState(null);
 
 
     const [showTable1, setShowTable1] = useState(true);
@@ -148,14 +150,15 @@ const ShoppingProductPage = () => {
             setError5('');
             setError6('');
             setError7('');
+            setPaymentError(null);
         }, 10000);
     };
 
 
     const handleOrder = async () => {
         try {
-            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart };
-            await orderPlace(data);
+            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart, cardToken };
+           const response = await orderPlace(data);
 
             localStorage.removeItem('firstName');
             localStorage.removeItem('lastName');
@@ -170,11 +173,18 @@ const ShoppingProductPage = () => {
             Cookies.remove('cart');
             Cookies.remove('total');
 
-            if(user){
+
+            if (response.status === 200) {
+                if(user){
                 await router.push('/AccountDashboard');
             }else{
                 await router.push('/');
             }
+            } else {
+                // Payment failed, handle accordingly (e.g., show an error message)
+                console.error('Payment failed.');
+            }
+
         } catch (error) {
             console.error('checkout failed:', error);
         }
@@ -280,8 +290,14 @@ const ShoppingProductPage = () => {
 
       const handleContinueToOrderReviewClick = () => {
         // Move from Payment to Review directly
-        setShowPaymentDiv(false);
-        setShowReviewDiv(true);
+          if(cardToken){
+              setShowPaymentDiv(false);
+              setShowReviewDiv(true);
+          }
+          else{
+              setPaymentError('Please Add Card First');
+          }
+
       };
 
       const handleContinueClick = () => {
@@ -293,7 +309,6 @@ const ShoppingProductPage = () => {
     const CheckoutForm = () => {
         const stripe = useStripe();
         const elements = useElements();
-        const [paymentError, setPaymentError] = useState(null);
 
         const handleSubmit = async (event) => {
             event.preventDefault();
@@ -311,6 +326,7 @@ const ShoppingProductPage = () => {
             } else {
                 // Send the token to your server
                 // await handlePayment(token);
+                setCardToken(token);
             }
         };
         const handlePayment = async (token) => {
@@ -341,7 +357,7 @@ const ShoppingProductPage = () => {
                     <CardElement />
                 </div>
                 <button type="submit" disabled={!stripe} className="pay-button">
-                    Pay
+                    Add Card
                 </button>
                 {paymentError && <div className="error-message">{paymentError}</div>}
 
@@ -402,9 +418,6 @@ const ShoppingProductPage = () => {
                                     </Text>
                                 </Box>
                             </Box>
-                    {/*<Elements stripe={getStripe()}>
-                        <CheckoutForm />
-                    </Elements>*/}
                             {showShippingDiv && (
                             <Box className='shipping-div'>
                                 {!user && (
@@ -528,7 +541,7 @@ const ShoppingProductPage = () => {
                                                                 </Text>
                                                             </Box>
                                                             ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                            <Box >
+                                                            <Box display='flex'>
                                                                 <Box className='boxOne'>
                                                                     <Box>
                                                                         <FormControl mt={5}>
@@ -541,8 +554,7 @@ const ShoppingProductPage = () => {
                                                                         </FormControl>
                                                                     </Box>
                                                                 </Box>
-                                                                {/*<Box className='boxTwo'>*/}
-                                                                <Box >
+                                                                <Box className='boxTwo'>
                                                                     <Heading as="h5" fontWeight="200">
                                                                         You have the option of creating an account for future orders and faster checkouts.
                                                                     </Heading>
@@ -642,9 +654,9 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                             </Box>
                                                         </form>
-                                                        {/*<Elements stripe={getStripe()}>
+                                                        {<Elements stripe={getStripe()}>
                                                             <CheckoutForm />
-                                                        </Elements>*/}
+                                                        </Elements>}
                                                         <form className="shipping-form">
                                                             <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
                                                             <Box display='flex'>
@@ -784,16 +796,7 @@ const ShoppingProductPage = () => {
                                                                     {cart.map((cartItem, index) => (
                                                                         <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                {cartItem.images &&
-                                                                                    Array.isArray(JSON.parse(cartItem.images)) &&
-                                                                                    JSON.parse(cartItem.images).length > 0 && (
-                                                                                        <Image
-                                                                                            className="pp-box1-img"
-                                                                                            src={JSON.parse(cartItem.images)[0].image1}
-                                                                                            alt="Image 1"
-                                                                                            height={'85px'}
-                                                                                        />
-                                                                                    )}
+                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
                                                                                 Part No.: {cartItem.part_number}
@@ -806,13 +809,13 @@ const ShoppingProductPage = () => {
 
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                                {formatCurrency(cartItem.price)}
+                                                                                ${cartItem.price}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 {cartItem.quantity}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="right">
-                                                                                {formatCurrency(cartItem.price * cartItem.quantity)}
+                                                                                ${(cartItem.price * cartItem.quantity)}
                                                                             </Td>
                                                                         </Tr>
                                                                     ))}
