@@ -174,7 +174,7 @@ const ProductPage = () => {
                     <BreadcrumbLink fontWeight="600" href='#'>Toyota 9034112012</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-                {selectedVehicle && selectedVehicle.id !== product.id  ? (
+                {selectedVehicle && selectedVehicle.id !== product.id && selectedVehicle.length !== 0  ? (
 
                  <Box className="pp-innerbox-fits">
                  <Box display='flex'>
@@ -184,7 +184,7 @@ const ProductPage = () => {
                                  This part fits the vehicle you selected:
                              </Text>
                              <Text mr={15} className="pp-innerbox-text-fits">
-                                 My Vehicle: 2018 Toyota 4Runner
+                                 My Vehicle: {selectedVehicle.year} {selectedVehicle.company} {selectedVehicle.model}
                              </Text>
                              <Box className='pp-inner-whitebox'>
                                  <Text className="pp-innerbox-text-fits">
@@ -205,7 +205,7 @@ const ProductPage = () => {
 
              </Box>
                 ) : (
-                    selectedVehicle.length != 0 && (<Box className="pp-innerbox-unfits">
+                    selectedVehicle.length !== 0 && (<Box className="pp-innerbox-unfits">
                         <Box display='flex'>
                         <Image ml={15} className="pp-images-fits" src="/images/danger.png" alt="Image 1"/>
                         <Box ml={15}>
