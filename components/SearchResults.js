@@ -361,7 +361,7 @@ const SearchResults = ({title}) => {
                                             </Breadcrumb>
                                             { searchString != 'all' && (
                                                 <Heading className="section-headings" as="h2">
-                                                    Search Results for "{searchString}"
+                                                    Search Results for &ldquo;{searchString}&ldquo;
                                                 </Heading>
                                             )}
                                             {loading ? (
@@ -371,6 +371,7 @@ const SearchResults = ({title}) => {
 
                                                     <Grid className="item productblock-grid" gap={6}>
                                                         {products.map((product) => (
+                                                            // eslint-disable-next-line react/jsx-key
                                                             <Product
                                                                 description={product.name}
                                                                 image={JSON.parse(product.images)[0].image1}

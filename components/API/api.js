@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
-// const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
+// const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
 // const API_BASE_URL = 'https://cars.xnaj.com/backend.cars.xnaj.com/public/api'; // Replace with your API's URL
+ const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
     try {
@@ -88,6 +88,7 @@ export const orderPlace = async (userData) => {
         data.append('sub_total', userData.subTotal);
         data.append('user', JSON.stringify(userData.user));
         data.append('cart', JSON.stringify(userData.cart));
+        data.append('token', JSON.stringify(userData.cardToken.id));
 
         let config = {
             method: 'post',
@@ -96,13 +97,13 @@ export const orderPlace = async (userData) => {
             data : data
         };
 
-        axios.request(config)
-            .then((response) => {
+        return await axios.request(config)
+          /*  .then((response) => {
                 return response;
             })
             .catch((error) => {
                 console.log(error );
-            });
+            });*/
 
     } catch (error) {
         throw error;
