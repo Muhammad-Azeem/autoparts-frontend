@@ -35,8 +35,9 @@ import {
     deleteAddressBook,
     getAddressesByUserId, getOrdersByUserId,
     register,
+    updatePassword,
     storeAddressBook,
-    updateAddressBook
+    updateAddressBook, login
 } from '../components/API/api'
 import {ChevronDownIcon, ChevronRightIcon} from "@chakra-ui/icons";
 import {changeEmail} from './API/api';
@@ -48,6 +49,12 @@ const AcctDash = () => {
     const [password, setPassword] = useState('');
     const [user, setUser] = useState('');
     const [error, setError] = useState('');
+
+    const [success, setSuccess] = useState('');
+
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
 
     const displayErrorAndHide = () => {
         setTimeout(() => {
@@ -76,6 +83,26 @@ const AcctDash = () => {
         // console.log(JSON.parse(temp));
     }, []);
 
+    const handleUpdatePassword = async () => {
+        if (newPassword !== confirmNewPassword) {
+            setError("Password Mismatch");
+            displayErrorAndHide();
+            return;
+        }
+        try {
+            const credentials = { current_password: currentPassword, new_password: newPassword };
+            let temp= localStorage.getItem('user');
+            temp = JSON.parse(temp);
+            // setLoading(true);
+
+            await updatePassword(credentials, temp.id);
+            setSuccess('Password Updated Successfully')
+            // setLoading(false);
+        } catch (error) {
+            // setLoading(false);
+            setError('Current Password is invalid');
+        }
+    };
     const handleChangeEmail = async (e) => {
         e.preventDefault();
 
@@ -593,6 +620,12 @@ const AcctDash = () => {
                                             <Heading mt={10} className="account-login" as="h3" >
                                                 Change Password
                                             </Heading>
+                                            {success && (
+                                                <p style={{ color: 'green' }}>{success}</p>
+                                            )}
+                                            {error && (
+                                                <p style={{ color: 'red' }}>{error}</p>
+                                            )}
                                             <Box mt={10} borderBottom="1px solid #d0d0d0">
                                             </Box>
                                             <Box className="form-box-width" mt={10}>
@@ -604,21 +637,21 @@ const AcctDash = () => {
 
                                                     <FormControl className="acctSet-inputbox">
                                                         <FormLabel className="account-label" flex={1} pr={4}>Current Password:</FormLabel>
-                                                        <Input className="account-input" flex={2} type="password" />
+                                                        <Input className="account-input"  value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} flex={2} type="password" />
                                                     </FormControl>
 
                                                     <FormControl className="acctSet-inputbox">
                                                         <FormLabel className="account-label" flex={1} pr={4}>New Password:</FormLabel>
-                                                        <Input className="account-input" flex={2} type="password" />
+                                                        <Input className="account-input" flex={2} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} type="password" />
                                                     </FormControl>
 
                                                     <FormControl className="acctSet-inputbox">
                                                         <FormLabel className="account-label" flex={1} pr={4}>Confirm New Password:</FormLabel>
-                                                        <Input className="account-input" flex={2} type="password" />
+                                                        <Input className="account-input" flex={2} value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} type="password" />
                                                     </FormControl>
                                                     <Box className="acctSet-butbox" >
                                                         <Button onClick={toggleEditBoxVisibility2} mr={10} className="discard-btn" >Discard Changes</Button>
-                                                        <Button className="account-save-btn" type="submit">Save Changes</Button>
+                                                        <Button onClick={handleUpdatePassword} className="account-save-btn" >Save Changes</Button>
                                                     </Box>
                                                 </form>
                                             </Box>

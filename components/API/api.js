@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
+const API_BASE_URL = 'http://localhost:8000/api'; // Replace with your API's URL
 // const API_BASE_URL = 'https://cars.xnaj.com/backend.cars.xnaj.com/public/api'; // Replace with your API's URL
- const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
+//  const API_BASE_URL = 'https://carproject.digitalotters.com/autoparts-backend/public/api'; // Replace with your API's URL
 
 export const register = async (userData) => {
     try {
@@ -16,20 +16,31 @@ export const register = async (userData) => {
             url: `${API_BASE_URL}/signup`,
             data : data
         };
-
-        return await axios.request(config)
-            // .then((response) => {
-            //     console.log(response, 'responsess' );
-            //     return response;
-            // })
-            // .catch((error) => {
-            //     console.log(error);
-            // });
-
+        return await axios.request(config);
     } catch (error) {
         throw error;
     }
 };
+
+export const updatePassword = async (userData,id) => {
+    try {
+        let data = new FormData();
+
+        data.append('new_password', userData.new_password);
+        data.append('current_password', userData.current_password);
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${API_BASE_URL}/updatePassword/`+id,
+            data : data
+        };
+        return await axios.request(config);
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 
 

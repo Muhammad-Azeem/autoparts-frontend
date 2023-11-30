@@ -36,6 +36,7 @@ const SignUpForm = () => {
     const [loginPassword, setLoginPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const [error1, setError1] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -80,8 +81,8 @@ const SignUpForm = () => {
             router.push('/Register-Success');
             setLoading(false);
         } catch (error) {
-            console.error('Registration failed:', error);
-            setError('Registration failed. Please try again.');
+            setLoading(false);
+            setError1('Registration failed. Please try again.');
             displayErrorAndHide();
         }
     };
@@ -93,7 +94,10 @@ const SignUpForm = () => {
             await router.push('/AccountDashboard'); // Redirect to a protected route after successful login
             setLoading(false);
         } catch (error) {
+            setLoading(false);
+            setError('Invalid Credentials');
             console.error('Login failed:', error);
+
         }
     };
     const displayErrorAndHide = () => {
@@ -113,6 +117,9 @@ const SignUpForm = () => {
                 <Heading as="h3">Returning Customers</Heading>
                 <form className="returning-form">
                     <Heading className="returning-heading" as="h3">Login</Heading>
+                    {error && (
+                        <p style={{ color: 'red' }}>{error}</p>
+                    )}
                     <FormControl  mt={20}>
                         <FormLabel className="returing-label">Email:
                             <sup style={{color:'#E52222'}}>*</sup>
@@ -150,8 +157,8 @@ const SignUpForm = () => {
                     <span className="bussiness-url" onClick={handleBussinessAccountClick}  >
                         Create a free business account.
                     </span>
-                    {error && (
-                        <p style={{ color: 'red' }}>{error}</p>
+                    {error1 && (
+                        <p style={{ color: 'red' }}>{error1}</p>
                     )}
                 </Heading>
                 <form className="returning-form2">
