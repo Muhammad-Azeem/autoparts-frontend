@@ -2,7 +2,7 @@
   "name": "autoparts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cars.xnaj.com/",
+  "homepage": "https://carproject.digitalotters.com/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

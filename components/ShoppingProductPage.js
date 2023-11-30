@@ -30,6 +30,9 @@ import {getCartFromCookie} from "./utility/cookies";
 import Cookies from "js-cookie";
 import {formatCurrency} from "./utility/constants";
 import Select from 'react-select';
+import { Elements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { getStripe } from '../utils/stripe';
 
 import { countries } from 'countries-list';
 
@@ -106,6 +109,7 @@ const ShoppingProductPage = () => {
     };
 
     const [subTotal, setSubTotal] = useState('');
+    const [cardToken, setCardToken] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
@@ -126,6 +130,7 @@ const ShoppingProductPage = () => {
     const [error5, setError5] = useState('');
     const [error6, setError6] = useState('');
     const [error7, setError7] = useState('');
+    const [paymentError, setPaymentError] = useState(null);
     const [error8, setError8] = useState('');
 
 
@@ -146,6 +151,7 @@ const ShoppingProductPage = () => {
             setError5('');
             setError6('');
             setError7('');
+            setPaymentError(null);
             setError8('');
         }, 10000);
     };
@@ -153,8 +159,8 @@ const ShoppingProductPage = () => {
 
     const handleOrder = async () => {
         try {
-            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart };
-            await orderPlace(data);
+            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart, cardToken };
+           const response = await orderPlace(data);
 
             localStorage.removeItem('firstName');
             localStorage.removeItem('lastName');
@@ -169,11 +175,18 @@ const ShoppingProductPage = () => {
             Cookies.remove('cart');
             Cookies.remove('total');
 
-            if(user){
+
+            if (response.status === 200) {
+                if(user){
                 await router.push('/AccountDashboard');
             }else{
                 await router.push('/');
             }
+            } else {
+                // Payment failed, handle accordingly (e.g., show an error message)
+                console.error('Payment failed.');
+            }
+
         } catch (error) {
             console.error('checkout failed:', error);
         }
@@ -273,8 +286,14 @@ const ShoppingProductPage = () => {
 
       const handleContinueToOrderReviewClick = () => {
         // Move from Payment to Review directly
-        setShowPaymentDiv(false);
-        setShowReviewDiv(true);
+          if(cardToken){
+              setShowPaymentDiv(false);
+              setShowReviewDiv(true);
+          }
+          else{
+              setPaymentError('Please Add Card First');
+          }
+
       };
 
       const handleContinueClick = () => {
@@ -386,6 +405,95 @@ const ShoppingProductPage = () => {
             setError8('');
         }
     };
+
+
+    const CheckoutForm = () => {
+        const stripe = useStripe();
+        const elements = useElements();
+
+        const handleSubmit = async (event) => {
+            event.preventDefault();
+
+            if (!stripe || !elements) {
+                return;
+            }
+
+            const cardElement = elements.getElement(CardElement);
+
+            const { token, error } = await stripe.createToken(cardElement);
+
+            if (error) {
+                setPaymentError(error.message);
+            } else {
+                // Send the token to your server
+                // await handlePayment(token);
+                setCardToken(token);
+            }
+        };
+        const handlePayment = async (token) => {
+            try {
+                const response = await fetch('/api/payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token: token.id, amount : parseFloat(subTotal) }),
+                });
+
+                if (response.ok) {
+                    // Payment successful, handle accordingly (e.g., show a success message)
+                    console.log('Payment successful!');
+                } else {
+                    // Payment failed, handle accordingly (e.g., show an error message)
+                    console.error('Payment failed.');
+                }
+            } catch (error) {
+                console.error('Error processing payment:', error);
+            }
+        };
+
+        return (
+            <form onSubmit={handleSubmit} className="checkout-form">
+                <div className="card-element">
+                    <CardElement />
+                </div>
+                <button type="submit" disabled={!stripe} className="pay-button">
+                    Add Card
+                </button>
+                {paymentError && <div className="error-message">{paymentError}</div>}
+
+                <style jsx>{`
+        .checkout-form {
+          max-width: 400px;
+          margin: 0 auto;
+        }
+
+        .card-element {
+          margin-bottom: 20px;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        .pay-button {
+          background-color: #4caf50;
+          color: white;
+          padding: 10px 20px;
+          font-size: 16px;
+          cursor: pointer;
+          border: none;
+          border-radius: 4px;
+        }
+
+        .error-message {
+          color: red;
+          margin-top: 10px;
+        }
+      `}</style>
+            </form>
+        );
+    };
+
 
     return (
 
@@ -534,7 +642,7 @@ const ShoppingProductPage = () => {
                                                                 </Text>
                                                             </Box>
                                                             ) : (<Box><Heading mt={25} className="returning-heading" as="h3">Create an Account <span className='optional'>(Optional)</span></Heading>
-                                                            <Box >
+                                                            <Box display='flex'>
                                                                 <Box className='boxOne'>
                                                                     <Box>
                                                                         <FormControl mt={5}>
@@ -547,8 +655,7 @@ const ShoppingProductPage = () => {
                                                                         </FormControl>
                                                                     </Box>
                                                                 </Box>
-                                                                {/*<Box className='boxTwo'>*/}
-                                                                <Box >
+                                                                <Box className='boxTwo'>
                                                                     <Heading as="h5" fontWeight="200">
                                                                         You have the option of creating an account for future orders and faster checkouts.
                                                                     </Heading>
@@ -648,6 +755,9 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                             </Box>
                                                         </form>
+                                                        {<Elements stripe={getStripe()}>
+                                                            <CheckoutForm />
+                                                        </Elements>}
                                                         <form className="shipping-form">
                                                             <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
                                                             <Box display='flex'>
@@ -787,16 +897,7 @@ const ShoppingProductPage = () => {
                                                                     {cart.map((cartItem, index) => (
                                                                         <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                {cartItem.images &&
-                                                                                    Array.isArray(JSON.parse(cartItem.images)) &&
-                                                                                    JSON.parse(cartItem.images).length > 0 && (
-                                                                                        <Image
-                                                                                            className="pp-box1-img"
-                                                                                            src={JSON.parse(cartItem.images)[0].image1}
-                                                                                            alt="Image 1"
-                                                                                            height={'85px'}
-                                                                                        />
-                                                                                    )}
+                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
                                                                                 Part No.: {cartItem.part_number}
@@ -809,13 +910,13 @@ const ShoppingProductPage = () => {
 
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
-                                                                                {formatCurrency(cartItem.price)}
+                                                                                ${cartItem.price}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="center">
                                                                                 {cartItem.quantity}
                                                                             </Td>
                                                                             <Td width="150px" textAlign="right">
-                                                                                {formatCurrency(cartItem.price * cartItem.quantity)}
+                                                                                ${(cartItem.price * cartItem.quantity)}
                                                                             </Td>
                                                                         </Tr>
                                                                     ))}

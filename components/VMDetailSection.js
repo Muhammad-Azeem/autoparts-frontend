@@ -421,6 +421,7 @@ const DetailSection = ({title}) => {
 
                                                     <Grid className="item productblock-grid" gap={6}>
                                                         {products.map((product) => (
+                                                            // eslint-disable-next-line react/jsx-key
                                                             <Product
                                                                 description={product.name}
                                                                 image={JSON.parse(product.images)[0].image1}
