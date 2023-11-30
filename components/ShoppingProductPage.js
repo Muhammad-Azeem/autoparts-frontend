@@ -448,7 +448,7 @@ const ShoppingProductPage = () => {
         };
 
         return (
-            <form onSubmit={handleSubmit} className="checkout-form">
+            <form style={{display:'flex', justifyContent:'space-between'}} onSubmit={handleSubmit} className="checkout-form">
                 <div className="card-element">
                     <CardElement />
                 </div>
@@ -459,8 +459,8 @@ const ShoppingProductPage = () => {
 
                 <style jsx>{`
         .checkout-form {
-          max-width: 400px;
-          margin: 0 auto;
+          max-width: 500px;
+          //margin: 0 auto;
         }
 
         .card-element {
@@ -468,16 +468,19 @@ const ShoppingProductPage = () => {
           padding: 10px;
           border: 1px solid #ccc;
           border-radius: 4px;
+          width: 350px;
+          height: 6px;
         }
 
         .pay-button {
           background-color: #4caf50;
           color: white;
-          padding: 10px 20px;
+          padding: 3px 20px;
           font-size: 16px;
           cursor: pointer;
           border: none;
           border-radius: 4px;
+          height: 30px;
         }
 
         .error-message {
@@ -750,40 +753,13 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                             </Box>
                                                         </form>
-                                                        {<Elements stripe={getStripe()}>
-                                                            <CheckoutForm />
-                                                        </Elements>}
+
                                                         <form className="shipping-form">
                                                             <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
-                                                            <Box display='flex'>
-                                                                <Box>
-                                                                        <Box display="flex" alignItems="center">
-                                                                            <Text fontSize='14px' ml={2}>
-                                                                            <Input mr={5}  type="radio" />
-                                                                            <Image mr={10} height='15px' src="/images/paypal.png" alt="Image 1"/>
-                                                                            Speed through checkout. PayPal is the safer, easier way to pay.</Text>
-                                                                        </Box>
-
-                                                                        <Box  alignItems="center">
-                                                                            <Text fontWeight='600' fontSize='14px' ml={2}>
-                                                                            <Input mr={5}  type="radio" />
-                                                                                Wire Transfer
-                                                                            </Text>
-                                                                            <Text fontSize='14px' ml={2}>
-                                                                                Your payment will be processed through Wire Transfer.
-                                                                            </Text>
-                                                                            <Text fontSize='14px' ml={2}>
-                                                                                Once you submit the order, we will confirm the availability and price of the part(s) with the manufacture, typically within 1-2 business days.
-                                                                            </Text>
-                                                                            <Text fontSize='14px' ml={2}>
-                                                                                You will receive a confirmation email with instructions for the wire transfer.
-                                                                            </Text>
-                                                                            <Text fontSize='14px' ml={2}>
-                                                                                If you have any questions or concerns, please contact us.
-                                                                            </Text>
-                                                                        </Box>
-
-                                                                </Box>
+                                                            <Box>
+                                                                {<Elements stripe={getStripe()}>
+                                                                    <CheckoutForm />
+                                                                </Elements>}
                                                             </Box>
 
                                                         </form>
