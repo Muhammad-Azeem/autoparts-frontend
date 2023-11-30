@@ -52,8 +52,13 @@ const   Cart = () => {
         router.push('/ProductList');
     };
     const handleCheckout = () => {
-        router.push('/ShoppingCart');
-        localStorage.setItem('subTotal', subTotal);
+        if(!cart.length)
+        {
+            alert('Please add product to cart first')
+        }else {
+            router.push('/ShoppingCart');
+            localStorage.setItem('subTotal', subTotal);
+        }
     };
     const [cart, setCart] = useState([])
     const [subTotal, setSubTotal] = useState(0);
