@@ -63,9 +63,9 @@ const Footer = () => {
                     <Link href="#" className="foot-text footer-padding">
                         Track Order
                     </Link>
-                    <Link href="#" className="foot-text footer-padding">
-                        Help Center
-                    </Link>
+                    {/*<Link href="#" className="foot-text footer-padding">*/}
+                    {/*    Help Center*/}
+                    {/*</Link>*/}
                 </Box>
                 <Box w='20%' h='150px' p={4} color='black'>
                     <Text fontWeight="600">

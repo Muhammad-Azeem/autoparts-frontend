@@ -185,11 +185,11 @@ const HeaderMobile = () => {
                                                    className="right-subheader-img"/>
                                             Track Order
                                         </Link>
-                                        <li href="#" className="main-nav-li">
-                                            <Image mr={15} src="/images/help.png " alt="Image Alt Text"
-                                                   className="right-subheader-img"/>
-                                            Help Center
-                                        </li>
+                                        {/*<li href="#" className="main-nav-li">*/}
+                                        {/*    <Image mr={15} src="/images/help.png " alt="Image Alt Text"*/}
+                                        {/*           className="right-subheader-img"/>*/}
+                                        {/*    Help Center*/}
+                                        {/*</li>*/}
                                         <li href="#" className="main-nav-li">
                                             <Image src="/images/email.jpg " alt="Image Alt Text"
                                                    className="right-subheader-img"/>

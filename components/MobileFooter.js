@@ -101,7 +101,7 @@ const MobileFooter = () => {
                         <UnorderedList className="mobile-footer-ul">
                             <ListItem>My Account</ListItem>
                             <ListItem>Track Order</ListItem>
-                            <ListItem>Help Center</ListItem>
+                            {/*<ListItem>Help Center</ListItem>*/}
                         </UnorderedList>
                     </AccordionPanel>
                 </AccordionItem>

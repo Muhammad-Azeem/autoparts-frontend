@@ -199,9 +199,9 @@ const ProductPage = () => {
                              </Box>
                      </Box>
                  </Box>
-                <Text cursor="pointer" onClick={onModalOpen}  mr={35} >
-                    Change Vehicle
-                </Text>
+                {/*<Text cursor="pointer" onClick={onModalOpen}  mr={35} >*/}
+                {/*    Change Vehicle*/}
+                {/*</Text>*/}
 
              </Box>
                 ) : (
@@ -223,9 +223,9 @@ const ProductPage = () => {
                                 </Box>
                         </Box>
                     </Box>
-                       <Text cursor="pointer" onClick={onModalOpen}  mr={35} >
-                           Change Vehicle
-                       </Text>
+                       {/*<Text cursor="pointer" onClick={onModalOpen}  mr={35} >*/}
+                       {/*    Change Vehicle*/}
+                       {/*</Text>*/}
                     </Box>)
                 )}
               {selectedVehicle.length === 0 ? (

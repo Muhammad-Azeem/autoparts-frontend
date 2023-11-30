@@ -232,17 +232,17 @@ const AcctDash = () => {
 
 
                         <Box position="sticky" top="0px" mt={15} border="1px solid #b0b0b0" alignItems="center">
-                            <Text  className="vm-leftside-heading" size="lg">
-                                Help Center
-                            </Text>
+                            {/*<Text  className="vm-leftside-heading" size="lg">*/}
+                            {/*    Help Center*/}
+                            {/*</Text>*/}
                             <Box
                                 className="vm-leftside-box" fontSize="small" color="grey">
                                 Contact Us
                             </Box>
-                            <Box
-                                className="vm-leftside-box" fontSize="small" color="grey">
-                                Help Center
-                            </Box>
+                            {/*<Box*/}
+                            {/*    className="vm-leftside-box" fontSize="small" color="grey">*/}
+                            {/*    Help Center*/}
+                            {/*</Box>*/}
                             <Box
                                 className="vm-leftside-box" fontSize="small" color="grey">
                                 Policies

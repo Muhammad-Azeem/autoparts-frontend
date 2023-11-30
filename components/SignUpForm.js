@@ -24,6 +24,9 @@ import LoaderSpinner from "../components/LoaderSpinner"
 import {login, register} from "./API/api";
 const SignUpForm = () => {
     const [loading, setLoading] = useState(true);
+
+
+
     const router = useRouter();
 
     const [email, setEmail] = useState('');
@@ -33,6 +36,18 @@ const SignUpForm = () => {
     const [loginPassword, setLoginPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // Simulate an API call or any asynchronous task
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // After the task is done, set loading to false
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
 
     const handleRegister = async () => {
 
@@ -73,8 +88,10 @@ const SignUpForm = () => {
     const handleLogin = async () => {
         try {
             const credentials = { email: loginEmail, password: loginPassword };
+            setLoading(true);
             await login(credentials);
             await router.push('/AccountDashboard'); // Redirect to a protected route after successful login
+            setLoading(false);
         } catch (error) {
             console.error('Login failed:', error);
         }
@@ -114,9 +131,13 @@ const SignUpForm = () => {
                             <span></span>
                             Remember Me
                         </label>
+                        {loading ? (
+                            <LoaderSpinner />
+                        ) : (
                         <Button className="returning-button" colorScheme="teal" type="button" onClick={handleLogin}>
                             Login
                         </Button>
+                        )}
                     </Flex>
                 </form>
             </Box>
@@ -172,10 +193,13 @@ const SignUpForm = () => {
                         />
                     </FormControl>
                     <Flex  mt={20}>
-
+                        {loading ? (
+                            <LoaderSpinner />
+                        ) : (
                         <Button className="account-button" colorScheme="teal" type="button" onClick={handleRegister} >
                             Register
                         </Button>
+                        )}
                     </Flex>
                 </form>
             </Box>

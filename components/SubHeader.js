@@ -237,7 +237,7 @@ const SubHeader = () => {
                                     </li>
                                 </ul>
                                 <ul className="main-nav-ul-middle">
-                                    <Link display="flex" color="black" textDecoration="none" justifyContent="space-between" href="/search-products/all" className="main-nav-li">
+                                    <Link display="flex" color="black" textDecoration="none" justifyContent="space-between" href="/" className="main-nav-li">
                                         Toyota Parts
                                         <span className="chevron-icon">
                                             {/* Include your SVG chevron icon here */}
@@ -286,11 +286,11 @@ const SubHeader = () => {
                                                className="right-subheader-img"/>
                                         Track Order
                                     </Link>
-                                    <li href="#" className="main-nav-li">
-                                        <Image mr={15} src="/images/help.png " alt="Image Alt Text"
-                                               className="right-subheader-img"/>
-                                        Help Center
-                                    </li>
+                                    {/*<li href="#" className="main-nav-li">*/}
+                                    {/*    <Image mr={15} src="/images/help.png " alt="Image Alt Text"*/}
+                                    {/*           className="right-subheader-img"/>*/}
+                                    {/*    Help Center*/}
+                                    {/*</li>*/}
                                     <li href="#" className="main-nav-li">
                                         <Image src="/images/email.jpg " alt="Image Alt Text"
                                                className="right-subheader-img"/>
@@ -318,7 +318,7 @@ const SubHeader = () => {
                 </MenuList>
             </Menu>
             <Box>
-                <Link className="sub-header-links" href="/search-products/all">
+                <Link className="sub-header-links" href="/">
                     Toyota Parts
                 </Link>
                 <Link className="sub-header-links" href="/search-products/all">

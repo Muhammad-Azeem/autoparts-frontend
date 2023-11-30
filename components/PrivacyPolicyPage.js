@@ -64,10 +64,10 @@ const PrivacyPolicyPage = () => {
                                 className="vm-leftside-box" fontSize="small" >
                                 Contact Us
                             </Box>
-                            <Box
-                                className="vm-leftside-box" fontSize="small" >
-                                Help Center
-                            </Box>
+                            {/*<Box*/}
+                            {/*    className="vm-leftside-box" fontSize="small" >*/}
+                            {/*    Help Center*/}
+                            {/*</Box>*/}
                             <Box
                                 className="vm-leftside-box" fontSize="small" >
                                 <Icon height="10px" as={FaPlus} mr={2} /> Policies
@@ -107,11 +107,11 @@ const PrivacyPolicyPage = () => {
                                 Contact Us
                             </Link>
                         </MenuItem>
-                        <MenuItem   className="menu-item">
-                            <Link className="success-leftside-link"  href="/">
-                                Help Center
-                            </Link>
-                        </MenuItem>
+                        {/*<MenuItem   className="menu-item">*/}
+                        {/*    <Link className="success-leftside-link"  href="/">*/}
+                        {/*        Help Center*/}
+                        {/*    </Link>*/}
+                        {/*</MenuItem>*/}
                         <MenuItem   onClick={handleSalesClick} className="menu-item">Sales Policy</MenuItem>
                         <MenuItem   onClick={handleReturnClick} className="menu-item">Return Policy</MenuItem>
                         <MenuItem   onClick={handlePrivacyClick}  className="menu-item">Privacy Policy</MenuItem>

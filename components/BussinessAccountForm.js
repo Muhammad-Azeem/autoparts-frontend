@@ -1,5 +1,5 @@
 // components/Header.js
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Heading,
     Input,
@@ -21,13 +21,24 @@ import {
 } from '@chakra-ui/react';
 
 import '../styles//global.css';
-import ProductBox from "./ProductBox";
-import {ChevronDownIcon} from "@chakra-ui/icons";
-import LeftSide from "./LeftSide";
-import ProductBlock from "./ProductBlock";
 import {useRouter} from "next/router";
 import {bussinesAcct} from "./API/api";
+import LoaderSpinner from "../components/LoaderSpinner";
 const BussinessAccountForm = () => {
+    const [loading, setLoading] = useState(true);
+    // Simulating an asynchronous operation
+    useEffect(() => {
+        const fetchData = async () => {
+            // Simulate an API call or any asynchronous task
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // After the task is done, set loading to false
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
+
     const router = useRouter();
 
     const handlePersonalClick = () => {
@@ -74,13 +85,10 @@ const BussinessAccountForm = () => {
             // const type=3;
             const userData = {bussinessAddress1,bussinessAddress2,zipCode,cityState ,firstName,lastName, jobTitle,bussinessType,bussinessName,email, password,phoneNumber,};
             let response = await bussinesAcct(userData);
-            console.log(response);
-             console.log('rest', response.data)
             const token  = response.data.token;
             const user = JSON.stringify(response.data.user);
             localStorage.setItem('token', token);
             localStorage.setItem('user', user);
-            console.log('monoply');
             window.location.href='/Register-Success';
         } catch (error) {
             console.error('Bussiness Account Registration failed:', error);
@@ -104,6 +112,9 @@ const BussinessAccountForm = () => {
                     <span onClick={handlePersonalClick} className="bussiness-url"  >
                         Create a personal account.
                     </span>
+                    {error && (
+                        <p style={{ color: 'red' }}>{error}</p>
+                    )}
                 </Heading>
                 <form className="bussiness-form">
                     <Heading className="returning-heading" as="h3">User Information</Heading>
@@ -229,9 +240,13 @@ const BussinessAccountForm = () => {
                     </Box>
 
                     <Flex className="bussiness-checkbox"  mt={30} >
+                        {loading ? (
+                            <LoaderSpinner />
+                        ) : (
                         <Button className="bussiness-acct-button" colorScheme="teal" type="button" onClick={handleBussinessAcct}>
                             Create a Bussiness Account
                         </Button>
+                            )}
                     </Flex>
 
                 </form>
