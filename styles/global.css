@@ -1468,7 +1468,7 @@ body{
     font-weight: 600;
     line-height: 1.33;
     margin: 0;
-    width: 75%;
+    /*width: 75%;*/
 }
 .pp-box2-heading1{
     border-bottom: 1px dotted #d0d0d0;
@@ -2242,6 +2242,9 @@ body{
     cursor: pointer;
     margin-left: 10px;
  }
+ .productDetail-box2-heads{
+     width: 70%;
+ }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {
@@ -2663,6 +2666,14 @@ li {
 
 }
 @media(max-width:1280px){
+    .pp-price-box {
+        width: 200px;
+        right: 50px;
+    }
+    .pp-price-box2 {
+        width: 200px;
+        right: 50px;
+    }
     .chakra-modal__close-btn {
         right: 101px;
     }
