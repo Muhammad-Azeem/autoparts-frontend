@@ -591,7 +591,7 @@ const AcctDash = () => {
                                     ) : (
                                         <Box className="editBox2 account-sectionbox">
                                             <Heading mt={10} className="account-login" as="h3" >
-                                                Change Login Email
+                                                Change Password
                                             </Heading>
                                             <Box mt={10} borderBottom="1px solid #d0d0d0">
                                             </Box>
