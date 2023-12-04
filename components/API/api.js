@@ -310,7 +310,7 @@ export const getAllCategories = async () => {
 };
 
 export const getVehicleId = async (data) => {
-
+``
     try {
         const response = await axios.get(`${API_BASE_URL}/vehicle/searchVehicle/`+data.year+`/`+data.model+`/`+data.company);
         return response.data;
