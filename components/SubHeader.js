@@ -149,13 +149,13 @@ const SubHeader = () => {
         setIsDivOpen(false);
         removeGarageFromCookie(id);
         setGarage(getGarageFromCookie());
+        window.location.reload();
     };
 
     const [garage, setGarage] = useState(getGarageFromCookie());
 
     useEffect(() => {
         setGarage(getGarageFromCookie());
-        console.log(garage, 'garata');
     }, [isDivOpen]); // Run only once on component mount
 
     const handleClearAllGarages = () => {
@@ -362,14 +362,23 @@ const SubHeader = () => {
                                         key={garageEntry.id}
                                         className="no-vehicles"
                                         style={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', cursor: 'pointer !important' }}
-                                        onClick={() => handleRadioChange(index)}
                                     >
-                                        <div>
-                                            <input type="radio" id={garageEntry.id} value={garageEntry.name} name='garage'   checked={garageEntry.is_selected}   />
-                                            <span >
-                                                {garageEntry.company} {garageEntry.model} {garageEntry.year}
-                                            </span>
-                                        </div>
+                                        <label
+                                            onClick={() => handleRadioChange(index)}
+                                            style={{ display: 'flex', alignItems: 'center' }}
+                                        >
+                                            <input
+                                                type="radio"
+                                                id={garageEntry.id}
+                                                value={garageEntry.name}
+                                                name='garage'
+                                                checked={garageEntry.is_selected}
+                                                onChange={() => {}}
+                                            />
+                                            <span>
+            {garageEntry.company} {garageEntry.model} {garageEntry.year}
+        </span>
+                                        </label>
                                         <div>
                                             <DeleteIcon mr={15} w={20} h={20} color="grey" onClick={() => handleDeleteGarage(garageEntry.id)} />
                                         </div>
