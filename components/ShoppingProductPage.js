@@ -37,7 +37,7 @@ import { getStripe } from '../utils/stripe';
 import { countries } from 'countries-list';
 
 const ShoppingProductPage = () => {
-    // const [selectedCountry, setSelectedCountry] = useState(null);
+     const [selectedCountry, setSelectedCountry] = useState(null);
 
     const countryOptions = Object.keys(countries).map((countryCode) => ({
         value: countryCode,
@@ -45,7 +45,8 @@ const ShoppingProductPage = () => {
     }));
 
     const handleCountryChange = (selectedOption) => {
-        setCountry(selectedOption);
+        setCountry(selectedOption.label);
+        setSelectedCountry(selectedOption);
     };
 
     const [user, setUser] = useState('');
@@ -545,7 +546,7 @@ const ShoppingProductPage = () => {
                                                         <Select
                                                             className="bussiness-input-select"
                                                             placeholder='Select Country'
-                                                            value={country}
+                                                            value={selectedCountry}
                                                             onChange={handleCountryChange}
                                                             options={countryOptions}
                                                         />
@@ -767,7 +768,7 @@ const ShoppingProductPage = () => {
                                                             </Box>
                                                         </form>
 
-                                                        <form className="shipping-form">
+                                                        <Box className="shipping-form">
                                                             <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
                                                             <Box>
                                                                 {<Elements stripe={getStripe()}>
@@ -775,7 +776,7 @@ const ShoppingProductPage = () => {
                                                                 </Elements>}
                                                             </Box>
 
-                                                        </form>
+                                                        </Box>
                                                     </Box>
                                                 </Flex>
                                             </Box>
@@ -855,7 +856,7 @@ const ShoppingProductPage = () => {
                                                                     Payment Method
                                                                 </Text>
                                                                 <Text>
-                                                                    Wire Transfer
+                                                                    Payment Via Stripe
                                                                 </Text>
                                                             </Box>
                                                         </Box>
@@ -881,7 +882,15 @@ const ShoppingProductPage = () => {
                                                                     {cart.map((cartItem, index) => (
                                                                         <Tr key={cartItem.id} mt={15} style={{ marginTop: '10px' }}>
                                                                             <Td>
-                                                                                <Image className="cart-box-image"  src={cartItem.images} alt={`Image ${cartItem.id}`}  />
+                                                                                {cartItem.images &&
+                                                                                    Array.isArray(JSON.parse(cartItem.images)) &&
+                                                                                    JSON.parse(cartItem.images).length > 0 && (
+                                                                                        <Image
+                                                                                            className="cart-box-image"
+                                                                                            src={JSON.parse(cartItem.images)[0].image1}
+                                                                                            alt="Image 1"
+                                                                                        />
+                                                                                    )}
                                                                             </Td>
                                                                             <Td width="250px" textAlign="left">
                                                                                 Part No.: {cartItem.part_number}
