@@ -37,7 +37,7 @@ import { getStripe } from '../utils/stripe';
 import { countries } from 'countries-list';
 
 const ShoppingProductPage = () => {
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    // const [selectedCountry, setSelectedCountry] = useState(null);
 
     const countryOptions = Object.keys(countries).map((countryCode) => ({
         value: countryCode,
@@ -45,7 +45,7 @@ const ShoppingProductPage = () => {
     }));
 
     const handleCountryChange = (selectedOption) => {
-        setSelectedCountry(selectedOption);
+        setCountry(selectedOption);
     };
 
     const [user, setUser] = useState('');
@@ -76,6 +76,7 @@ const ShoppingProductPage = () => {
             setCompany(addresses[0] ? addresses[0]['company'] : '' );
             setStreetAddress(addresses[0] ? addresses[0]['address_1'] : '' );
             setAppartment(addresses[0] ? addresses[0]['address_2'] : '' );
+            setCountry(addresses[0] ? addresses[0]['country'] : '' );
             setZipCode(user.zip_code);
             setPhone(user.phone);
         }
@@ -87,6 +88,7 @@ const ShoppingProductPage = () => {
             setAppartment(localStorage.getItem('appartment') !== null ? localStorage.getItem('appartment') : '');
             setZipCode(localStorage.getItem('zipCode') !== null ? localStorage.getItem('zipCode') : '');
             setPhone(localStorage.getItem('phone') !== null ? localStorage.getItem('phone') : '');
+            setCountry(localStorage.getItem('country') !== null ? localStorage.getItem('country') : '');
             setEmail(localStorage.getItem('email') !== null ? localStorage.getItem('email') : '');
             setCEmail(localStorage.getItem('cEmail') !== null ? localStorage.getItem('cEmail') : '');
         }
@@ -117,6 +119,7 @@ const ShoppingProductPage = () => {
     const [appartment, setAppartment] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [phone, setPhone] = useState('');
+    const [country, setCountry] = useState('');
     const [email, setEmail] = useState('');
     const [cEmail, setCEmail] = useState('');
     const [addressAs, setAddressAs] = useState('');
@@ -132,6 +135,7 @@ const ShoppingProductPage = () => {
     const [error7, setError7] = useState('');
     const [paymentError, setPaymentError] = useState(null);
     const [error8, setError8] = useState('');
+    const [error9, setError9] = useState('');
 
 
     const [showTable1, setShowTable1] = useState(true);
@@ -187,6 +191,11 @@ const ShoppingProductPage = () => {
         }
     };
     const handleShippingForm = async () => {
+        if (country == '') {
+            setError9("Country is required");
+            displayErrorAndHide();
+            return;
+        }
         if (firstName == '') {
             setError1("First Name is required");
             displayErrorAndHide();
@@ -236,13 +245,14 @@ const ShoppingProductPage = () => {
         }
         try {
             if(user){
-                const userData = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,addressAs };
+                const userData = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,addressAs,country };
                 let response = await updateShipping(userData);
             }
             else{
                 localStorage.setItem('firstName', firstName);
                 localStorage.setItem('lastName', lastName);
                 localStorage.setItem('company', company);
+                localStorage.setItem('country', country);
                 localStorage.setItem('streetAddress', streetAddress);
                 localStorage.setItem('appartment', appartment);
                 localStorage.setItem('zipCode', zipCode);
@@ -532,13 +542,16 @@ const ShoppingProductPage = () => {
                                                 <Box className='boxOne'>
                                                     <Box >
                                                     <FormControl  mt={20}>
-                                                    <Select
-                                                        className="bussiness-input-select"
-                                                        placeholder='Select Country'
-                                                        value={selectedCountry}
-                                                        onChange={handleCountryChange}
-                                                        options={countryOptions}
-                                                    />
+                                                        <Select
+                                                            className="bussiness-input-select"
+                                                            placeholder='Select Country'
+                                                            value={country}
+                                                            onChange={handleCountryChange}
+                                                            options={countryOptions}
+                                                        />
+                                                        {error9 && (
+                                                            <p style={{ color: 'red' }}>{error9}</p>
+                                                        )}
                                                     </FormControl>
                                                     </Box>
                                                     <Box >
@@ -748,7 +761,7 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                                 <Box className='boxTwo'>
                                                                     <Text>
-                                                                        Pakistan
+                                                                        {country}
                                                                     </Text>
                                                                 </Box>
                                                             </Box>

@@ -40,7 +40,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {ChevronRightIcon} from "@chakra-ui/icons";
-import {getProductbyId} from "./API/api";
+import {getProductbyId, getVehicleId} from "./API/api";
 import {addToCartToCockie,getSelectedGarageFromCookie,} from "./utility/cookies";
 import {formatCurrency} from "./utility/constants";
 import CheckFitModal from './CheckFitModal';
@@ -73,10 +73,18 @@ const ProductPage = () => {
 
 
     const [selectedVehicle, setSelectedVehicle] = useState([]);
-    useEffect(() => {
-        const vehicle = getSelectedGarageFromCookie();
+    const [selectedVehicleID, setSelectedVehicleID] = useState([]);
+
+    useEffect( async() => {
+        const vehicle = await getSelectedGarageFromCookie();
         setSelectedVehicle(vehicle);
+
+        const vehicle_id= await getVehicleId(vehicle);
+        console.log(vehicle_id,'hello');
+        setSelectedVehicleID(vehicle_id.id);
     }, []);
+
+
 
 
     const [loading, setLoading] = useState(true);
@@ -174,7 +182,7 @@ const ProductPage = () => {
                     <BreadcrumbLink fontWeight="600" href='#'>Toyota 9034112012</BreadcrumbLink>
                 </BreadcrumbItem>
             </Breadcrumb>
-                {selectedVehicle && selectedVehicle.id !== product.id && selectedVehicle.length !== 0  ? (
+                {selectedVehicle && selectedVehicleID == product.vehicle_id && selectedVehicle.length !== 0  ? (
 
                  <Box className="pp-innerbox-fits">
                  <Box display='flex'>

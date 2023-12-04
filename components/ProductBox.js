@@ -84,11 +84,14 @@ const ProductBox = () => {
                             <Box width="100%">
                                 <Grid className="productblock-grid" >
                                     {/* Your existing content */}
-                                    <GridItem onClick={() => handleProductDetailClick(product.id)} className="product-box">
-                                        <Box  className="grid-product_box" >
-                                            <Image src={JSON.parse(product.images)[0].image1} className="images-product_box" alt="Image Alt Text"  />
-                                            <Text className="title-product_block">{product.name}</Text>
-                                        </Box>
+                                    {/*<GridItem onClick={() => handleProductDetailClick(product.id)} className="product-box">*/}
+                                    <GridItem  className="product-box">
+                                        <Link style={{textDecoration:'none'}} href={`/ProductPage/${product.id}`}>
+                                            <Box  className="grid-product_box" >
+                                                <Image src={JSON.parse(product.images)[0].image1} className="images-product_box" alt="Image Alt Text"  />
+                                                <Text className="title-product_block">{product.name}</Text>
+                                            </Box>
+                                        </Link>
                                     </GridItem>
 
                                 </Grid>
