@@ -766,7 +766,7 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                             </Box>
                                                         </form>
-                                                        <form className="shipping-form">
+                                                        <Box className="shipping-form">
                                                             <h3 className="chakra-heading returning-heading ">Payment Method</h3>
                                                             <div >
                                                                 <div >
@@ -798,7 +798,7 @@ const ShoppingProductPage = () => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </form>
+                                                        </Box>
                                                     </Box>
                                                 </Flex>
                                             </Box>
