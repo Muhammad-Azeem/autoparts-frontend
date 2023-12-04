@@ -123,10 +123,10 @@ const Header = () => {
                                         <img className="car" src="/images/car.png" alt="Car"  />
                                     </Box>
                                 }
-                                rightIcon={<ArrowUpDownIcon />}
+                                // rightIcon={<ArrowUpDownIcon />}
                                 className="select-vehicle-btn"
                     >
-                        <Text className="header-select-vehicle">
+                        <Text mr={5} className="header-select-vehicle">
                         Select Vehicle
                         </Text>
                     </MenuButton>
@@ -219,8 +219,8 @@ const Header = () => {
                                     ref={divRef}
                                     style={{
                                         position: 'absolute',
-                                        top: '55px', // Adjust the positioning as needed
-                                        right: '-25px',
+                                        top: '47px', // Adjust the positioning as needed
+                                        right: '-120px',
                                         width: '225px', // Set the desired width
                                         height: '75px',
                                         background: 'white',

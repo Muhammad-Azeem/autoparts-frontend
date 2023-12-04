@@ -584,7 +584,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={15}>
-                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="Zip Code" value={zipCode} onChange={handleZipCodeChange} /><br/>
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="Zip Code" value={zipCode} onChange={handleZipCodeChange} /><br/>
                                                             <span style={{fontSize:'11px', color:'gray'}}>Enter Zip Code for City and State</span>
                                                             {error6 && (
                                                                 <p style={{ color: 'red' }}>{error6}</p>
@@ -593,7 +593,7 @@ const ShoppingProductPage = () => {
                                                     </Box>
                                                     <Box  >
                                                         <FormControl mt={5}>
-                                                            <Input mr={5} className="bussiness-input"  type="number" placeholder="phone" value={phone} onChange={handlePhoneChange} />
+                                                            <Input mr={5} className="bussiness-input"  type="text" placeholder="phone" value={phone} onChange={handlePhoneChange} />
                                                             {error7 && (
                                                                 <p style={{ color: 'red' }}>{error7}</p>
                                                             )}
