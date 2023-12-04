@@ -98,15 +98,33 @@ const Header = () => {
     };
     const [searchValue, setSearchValue] = useState('');
 
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            // Redirect to a URL with the search value
-            window.location.href = `/search-products/${encodeURIComponent(searchValue)}`;
-        }
-    };
+    // const handleKeyPress = (event) => {
+    //     if (event.key === 'Enter') {
+    //         // Redirect to a URL with the search value
+    //         window.location.href = `/search-products/${encodeURIComponent(searchValue)}`;
+    //     }
+    // };
+    // const handleChange = (event) => {
+    //     setSearchValue(event.target.value);
+    // };
+
     const handleChange = (event) => {
         setSearchValue(event.target.value);
+        window.history.pushState({}, '', `/search-products/${encodeURIComponent(searchValue)}`);
+
     };
+
+    // useEffect(() => {
+    //     const handleUrlUpdate = () => {
+    //         window.history.pushState({}, '', `/search-products/${encodeURIComponent(searchValue)}`);
+    //     };
+    //
+    //     handleUrlUpdate(); // Update URL initially
+    //
+    //     return () => {
+    //         window.removeEventListener('popstate', handleUrlUpdate);
+    //     };
+    // }, [searchValue]);
     return (
         <Flex className="header" as="header" >
             {/* Left-aligned logo */}
@@ -131,6 +149,7 @@ const Header = () => {
                         </Text>
                     </MenuButton>
                 </Menu>
+
                 <Box
                     background="#F1F1F1"
                     padding="5px"
@@ -138,7 +157,20 @@ const Header = () => {
                     borderTopRightRadius="4px"
                     borderBottomRightRadius="4px"
                 >
-                    <input className="search-placeholder" type="text" value={searchValue}  onKeyPress={handleKeyPress} onChange={handleChange} placeholder="Search by Part Number, Part Name, Description" />
+                    <div>
+                        <input
+                            className="search-placeholder"
+                            type="text"
+                            value={searchValue}
+                            onChange={handleChange}
+                            placeholder="Search by Part Number, Part Name, Description"
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter' && searchValue != "") {
+                                    window.location.href = `/search-products/${encodeURIComponent(searchValue)}`;
+                                }
+                            }} 
+                        />
+                    </div>
                 </Box>
             </Flex>
 

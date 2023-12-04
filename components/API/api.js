@@ -56,6 +56,7 @@ export const updateShipping = async (userData) => {
         data.append('first_name', userData.firstName);
         data.append('last_name', userData.lastName);
         data.append('company', userData.company);
+        data.append('country', userData.country);
         data.append('address', userData.streetAddress);
         data.append('appartment', userData.appartment);
         data.append('zip_code', userData.zipCode);
