@@ -2245,6 +2245,11 @@ body{
  .productDetail-box2-heads{
      width: 70%;
  }
+ .stripe-text{
+     color: blue;
+     font-weight: 800;
+     margin-right: 15px;
+ }
 /*//////////NAVBAR////////////*/
 /* Navbar.css */
 .navbar {

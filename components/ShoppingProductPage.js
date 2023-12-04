@@ -45,7 +45,7 @@ const ShoppingProductPage = () => {
     }));
 
     const handleCountryChange = (selectedOption) => {
-        setCountry(selectedOption);
+        setCountry(selectedOption.label);
     };
 
     const [user, setUser] = useState('');
@@ -469,17 +469,17 @@ const ShoppingProductPage = () => {
 
                 <style jsx>{`
         .checkout-form {
-          max-width: 500px;
+          //max-width: 500px;
           //margin: 0 auto;
         }
 
         .card-element {
-          margin-bottom: 20px;
+          //margin-bottom: 20px;
           padding: 10px;
           border: 1px solid #ccc;
           border-radius: 4px;
-          width: 350px;
-          height: 6px;
+          width: 250px;
+          height: 10px;
         }
 
         .pay-button {
@@ -766,15 +766,38 @@ const ShoppingProductPage = () => {
                                                                 </Box>
                                                             </Box>
                                                         </form>
-
                                                         <form className="shipping-form">
-                                                            <Heading className="returning-heading" as="h3" borderBottom='none'>Payment Method</Heading>
-                                                            <Box>
-                                                                {<Elements stripe={getStripe()}>
-                                                                    <CheckoutForm />
-                                                                </Elements>}
-                                                            </Box>
+                                                            <h3 className="chakra-heading returning-heading ">Payment Method</h3>
+                                                            <div >
+                                                                <div >
+                                                                    <div >
+                                                                        <p >
+                                                                            <input type="radio" selected />
+                                                                            <span className="stripe-text">
+                                                                                stripe
+                                                                            </span>
+                                                                            Speed through checkout. PayPal is the safer, easier way to pay.
 
+                                                                            {/*<Image src="/images/stripe.png" className="images-product_box" alt="Image Alt Text"  />*/}
+                                                                        </p>
+                                                                    </div>
+                                                                    <Box>
+                                                                        {<Elements stripe={getStripe()}>
+                                                                            <CheckoutForm />
+                                                                        </Elements>}
+                                                                    </Box>
+                                                                    <div >
+                                                                        <p>
+                                                                            <input type="radio" />
+                                                                            Wire Transfer
+                                                                        </p>
+                                                                        <p >Your payment will be processed through Wire Transfer.</p>
+                                                                        <p >Once you submit the order, we will confirm the availability and price of the part(s) with the manufacture, typically within 1-2 business days.</p>
+                                                                        <p>You will receive a confirmation email with instructions for the wire transfer.</p>
+                                                                        <p>If you have any questions or concerns, please contact us.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </form>
                                                     </Box>
                                                 </Flex>

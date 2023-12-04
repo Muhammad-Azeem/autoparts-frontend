@@ -168,7 +168,7 @@ const Header = () => {
                                 if (event.key === 'Enter' && searchValue != "") {
                                     window.location.href = `/search-products/${encodeURIComponent(searchValue)}`;
                                 }
-                            }} 
+                            }}
                         />
                     </div>
                 </Box>
