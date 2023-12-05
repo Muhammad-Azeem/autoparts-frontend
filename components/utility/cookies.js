@@ -150,12 +150,33 @@ export const addCartToCookie = (newCart) => {
   setCartCookie(cart);
 };
 
+// export const removeCartFromCookie = (index) => {
+//   const cart = getCartFromCookie();
+//   cart.splice(index, 1);
+//   setCartCookie(cart);
+// };
+
 export const removeCartFromCookie = (index) => {
   const cart = getCartFromCookie();
-  cart.splice(index, 1);
-  setCartCookie(cart);
-};
 
+  // Check if the index is valid
+  if (index >= 0 && index < cart.length) {
+    const removedProduct = cart[index];
+
+    // Update the total by subtracting the price * quantity of the removed product
+    const currentTotal = getCartTotalPriceFromCookie();
+    const updatedTotal = currentTotal - (removedProduct.price * removedProduct.quantity);
+
+    // Update the total in the cookie
+    setCartTotalCookie(updatedTotal);
+
+    // Remove the product from the cart
+    cart.splice(index, 1);
+
+    // Update the cart in the cookie
+    setCartCookie(cart);
+  }
+};
 export const clearAllGaragesFromCookie = () => {
   // Clear the garage data in cookies
   // (Note: Replace the removeCookie function with your actual implementation)
