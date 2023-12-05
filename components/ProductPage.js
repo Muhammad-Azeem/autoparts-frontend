@@ -163,7 +163,8 @@ const ProductPage = () => {
             temp.price = product.price
 
             await addToCartToCockie(temp, quantity)
-            router.push('/AddToCart/');
+            window.location.href = '/AddToCart'
+            // router.push('/AddToCart/');
 
         }
 

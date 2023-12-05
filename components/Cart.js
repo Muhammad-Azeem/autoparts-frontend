@@ -77,6 +77,7 @@ const   Cart = () => {
         setSubTotal(calculateSubtotal(data))
 
         setLoading(false);
+        window.location.reload();
     };
     useEffect(() => {
         setLoading(true);
