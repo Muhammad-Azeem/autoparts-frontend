@@ -114,10 +114,10 @@ export const addToCartToCockie = async (newCart, quantity = 1) => {
     let cartTotal = getCartTotalPriceFromCookie();
 
     if (cartTotal) {
-      cartTotal = parseInt(cartTotal) + parseInt(newCart.price) * quantity;
+      cartTotal = parseFloat(cartTotal) + parseFloat(newCart.price) * quantity;
       setCartTotalCookie(cartTotal);
     } else {
-      let total = parseInt(newCart.price) * quantity;
+      let total = parseFloat(newCart.price) * quantity;
       setCartTotalCookie(total);
     }
 
