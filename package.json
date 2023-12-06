@@ -2,7 +2,7 @@
   "name": "autoparts",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://carproject.digitalotters.com/",
+  "homepage": "https://autoparts.stackup.solutions/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
