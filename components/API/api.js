@@ -97,7 +97,7 @@ export const orderPlace = async (userData) => {
         data.append('appartment', userData.appartment);
         data.append('zip_code', userData.zipCode);
         data.append('phone', userData.phone);
-        data.append('sub_total', userData.subTotal);
+        data.append('sub_total', userData.total);
         data.append('user', JSON.stringify(userData.user));
         data.append('cart', JSON.stringify(userData.cart));
         data.append('token', JSON.stringify(userData.cardToken.id));

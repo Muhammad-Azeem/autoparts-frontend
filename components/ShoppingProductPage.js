@@ -112,6 +112,7 @@ const ShoppingProductPage = () => {
     };
 
     const [subTotal, setSubTotal] = useState('');
+    const [shippingCost, setShippingCost] = useState('');
     const [cardToken, setCardToken] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -164,7 +165,8 @@ const ShoppingProductPage = () => {
 
     const handleOrder = async () => {
         try {
-            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,subTotal,user,cart, cardToken };
+            const total = parseFloat(parseInt(subTotal) + parseInt(shippingCost));
+            const data = { firstName, lastName,company,streetAddress,appartment,zipCode,phone,total,user,cart, cardToken };
            const response = await orderPlace(data);
 
             localStorage.removeItem('firstName');
@@ -181,7 +183,7 @@ const ShoppingProductPage = () => {
             Cookies.remove('total');
 
 
-            if (response.success === true) {
+            if (response.data && response.data.success === true) {
                 await router.push('/ThankYou');
             } else {
                 console.error('Payment failed.');
@@ -232,12 +234,13 @@ const ShoppingProductPage = () => {
             displayErrorAndHide();
             return;
         }
-        if (email == '') {
-            setError8("Email is required");
-            displayErrorAndHide();
-            return;
-        }
+
         if(!user) {
+            if (email == '') {
+                setError8("Email is required");
+                displayErrorAndHide();
+                return;
+            }
             if (email !== cEmail) {
                 setError("Emails don't match");
                 displayErrorAndHide();
@@ -261,6 +264,10 @@ const ShoppingProductPage = () => {
                 localStorage.setItem('email', email);
                 localStorage.setItem('cEmail', cEmail);
             }
+            const min = 1;
+            const max = 30;
+            const rand = min + Math.random() * (max - min);
+            setShippingCost(rand);
             setShowShippingDiv(false);
             setShowPaymentDiv(true);
 
@@ -703,7 +710,7 @@ const ShoppingProductPage = () => {
                                                 Estimated Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                0
+                                                $0
                                             </Text>
                                         </Box>
                                         <Box mt={5}  display='flex' justifyContent='space-between'>
@@ -821,7 +828,7 @@ const ShoppingProductPage = () => {
                                                     Estimated Shipping & Handling
                                                 </Text>
                                                 <Text margin='0px' fontSize='small' >
-                                                    0
+                                                    {formatCurrency(parseFloat(shippingCost))}
                                                 </Text>
                                             </Box>
 
@@ -831,7 +838,7 @@ const ShoppingProductPage = () => {
                                                         Estimated Order Total
                                                     </Text>
                                                     <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                        {formatCurrency(parseFloat(subTotal))}
+                                                        {formatCurrency(parseFloat(subTotal) +  parseFloat(shippingCost))}
                                                     </Text>
                                                 </Box>
                                             </Text>
@@ -965,7 +972,7 @@ const ShoppingProductPage = () => {
                                                 Shipping & Handling
                                             </Text>
                                             <Text margin='0px' fontSize='small' >
-                                                0
+                                                {formatCurrency(parseFloat(shippingCost))}
                                             </Text>
                                         </Box>
 
@@ -975,7 +982,7 @@ const ShoppingProductPage = () => {
                                                     Order Total
                                                 </Text>
                                                 <Text margin='0px' fontWeight='600' fontSize='small' color='#bc0000'>
-                                                    {formatCurrency(parseFloat(subTotal))}
+                                                    {formatCurrency(parseFloat(subTotal) +  parseFloat(shippingCost))}
                                                 </Text>
                                             </Box>
                                             By placing an order, you agree with our Terms and Conditions

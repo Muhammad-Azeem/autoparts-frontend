@@ -46,7 +46,7 @@ const TrackingPage = () => {
                     </Text>
                     <Box className="track-forms-box" >
                         <FormControl mt={20}>
-                            <FormLabel mr={5} className="returing-label">First Name:
+                            <FormLabel mr={5} className="returing-label">Email Address
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
                             <Input mr={5} className="track-input" type="text" />
@@ -54,7 +54,7 @@ const TrackingPage = () => {
                     </Box>
                     <Box className="track-forms-box" >
                         <FormControl mt={20}>
-                            <FormLabel mr={10} className="returing-label">Email Address:
+                            <FormLabel mr={10} className="returing-label">Order Number
                                 <sup style={{color:'#E52222'}}>*</sup>
                             </FormLabel>
                             <Input mr={5} className="track-input" type="email" />
