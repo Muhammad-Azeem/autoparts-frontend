@@ -173,6 +173,9 @@ const ProductPage = () => {
     return (
 
     <Box >
+        {loading ? (
+            <div></div>
+        ) : (
         <Box className="pp-box">
             <Breadcrumb  spacing='5px' separator={<ChevronRightIcon color='gray.500' />}>
                 <BreadcrumbItem className="breadcrum-ol" >
@@ -250,6 +253,7 @@ const ProductPage = () => {
             </Box>
               ) : null}
         </Box>
+            )}
 
         <Box className="pp-productDetail-main-box">
             <Flex className="pp-productDetail-innerbox" >

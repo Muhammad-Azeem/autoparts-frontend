@@ -38,7 +38,34 @@ import { countries } from 'countries-list';
 
 const ShoppingProductPage = () => {
      const [selectedCountry, setSelectedCountry] = useState(null);
-
+    const [subTotal, setSubTotal] = useState('');
+    const [shippingCost, setShippingCost] = useState('');
+    const [cardToken, setCardToken] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [company, setCompany] = useState('');
+    const [streetAddress, setStreetAddress] = useState('');
+    const [appartment, setAppartment] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [phone, setPhone] = useState('');
+    const [country, setCountry] = useState('');
+    const [email, setEmail] = useState('');
+    const [cEmail, setCEmail] = useState('');
+    const [addressAs, setAddressAs] = useState('');
+    const [password, setPassword] = useState('');
+    const [cPassword, setCPassword] = useState('');
+    const [error, setError] = useState('');
+    const [error1, setError1] = useState('');
+    const [error2, setError2] = useState('');
+    const [error3, setError3] = useState('');
+    const [error4, setError4] = useState('');
+    const [error5, setError5] = useState('');
+    const [error6, setError6] = useState('');
+    const [error7, setError7] = useState('');
+    const [paymentError, setPaymentError] = useState(null);
+    const [paymentSuccess, setPaymentSuccess] = useState(null);
+    const [error8, setError8] = useState('');
+    const [error9, setError9] = useState('');
     const countryOptions = Object.keys(countries).map((countryCode) => ({
         value: countryCode,
         label: countries[countryCode].name,
@@ -62,24 +89,25 @@ const ShoppingProductPage = () => {
 
         let temp= localStorage.getItem('user');
         temp = JSON.parse(temp);
+        console.log(temp);
         setUser(temp);
 
         const getAddress = async () => {
-            const data = await getAddressesByUserId(temp.id)
+            const data = await getAddressesByUserId(temp.id);
             setAddresses(data);
+
+            setFirstName(data[0] ? data[0]['first_name'] : '' );
+            setLastName(data[0] ? data[0]['last_name'] : '' );
+            setCompany(data[0] ? data[0]['company'] : '' );
+            setStreetAddress(data[0] ? data[0]['address_1'] : '' );
+            setAppartment(data[0] ? data[0]['city'] : '' );
+            setCountry(data[0] ? data[0]['country'] : '' );
+            setZipCode(temp ? temp.zip_code : '');
+            setPhone(temp? temp.business_phone_number : '');
         }
 
-        if(user){
+        if(temp && temp.id){
             getAddress();
-
-            setFirstName(addresses[0] ? addresses[0]['first_name'] : '' );
-            setLastName(addresses[0] ? addresses[0]['last_name'] : '' );
-            setCompany(addresses[0] ? addresses[0]['company'] : '' );
-            setStreetAddress(addresses[0] ? addresses[0]['address_1'] : '' );
-            setAppartment(addresses[0] ? addresses[0]['address_2'] : '' );
-            setCountry(addresses[0] ? addresses[0]['country'] : '' );
-            setZipCode(user.zip_code);
-            setPhone(user.phone);
         }
         else {
             setFirstName(localStorage.getItem('firstName') !== null ? localStorage.getItem('firstName') : '');
@@ -111,33 +139,7 @@ const ShoppingProductPage = () => {
         router.push('/');
     };
 
-    const [subTotal, setSubTotal] = useState('');
-    const [shippingCost, setShippingCost] = useState('');
-    const [cardToken, setCardToken] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [company, setCompany] = useState('');
-    const [streetAddress, setStreetAddress] = useState('');
-    const [appartment, setAppartment] = useState('');
-    const [zipCode, setZipCode] = useState('');
-    const [phone, setPhone] = useState('');
-    const [country, setCountry] = useState('');
-    const [email, setEmail] = useState('');
-    const [cEmail, setCEmail] = useState('');
-    const [addressAs, setAddressAs] = useState('');
-    const [password, setPassword] = useState('');
-    const [cPassword, setCPassword] = useState('');
-    const [error, setError] = useState('');
-    const [error1, setError1] = useState('');
-    const [error2, setError2] = useState('');
-    const [error3, setError3] = useState('');
-    const [error4, setError4] = useState('');
-    const [error5, setError5] = useState('');
-    const [error6, setError6] = useState('');
-    const [error7, setError7] = useState('');
-    const [paymentError, setPaymentError] = useState(null);
-    const [error8, setError8] = useState('');
-    const [error9, setError9] = useState('');
+
 
 
     const [showTable1, setShowTable1] = useState(true);
@@ -440,6 +442,7 @@ const ShoppingProductPage = () => {
             } else {
                 // Send the token to your server
                 // await handlePayment(token);
+                setPaymentSuccess('Card Added');
                 setCardToken(token);
             }
         };
@@ -474,9 +477,10 @@ const ShoppingProductPage = () => {
                     Add Card
                 </button>
                 {paymentError && <div className="error-message">{paymentError}</div>}
+                {paymentSuccess && <div className="success1-message">{paymentSuccess}</div>}
 
                 <style jsx>{`
-        .checkout-form {
+        .checkout-form {x
           //max-width: 500px;
           //margin: 0 auto;
         }
@@ -503,6 +507,10 @@ const ShoppingProductPage = () => {
 
         .error-message {
           color: red;
+          margin-top: 10px;
+        }
+         .success1-message {
+          color: green;
           margin-top: 10px;
         }
       `}</style>
@@ -780,7 +788,7 @@ const ShoppingProductPage = () => {
                                                                 <div >
                                                                     <div >
                                                                         <p >
-                                                                            <input type="radio" selected />
+                                                                            <input type="radio" checked />
                                                                             <span className="stripe-text">
                                                                                 stripe
                                                                             </span>
@@ -796,7 +804,7 @@ const ShoppingProductPage = () => {
                                                                     </Box>
                                                                     <div >
                                                                         <p>
-                                                                            <input type="radio" />
+                                                                            <input type="radio"  disabled/>
                                                                             Wire Transfer
                                                                         </p>
                                                                         <p >Your payment will be processed through Wire Transfer.</p>

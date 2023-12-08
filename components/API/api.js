@@ -75,6 +75,8 @@ export const updateShipping = async (userData) => {
 
         axios.request(config)
             .then((response) => {
+                const user = JSON.stringify(response.data.user);
+                localStorage.setItem('user', user);
                 return response;
             })
             .catch((error) => {
